@@ -1,0 +1,11 @@
+{
+  "dictionaries": [],
+  "flagWords": [],
+  "ignorePaths": [
+    "node_modules",
+    ".vscode",
+  ],
+  "language": "en",
+  "version": "0.2",
+  "words": []
+}
