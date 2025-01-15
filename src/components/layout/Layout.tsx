@@ -1,8 +1,20 @@
-import { AppShell, Burger, Group, Image, Skeleton } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
-import viteLogo from "/vite.svg";
 import React from "react";
-import { DashboardRouter } from "../router";
+import { routes } from "@constants";
+import { useDisclosure } from "@mantine/hooks";
+import { AppShell, Burger, Group, Image } from "@mantine/core";
+import { DashboardRouter, NavigateButton } from "@components";
+import logo from "/logo.png";
+
+const navigationLinks = [
+  {
+    text: "Countries",
+    route: routes.countries,
+  },
+  {
+    text: "Overview",
+    route: routes.overview,
+  },
+];
 
 const Layout: React.FC = () => {
   const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
@@ -32,18 +44,24 @@ const Layout: React.FC = () => {
             visibleFrom="sm"
             size="sm"
           />
-          <Image src={viteLogo} alt="logo" />
+          <Image src={logo} alt="logo" h={50} radius="md" />
         </Group>
       </AppShell.Header>
       <AppShell.Navbar p="md">
-        {Array(15)
-          .fill(0)
-          .map((_, index) => (
-            <Skeleton key={index} h={28} mt="sm" animate={false} />
-          ))}
+        {navigationLinks.map((item, index) => (
+          <NavigateButton
+            variant="gradient"
+            gradient={{ from: "red", to: "orange", deg: 90 }}
+            mt="sm"
+            key={index}
+            navigateTo={item.route}
+          >
+            {item.text}
+          </NavigateButton>
+        ))}
       </AppShell.Navbar>
       <AppShell.Main>
-        <DashboardRouter/>
+        <DashboardRouter />
       </AppShell.Main>
     </AppShell>
   );

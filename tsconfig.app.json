@@ -24,8 +24,14 @@
 
     /* Custom */
     "paths": {
-      "@pages": ["./src/pages"]
+      "@pages": ["./src/pages"],
+      "@hooks": ["./src/hooks"],
+      "@types": ["./src/types"],
+      "@store": ["./src/store"],
+      "@services": ["./src/services"],
+      "@constants": ["./src/constants"],
+      "@components": ["./src/components"]
     }
   },
-  "include": ["src"]
+  "include": ["${configDir}/src/**/*"]
 }
