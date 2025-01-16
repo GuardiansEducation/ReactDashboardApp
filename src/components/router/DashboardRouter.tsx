@@ -1,17 +1,15 @@
-
 import React from "react";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { routes } from "@constants";
 import { Countries, Overview } from "@pages";
+import { Navigate, Route, Routes } from "react-router-dom";
 
 const DashboardRouter: React.FC = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Navigate to="/countries" />}/>
-        <Route path="/countries" element={<Countries />} />
-        <Route path="/overview" element={<Overview />} />
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Navigate to={routes.countries} />} />
+      <Route path={routes.countries} element={<Countries />} />
+      <Route path={routes.overview} element={<Overview />} />
+    </Routes>
   );
 };
 
