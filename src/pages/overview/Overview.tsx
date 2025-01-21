@@ -7,6 +7,24 @@ const Overview: React.FC = () => {
   const number = useAppSelector((state) => state.value);
   const dispatch = useAppDispatch();
 
+  const selectedCompetitions = [
+    {
+      competition: {
+        area: {
+          id: 2072,
+          name: "England",
+          code: "ENG",
+          flag: "https://crests.football-data.org/770.svg"
+        },
+        name: "Premier League",
+        code: "PL",
+      },
+      followedTeamIds: [],  // Maximum 3
+    },
+
+    // ... Maximum 4
+  ]
+
   return (
     <>
       <div>Number: {number}</div>
