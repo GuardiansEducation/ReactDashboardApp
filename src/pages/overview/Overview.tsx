@@ -1,23 +1,42 @@
 import React from "react";
-import { Button } from "@mantine/core";
-import { decremented } from "@store";
-import { useAppDispatch, useAppSelector } from "@hooks";
+import { Container, Image, Tabs } from "@mantine/core";
+import { useAppSelector } from "@hooks";
+import { CompetitionState } from "../../store/CompetitionState";
+import OverviewLayout from "./OverviewLayout";
 
 const Overview: React.FC = () => {
-  const number = useAppSelector((state) => state.value);
-  const dispatch = useAppDispatch();
+  const competitions: CompetitionState[] = useAppSelector(
+    (state) => state.competitions
+  );
 
   return (
-    <>
-      <div>Number: {number}</div>
-      <Button
-        onClick={() => {
-          dispatch(decremented());
-        }}
+    <Container fluid>
+      <Tabs
+        variant="outline"
+        defaultValue={competitions[3].area.name}
+        color="orange"
       >
-        decrement
-      </Button>
-    </>
+        <Tabs.List justify="space-between">
+          {competitions.map((competition) => (
+            <Tabs.Tab
+              key={competition.code}
+              value={competition.area.name}
+              leftSection={
+                <Image h={20} src={competition.area.flag} radius="md" />
+              }
+            >
+              {competition.name}
+            </Tabs.Tab>
+          ))}
+        </Tabs.List>
+
+        {competitions.map((competition) => (
+          <Tabs.Panel key={competition.code} value={competition.area.name}>
+            <OverviewLayout content={competition.area.name}></OverviewLayout>
+          </Tabs.Panel>
+        ))}
+      </Tabs>
+    </Container>
   );
 };
 

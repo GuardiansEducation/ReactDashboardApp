@@ -28,7 +28,7 @@ const Countries: React.FC = () => {
       <div>
         <Button
           onClick={async () => {
-            const response: RootObject = await CompetitionService.get("PL");
+            const response: RootObject = await CompetitionService.get("PD");
             console.log(response);
             setData(response.area);
           }}
