@@ -1,9 +1,9 @@
-import { Area } from "./Area";
 import { CurrentSeason } from "./CurrentSeason";
+import { CompetitionArea } from "./CompetitionArea";
 import { Season } from "./Season";
 
-export interface RootObject {
-  area: Area;
+export interface Competition {
+  area: CompetitionArea;
   id: number;
   name: string;
   code: string;
