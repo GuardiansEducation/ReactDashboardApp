@@ -1,5 +1,5 @@
 import { CompetitionArea } from "../CompetitionArea";
-import { CurrentSeason } from "../CurrentSeason";
+import { Season } from "../Season";
 
 export interface CompetitionListItem {
   id: number;
@@ -9,7 +9,7 @@ export interface CompetitionListItem {
   type: string;
   emblem: string;
   plan: string;
-  currentSeason: CurrentSeason;
+  currentSeason: Season;
   numberOfAvailableSeasons: number;
   lastUpdated: string;
 }

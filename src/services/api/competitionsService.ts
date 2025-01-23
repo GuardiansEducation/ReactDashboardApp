@@ -1,5 +1,5 @@
 import { AxiosInstance } from "axios";
-import { RootObject } from "@types";
+import { Competition, CompetitionList } from "@types";
 import api from "./footballApi";
 
 class CompetitionService {
@@ -9,9 +9,17 @@ class CompetitionService {
     this.instance = instance;
   }
 
-  async get(id: string = "PL"): Promise<RootObject> {
-    const response = await this.instance.get<RootObject>(
+  async get(id: number): Promise<Competition> {
+    const response = await this.instance.get<Competition>(
       `/football/competitions/${id}`
+    );
+
+    return response.data;
+  }
+
+  async list_area_competitions(areaId: number): Promise<CompetitionList> {
+    const response = await this.instance.get<CompetitionList>(
+      `/football/competitions?areaId=${areaId}`
     );
 
     return response.data;
