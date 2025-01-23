@@ -3,16 +3,16 @@ import { incremented } from "@store";
 import { Button, Grid, Image } from "@mantine/core";
 import { CompetitionService } from "@services";
 import { useAppDispatch, useAppSelector } from "@hooks";
-import { Area, RootObject } from "../../types/api";
+import { CompetitionArea } from "@types";
 
 const Countries: React.FC = () => {
   const number = useAppSelector((state) => state.value);
   const dispatch = useAppDispatch();
-  const [data, setData] = useState<Area>({
+  const [data, setData] = useState<CompetitionArea>({
     id: 0,
     name: "name",
-    code: "code",
     flag: "flag",
+    code: "code",
   });
 
   return (
@@ -28,7 +28,7 @@ const Countries: React.FC = () => {
       <div>
         <Button
           onClick={async () => {
-            const response: RootObject = await CompetitionService.get("PL");
+            const response = await CompetitionService.get(2021);//PL Id
             console.log(response);
             setData(response.area);
           }}

@@ -4,6 +4,6 @@ export interface Season {
   id: number;
   startDate: string;
   endDate: string;
-  currentMatchday: null | number;
+  currentMatchday: number | null;
   winner: Winner | null;
 }
