@@ -1,15 +1,21 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { ComboboxItem, Select } from "@mantine/core";
 
 export type AreaSelectorProps = {
   areas: ComboboxItem[];
-  onAreaChanged: (value: string | null) => void;
+  onAreaChanged: (id: number, name: string) => void;
 };
 
 const AreaSelector: React.FC<AreaSelectorProps> = ({ areas, onAreaChanged }) => {
-  const defaultValue = areas.length > 0 ? areas[0].label : null;
-  
-  return <Select data={areas} defaultValue={defaultValue} onChange={onAreaChanged} />;
+  const handleChange = useCallback((value: string | null, option: ComboboxItem) => {
+    if (value === null) {
+      return;
+    }
+
+    onAreaChanged(+option.value, option.label);
+  }, []);
+
+  return <Select data={areas} onChange={handleChange} />;
 };
 
 export default AreaSelector;
