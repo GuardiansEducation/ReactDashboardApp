@@ -24,9 +24,5 @@ export default tseslint.config(
         { allowConstantExport: true },
       ],
     },
-    globals: {
-      FOOTBALL_API_BASE_URL: "readonly",
-      FOOTBALL_API_TOKEN: "readonly",
-    },
   }
 );

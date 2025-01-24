@@ -3,5 +3,5 @@ export interface TeamSeason {
   startDate: string;
   endDate: string;
   currentMatchday: number;
-  winner: any;
+  winner: unknown;
 }
