@@ -1,4 +1,4 @@
-import { Stack, Table, Progress, Group } from "@mantine/core";
+import { Stack, Table } from "@mantine/core";
 
 const CompetitionTable: React.FC = () => {
   const elements = [
@@ -30,31 +30,6 @@ const CompetitionTable: React.FC = () => {
           </Table.Tr>
         </Table.Thead>
         <Table.Tbody>{rows}</Table.Tbody>
-        <Table.Caption>
-          <Group grow gap={5} mt="xs">
-            <Progress
-              radius="xs"
-              size="xs"
-              transitionDuration={0}
-              value={100}
-              color="orange"
-            ></Progress>
-            <Progress
-              radius="xs"
-              size="xs"
-              transitionDuration={0}
-              value={0}
-              color="orange"
-            ></Progress>
-            <Progress
-              radius="xs"
-              size="xs"
-              transitionDuration={0}
-              value={0}
-              color="orange"
-            ></Progress>
-          </Group>
-        </Table.Caption>
       </Table>
     </Stack>
   );

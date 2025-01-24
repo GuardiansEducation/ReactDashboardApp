@@ -1,35 +1,33 @@
-import { Grid, GridCol, Button, Text } from "@mantine/core";
-import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
-import CompetitionStats from "./CompetitionStats";
-import CompetitionTable from "./CompetitionTable";
-import CompetitionMatches from "./CompetitionMatches";
 import { useState } from "react";
+import { Grid, GridCol, Button, Text, Group, Progress } from "@mantine/core";
+import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
+import CompetitionStats from "./Stats/CompetitionStats";
+import CompetitionTable from "./Table/CompetitionTable";
+import CompetitionMatches from "./Matches/CompetitionMatches";
 
 export type OverviewLayoutProps = {
   content: string;
 };
 
-const pages = [
+const initialIndex = 0;
+const layoutContent = [
   <CompetitionTable />,
   <CompetitionStats />,
   <CompetitionMatches />,
 ];
 
 const OverviewLayout: React.FC<OverviewLayoutProps> = ({ content }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const nextComponent = () => {
-    setCurrentIndex((index) => (index + 1) % pages.length);
-  };
-
-  const previousComponent = () => {
-    setCurrentIndex((index) => (index - 1 + pages.length) % pages.length);
-  };
+  const [currentIndex, setCurrentIndex] = useState(initialIndex);
 
   return (
     <Grid align="center" grow>
       <GridCol span="auto">
-        <Button variant="transparent" fullWidth onClick={previousComponent}>
+        <Button
+          disabled={currentIndex === initialIndex}
+          variant="transparent"
+          fullWidth
+          onClick={() => setCurrentIndex((index) => index - 1)}
+        >
           <IconArrowLeft />
         </Button>
       </GridCol>
@@ -43,10 +41,27 @@ const OverviewLayout: React.FC<OverviewLayoutProps> = ({ content }) => {
         >
           {content}
         </Text>
-        {pages[currentIndex]}
+        {layoutContent[currentIndex]}
+        <Group grow gap={5} mt="xs">
+          {layoutContent.map((_, index) => (
+            <Progress
+              key={index}
+              radius="xs"
+              size="xs"
+              transitionDuration={0}
+              value={currentIndex == index ? 100 : 0}
+              color="orange"
+            />
+          ))}
+        </Group>
       </GridCol>
       <GridCol span="auto">
-        <Button variant="transparent" fullWidth onClick={nextComponent}>
+        <Button
+          disabled={currentIndex === layoutContent.length - 1}
+          variant="transparent"
+          fullWidth
+          onClick={() => setCurrentIndex((index) => index + 1)}
+        >
           <IconArrowRight />
         </Button>
       </GridCol>
