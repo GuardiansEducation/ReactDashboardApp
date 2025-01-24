@@ -6,26 +6,8 @@ import OverviewLayout from "./OverviewLayout";
 
 const Overview: React.FC = () => {
   const competitions: CompetitionState[] = useAppSelector(
-    (state) => state.competitions
+    (state) => state.counter.competitions
   );
-
-  const selectedCompetitions = [
-    {
-      competition: {
-        area: {
-          id: 2072,
-          name: "England",
-          code: "ENG",
-          flag: "https://crests.football-data.org/770.svg"
-        },
-        name: "Premier League",
-        code: "PL",
-      },
-      followedTeamIds: [],  // Maximum 3
-    },
-
-    // ... Maximum 4
-  ]
 
   return (
     <Container fluid>
