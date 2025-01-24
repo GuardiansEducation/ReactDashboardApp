@@ -1,41 +1,53 @@
 import React from "react";
-import { Container, Image, Tabs } from "@mantine/core";
+import { Container, Image, Stack, Tabs } from "@mantine/core";
 import { useAppSelector } from "@hooks";
-import { CompetitionState } from "../../store/CompetitionState";
 import OverviewLayout from "./OverviewLayout";
+import { Subscription } from "../../types/store";
+import { CommonAlert } from "@components";
 
 const Overview: React.FC = () => {
-  const competitions: CompetitionState[] = useAppSelector(
-    (state) => state.counter.competitions
+  const subscriptions: Subscription[] = useAppSelector(
+    (state) => state.subscription.subscriptions
   );
+
+  const hasItems = subscriptions.length > 0;
 
   return (
     <Container fluid>
-      <Tabs
-        variant="outline"
-        defaultValue={competitions[3].area.name}
-        color="orange"
-      >
-        <Tabs.List justify="space-between">
-          {competitions.map((competition) => (
-            <Tabs.Tab
-              key={competition.code}
-              value={competition.area.name}
-              leftSection={
-                <Image h={20} src={competition.area.flag} radius="md" />
-              }
-            >
-              {competition.name}
-            </Tabs.Tab>
-          ))}
-        </Tabs.List>
+      {hasItems ? (
+        <Tabs
+          variant="outline"
+          defaultValue={subscriptions[3].area.name}
+          color="orange"
+        >
+          <Tabs.List justify="space-between">
+            {subscriptions.map((subscription) => (
+              <Tabs.Tab
+                key={subscription.competition.area.code}
+                value={subscription.competition.area.name}
+                leftSection={
+                  <Image h={20} src={subscription.competition.area.flag} radius="md" />
+                }
+              >
+                {subscription.competition.area.name}
+              </Tabs.Tab>
+            ))}
+          </Tabs.List>
 
-        {competitions.map((competition) => (
-          <Tabs.Panel key={competition.code} value={competition.area.name}>
-            <OverviewLayout content={competition.area.name}></OverviewLayout>
-          </Tabs.Panel>
-        ))}
-      </Tabs>
+          {subscriptions.map((subscription) => (
+            <Tabs.Panel key={subscription.competition.code} value={subscription.competition.area.name}>
+              <OverviewLayout content={subscription.competition.name}></OverviewLayout>
+            </Tabs.Panel>
+          ))}
+        </Tabs>
+      ) : (
+        <Stack
+          align="center"
+          justify="center"
+        >
+          <CommonAlert title="No subscriptions made" message="Please choose your subscriptions" />
+        </Stack>
+      )}
     </Container>
   );
 };

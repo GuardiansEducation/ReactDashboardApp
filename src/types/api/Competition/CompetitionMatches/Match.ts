@@ -20,5 +20,5 @@ export interface Match {
   awayTeam: Team;
   score: Score;
   odds: Odds;
-  referees: any[];
+  referees: [];
 }
