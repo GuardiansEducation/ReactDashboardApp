@@ -1,2 +1,2 @@
-export { default as CompetitionsService } from "./competitionsService";
-export { default as AreasService } from "./areasService";
+export { default as CompetitionService } from "./competitionService";
+export { default as TeamSerice } from "./teamService";
