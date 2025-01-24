@@ -30,6 +30,7 @@ export default defineConfig(({ mode }) => {
         "@services": path.resolve(__dirname, "./src/services"),
         "@constants": path.resolve(__dirname, "./src/constants"),
         "@components": path.resolve(__dirname, "./src/components"),
+        "@tabler/icons-react": "@tabler/icons-react/dist/esm/icons/index.mjs",
       },
     },
     plugins: [react()],
