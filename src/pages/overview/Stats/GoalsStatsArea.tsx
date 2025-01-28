@@ -1,0 +1,63 @@
+import { Card, Stack, Text, Select } from "@mantine/core";
+import { useState } from "react";
+import { StatsAreaProps } from "./StatsAreaProps";
+import { Scorer } from "@types";
+import Player from "./Player";
+import StatisticsService from "../../../services/api/statisticsService";
+import StatsAreaHeader from "./StatsAreaHeader";
+import Goals from "/Goals.png";
+
+const GoalsStatsArea: React.FC<StatsAreaProps> = ({ competition, season, scorer }) => {
+  const [topScorers, updateTopScorers] = useState<Scorer[] | undefined>(scorer);
+  const [startDate, updateStartDate] = useState<string | undefined>(
+    season.startDate.substring(0, season.startDate.indexOf("-"))
+  );
+  const [endDate, updateEndDate] = useState<string | undefined>(
+    season.endDate.substring(0, season.endDate.indexOf("-"))
+  );
+
+  const updateScorers = async (season: string | undefined) => {
+    if (season === undefined) return;
+
+    const response = await StatisticsService.getBySeason(competition.code, season);
+
+    updateTopScorers(response.scorers);
+    updateStartDate(response.season.startDate.substring(0, response.season.startDate.indexOf("-")));
+    updateEndDate(response.season.endDate.substring(0, response.season.endDate.indexOf("-")));
+  };
+
+  return (
+    <Card shadow="sm" padding="lg" radius="md" withBorder>
+      <Card.Section>
+        <StatsAreaHeader title="Goals" emblem={competition.emblem} backgroundImage={Goals} />
+      </Card.Section>
+      <Stack justify="space-between" mt="md" mb="xs">
+        <Stack>
+          <Text
+            size="xl"
+            fw={600}
+            variant="gradient"
+            gradient={{ from: "orange", to: "orange", deg: 360 }}
+          >
+            {startDate}-{endDate} Player Stats
+          </Text>
+          <Select
+            onChange={(value) => {
+              const season = value?.substring(0, value.indexOf("/"));
+
+              updateScorers(season);
+            }}
+            label="Filter by Season"
+            data={["2024/25", "2023/24", "2022/23"]}
+            defaultValue="2024/25"
+          />
+        </Stack>
+        {topScorers?.slice(0, 10).map((player, index) => (
+          <Player key={index} scorer={player} position={++index} value={player.goals} />
+        ))}
+      </Stack>
+    </Card>
+  );
+};
+
+export default GoalsStatsArea;

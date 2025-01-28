@@ -24,7 +24,7 @@ const initialState: SubscriptionStore = {
           flag: "https://crests.football-data.org/770.svg",
         },
         teams: [{ id: 1 }, { id: 2 }, { id: 3 }],
-      }
+      },
     },
     {
       id: 2,
@@ -45,7 +45,7 @@ const initialState: SubscriptionStore = {
           flag: "https://crests.football-data.org/784.svg",
         },
         teams: [{ id: 1 }, { id: 2 }, { id: 3 }],
-      }
+      },
     },
     {
       id: 3,
@@ -66,7 +66,7 @@ const initialState: SubscriptionStore = {
           flag: "https://crests.football-data.org/759.svg",
         },
         teams: [{ id: 1 }, { id: 2 }, { id: 3 }],
-      }
+      },
     },
     {
       id: 4,
@@ -87,9 +87,21 @@ const initialState: SubscriptionStore = {
           flag: "https://crests.football-data.org/760.svg",
         },
         teams: [{ id: 1 }, { id: 2 }, { id: 3 }],
-      }
-    }
+      },
+    },
   ],
+  selectedOverviewCompetition: {
+    id: 2021,
+    name: "Premier League",
+    code: "PL",
+    area: {
+      id: 2072,
+      name: "England",
+      code: "ENG",
+      flag: "https://crests.football-data.org/770.svg",
+    },
+    teams: [{ id: 1 }, { id: 2 }, { id: 3 }],
+  },
 };
 
 //#endregion
@@ -111,10 +123,15 @@ const subscriptionSlice = createSlice({
         ...state.subscriptions.filter((x) => x.id !== id),
         { id, area, competition },
       ];
+
+      if (state.selectedOverviewCompetition === undefined)
+        state.selectedOverviewCompetition = competition;
     },
     unsubscrubeCompetition: (state, action: PayloadAction<{ id: number }>) => {
       const { id } = action.payload;
       state.subscriptions = state.subscriptions.filter((x) => x.id !== id);
+
+      if (state.subscriptions.length === 0) state.selectedOverviewCompetition = undefined;
     },
     subscribeCompetitionTeam: (
       state,
@@ -139,6 +156,16 @@ const subscriptionSlice = createSlice({
       const { competition } = state.subscriptions[index];
       competition.teams = competition.teams.filter((x) => x.id !== teamId);
     },
+    selectOverviewCompetition: (state, action: PayloadAction<{ code: string | null }>) => {
+      const { code } = action.payload;
+      const index = state.subscriptions.findIndex((x) => x.competition.code === code);
+
+      if (index < 0) {
+        return;
+      }
+
+      state.selectedOverviewCompetition = state.subscriptions[index].competition;
+    },
   },
 });
 
@@ -147,5 +174,6 @@ export const {
   unsubscrubeCompetition,
   subscribeCompetitionTeam,
   unsubscrubeCompetitionTeam,
+  selectOverviewCompetition,
 } = subscriptionSlice.actions;
 export const subscriptionSliceReducer = subscriptionSlice.reducer;
