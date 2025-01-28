@@ -17,6 +17,8 @@
     "@tabler/icons-react": "^3.29.0",
     "axios": "^1.7.9",
     "dayjs": "^1.11.13",
+    "flag-icons": "^7.3.2",
+    "iso-3166-1": "^2.1.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-redux": "^9.2.0",
