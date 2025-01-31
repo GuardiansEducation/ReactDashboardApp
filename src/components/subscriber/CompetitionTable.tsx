@@ -3,9 +3,9 @@ import { Table, Image, Button, MantineTheme } from "@mantine/core";
 import { CompetitionListItem, SubscribedCompetition } from "@types";
 
 export interface CompetitionTableProps {
-  competitions: CompetitionListItem[];
+  competitions: SubscribedCompetition[];
   subscribedCompetition?: SubscribedCompetition;
-  onSubscribe: (item: CompetitionListItem) => void;
+  onSubscribe: (item: SubscribedCompetition) => void;
 }
 
 const defaultTheme = (theme: MantineTheme) => ({});
@@ -23,7 +23,7 @@ const CompetitionTable: React.FC<CompetitionTableProps> = ({
   subscribedCompetition,
   onSubscribe,
 }) => {
-  const getTheme = (x: CompetitionListItem) => {
+  const getTheme = (x: SubscribedCompetition) => {
     if (subscribedCompetition === undefined) {
       return defaultTheme;
     }
@@ -35,7 +35,6 @@ const CompetitionTable: React.FC<CompetitionTableProps> = ({
     <Table.Tr key={x.id} style={getTheme(x)}>
       <Table.Td>{x.name}</Table.Td>
       <Table.Td>{x.code}</Table.Td>
-      <Table.Td>{x.type}</Table.Td>
       <Table.Td>
         <Image h={50} w="auto" fit="contain" src={x.emblem} />
       </Table.Td>
@@ -58,7 +57,6 @@ const CompetitionTable: React.FC<CompetitionTableProps> = ({
           <Table.Tr>
             <Table.Th>Name</Table.Th>
             <Table.Th>Code</Table.Th>
-            <Table.Th>Type</Table.Th>
             <Table.Th>Emblem</Table.Th>
             <Table.Th>Options</Table.Th>
           </Table.Tr>
