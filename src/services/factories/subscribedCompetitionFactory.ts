@@ -8,6 +8,7 @@ class SubscribedCompetitionFactory {
       id: competition.id,
       code: competition.code,
       name: competition.name,
+      emblem: competition.emblem,
       area: area,
       teams: [],
     };
