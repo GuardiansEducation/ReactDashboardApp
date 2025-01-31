@@ -16,19 +16,17 @@ export const useSubscribedArea = (subscriberId: number): AreaActions => {
   const [area, setArea] = useState<SubscribedArea>();
 
   const setSubscribedArea = useCallback((id: number, name: string) => {
-    const subscribedArea: SubscribedArea = SubscribedAreaFactory.createFromName(id, name);
-    setArea(subscribedArea);
-  }, []);
-
-
-  useEffect(() => {
-    if (subscription == null) {
+    if (area?.id == id) {
       return
     }
-  
-    setArea(subscription.area)
-  }, [subscription]);
 
+    const subscribedArea: SubscribedArea = SubscribedAreaFactory.createFromName(id, name);
+    setArea(subscribedArea);
+  }, [area]);
+
+  useEffect(() => {
+    setArea(subscription?.area);
+  }, []);
 
   return {
     subscribedArea: area,

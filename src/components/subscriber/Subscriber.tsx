@@ -12,14 +12,17 @@ export interface SubscriberProps {
 
 const Subscriber: React.FC<SubscriberProps> = ({ id, areas }) => {
   const { subscribedArea, setSubscribedArea } = useSubscribedArea(id);
-  const { competitions, subscribedCompetition, subscribe } = useSubscribedCompetition(id, subscribedArea);
+  const { competitions, subscribedCompetition, subscribe } = useSubscribedCompetition(
+    id,
+    subscribedArea
+  );
 
   return (
     <>
       <div>
         <AreaSelector
           areas={areas}
-          defaultValue={subscribedArea?.id.toString()}
+          defaultValue={subscribedArea?.id}
           onAreaChanged={setSubscribedArea}
         ></AreaSelector>
       </div>

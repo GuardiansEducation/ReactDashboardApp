@@ -3,7 +3,7 @@ import { ComboboxItem, Select } from "@mantine/core";
 
 export type AreaSelectorProps = {
   areas: ComboboxItem[];
-  defaultValue?: string;
+  defaultValue?: number;
   onAreaChanged: (id: number, name: string) => void;
 };
 
@@ -14,14 +14,14 @@ const AreaSelector: React.FC<AreaSelectorProps> = ({ areas, defaultValue, onArea
     }
 
     onAreaChanged(+option.value, option.label);
-  }, []);
+  }, [onAreaChanged]);
 
   return (
     <Select
       maw={150}
-      defaultValue={defaultValue}
-      placeholder="Select area..."
       data={areas}
+      placeholder="Select area..."
+      defaultValue={defaultValue?.toString()}
       onChange={handleChange}
     />
   );

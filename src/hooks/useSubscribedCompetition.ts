@@ -44,6 +44,10 @@ export const useSubscribedCompetition = (
       return;
     }
 
+    if (subscribedArea.id !== subscription?.area.id) {
+      dispatch(unsubscribeCompetition({ id: subscriberId }));
+    }
+
     const fetchData = async () => {
       const list: CompetitionList = await CompetitionService.listAreaCompetitions(
         subscribedArea.id
@@ -55,7 +59,6 @@ export const useSubscribedCompetition = (
     };
 
     fetchData();
-    dispatch(unsubscribeCompetition({ id: subscriberId }));
   }, [subscribedArea]);
 
   return {
