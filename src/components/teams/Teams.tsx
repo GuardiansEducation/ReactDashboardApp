@@ -1,40 +1,37 @@
-import { Checkbox, Table, Image } from "@mantine/core";
-/* import { TeamsOperation } from "@operations"; */
-import TeamsOperation from "../../operations/teamsOperation";
+import { Checkbox, Table, Image, ScrollArea, Loader, Center } from "@mantine/core";
 import { Team } from "@types";
-import { useEffect, useState } from "react";
+import { useFollowedTeams, useTeams } from "@hooks";
 
 export interface TeamsProps {
-  competitionId: number;
+  subscriptionId: number;
 }
 
-export const Teams: React.FC<TeamsProps> = ({ competitionId }) => {
-  const [selectedRows, setSelectedRows] = useState<number[]>([]);
-  const [teams, setTeams] = useState<Team[]>([]);
+export const Teams: React.FC<TeamsProps> = ({ subscriptionId }) => {
+  const { teams, isLoading } = useTeams(subscriptionId);
+  const { subscribeCompetitionTeam, unsubscribeCompetitionTeam, followedTeams } =
+    useFollowedTeams(subscriptionId);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setTeams(await TeamsOperation.execute(competitionId));
-    };
-    fetchData();
-  }, []);
+  if (isLoading) {
+    return (
+      <Center>
+        <Loader />
+      </Center>
+    );
+  }
 
   const rows = teams.map((team) => (
     <Table.Tr
       key={team.id}
-      bg={selectedRows.includes(team.id) ? "var(--mantine-color-blue-light)" : undefined}
+      bg={followedTeams.includes(team.id) ? "var(--mantine-color-blue-light)" : undefined}
     >
       <Table.Td>
         <Checkbox
-          aria-label="Select row"
-          checked={selectedRows.includes(team.id)}
-          onChange={(event) =>
-            setSelectedRows(
-              event.currentTarget.checked
-                ? [...selectedRows, team.id]
-                : selectedRows.filter((position) => position !== team.id)
-            )
-          }
+          aria-label="Select team"
+          checked={followedTeams.includes(team.id)}
+          onChange={(event) => {
+            if (event.currentTarget.checked) subscribeCompetitionTeam(team.id);
+            else unsubscribeCompetitionTeam(team.id);
+          }}
         />
       </Table.Td>
       <Table.Td>
@@ -45,14 +42,16 @@ export const Teams: React.FC<TeamsProps> = ({ competitionId }) => {
   ));
 
   return (
-    <Table>
-      <Table.Thead>
-        <Table.Tr>
-          <Table.Th />
-          <Table.Th>Club</Table.Th>
-        </Table.Tr>
-      </Table.Thead>
-      <Table.Tbody>{rows}</Table.Tbody>
-    </Table>
+    <ScrollArea h={400}>
+      <Table>
+        <Table.Thead>
+          <Table.Tr>
+            <Table.Th>Follow</Table.Th>
+            <Table.Th>Club</Table.Th>
+          </Table.Tr>
+        </Table.Thead>
+        <Table.Tbody>{rows}</Table.Tbody>
+      </Table>
+    </ScrollArea>
   );
 };
