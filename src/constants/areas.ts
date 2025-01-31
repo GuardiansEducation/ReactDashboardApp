@@ -2,11 +2,6 @@ import { Area } from "@types";
 
 export const areas: Area[] = [
   {
-    id: "2077",
-    code: "EUR",
-    name: "Europe",
-  },
-  {
     id: "2224",
     code: "ESP",
     name: "Spain",
@@ -25,6 +20,11 @@ export const areas: Area[] = [
     id: "2072",
     code: "ENG",
     name: "England",
+  },
+  {
+    id: "2077",
+    code: "EUR",
+    name: "Europe",
   },
   {
     id: "2088",

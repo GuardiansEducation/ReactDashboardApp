@@ -29,10 +29,10 @@ const subscriptionSlice = createSlice({
     },
     subscribeCompetitionTeam: (
       state,
-      action: PayloadAction<{ id: number; team: SubscribedTeam }>
+      action: PayloadAction<{ subscriptionId: number; team: SubscribedTeam }>
     ) => {
-      const { id, team } = action.payload;
-      const index = state.subscriptions.findIndex((x) => x.id === id);
+      const { subscriptionId, team } = action.payload;
+      const index = state.subscriptions.findIndex((x) => x.id === subscriptionId);
       if (index < 0) {
         return;
       }
@@ -40,9 +40,12 @@ const subscriptionSlice = createSlice({
       const { competition } = state.subscriptions[index];
       competition.teams = [...competition.teams.filter((x) => x.id !== team.id), team];
     },
-    unsubscribeCompetitionTeam: (state, action: PayloadAction<{ id: number; teamId: number }>) => {
-      const { id, teamId } = action.payload;
-      const index = state.subscriptions.findIndex((x) => x.id === id);
+    unsubscribeCompetitionTeam: (
+      state,
+      action: PayloadAction<{ subscriptionId: number; teamId: number }>
+    ) => {
+      const { subscriptionId, teamId } = action.payload;
+      const index = state.subscriptions.findIndex((x) => x.id === subscriptionId);
       if (index < 0) {
         return;
       }
@@ -60,3 +63,5 @@ export const {
   unsubscribeCompetitionTeam,
 } = subscriptionSlice.actions;
 export const subscriptionSliceReducer = subscriptionSlice.reducer;
+export const selectSubscription = (state: { subscription: SubscriptionStore }) =>
+  state.subscription.subscriptions;

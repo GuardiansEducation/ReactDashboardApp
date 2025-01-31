@@ -9,6 +9,7 @@ export interface CompetitionActions {
   competitions: SubscribedCompetition[];
   subscribedCompetition?: SubscribedCompetition;
   subscribe: (subscribedCompetition: SubscribedCompetition) => void;
+  unsubscribe: (subscribedCompetition: SubscribedCompetition) => void;
 }
 
 export const useSubscribedCompetition = (
@@ -39,6 +40,17 @@ export const useSubscribedCompetition = (
     [subscriberId, subscribedArea]
   );
 
+  const unsubscribe = useCallback(
+    (subscribedCompetition: SubscribedCompetition) => {
+      if (subscription?.competition.id != subscribedCompetition.id) {
+        return;
+      }
+
+      dispatch(unsubscribeCompetition({ id: subscriberId }));
+    },
+    [subscriberId, subscription]
+  );
+
   useEffect(() => {
     if (subscribedArea == null) {
       return;
@@ -65,5 +77,6 @@ export const useSubscribedCompetition = (
     competitions: competitions,
     subscribedCompetition: subscription?.competition,
     subscribe: subscribe,
+    unsubscribe: unsubscribe,
   };
 };

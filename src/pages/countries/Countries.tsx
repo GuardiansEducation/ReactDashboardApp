@@ -6,29 +6,34 @@ import { areas } from "@constants";
 
 const Countries: React.FC = () => {
   const data = useMemo(() => ComboboxItemFactory.create(areas), [areas]);
+  const items = [
+    {
+      id: 1,
+      area: areas[0],
+    },
+    {
+      id: 2,
+      area: areas[1],
+    },
+    {
+      id: 3,
+      area: areas[2],
+    },
+    {
+      id: 4,
+      area: areas[3],
+    },
+  ];
 
   return (
     <Grid grow gutter="xs">
-      <Grid.Col span={6}>
-        <Paper shadow="xl" radius="xl" p="xl">
-          <Subscriber id={1} areas={data} />
-        </Paper>
-      </Grid.Col>
-      <Grid.Col span={6}>
-        <Paper shadow="xl" radius="xl" p="xl">
-          <Subscriber id={2} areas={data} />
-        </Paper>
-      </Grid.Col>
-      <Grid.Col span={6}>
-        <Paper shadow="xl" radius="xl" p="xl">
-          <Subscriber id={3} areas={data} />
-        </Paper>
-      </Grid.Col>
-      <Grid.Col span={6}>
-        <Paper shadow="xl" radius="xl" p="xl">
-          <Subscriber id={4} areas={data} />
-        </Paper>
-      </Grid.Col>
+      {items.map((x) => (
+        <Grid.Col key={x.id} span={6}>
+          <Paper p="xl" shadow="sm" mih={370} withBorder>
+            <Subscriber id={x.id} defaultArea={x.area} areas={data} />
+          </Paper>
+        </Grid.Col>
+      ))}
     </Grid>
   );
 };
