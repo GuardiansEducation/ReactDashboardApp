@@ -1,16 +1,11 @@
 import { Stack, Text, Select } from "@mantine/core";
 
 export type SeasonStatisticPickerProps = {
-  startDate: string | undefined;
-  endDate: string | undefined;
+  title: React.JSX.Element;
   updateSeason: (season: string | undefined) => void;
 };
 
-const SeasonStatisticPicker: React.FC<SeasonStatisticPickerProps> = ({
-  startDate,
-  endDate,
-  updateSeason,
-}) => {
+const SeasonStatisticPicker: React.FC<SeasonStatisticPickerProps> = ({ title, updateSeason }) => {
   return (
     <Stack>
       <Text
@@ -19,7 +14,7 @@ const SeasonStatisticPicker: React.FC<SeasonStatisticPickerProps> = ({
         variant="gradient"
         gradient={{ from: "orange", to: "orange", deg: 360 }}
       >
-        {startDate}-{endDate} Player Stats
+        {title}
       </Text>
       <Select
         onChange={(value) => {

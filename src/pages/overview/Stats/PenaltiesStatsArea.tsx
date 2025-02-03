@@ -1,4 +1,4 @@
-import { Card, Stack } from "@mantine/core";
+import { Card, Group, Stack } from "@mantine/core";
 import { useState } from "react";
 import { StatsAreaProps } from "./StatsAreaProps";
 import { Scorer } from "@types";
@@ -55,6 +55,12 @@ const PenaltiesStatsArea: React.FC<StatsAreaProps> = ({ competition, season, sco
       <Player key={index} scorer={player} position={++index} value={player.penalties} />
     ));
 
+  const selectorTitle = (
+    <Group h={50}>
+      {startDate} - {endDate} Penalties Statistics {loading && <OverviewLoader />}
+    </Group>
+  );
+
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder>
       <Card.Section>
@@ -65,11 +71,7 @@ const PenaltiesStatsArea: React.FC<StatsAreaProps> = ({ competition, season, sco
         />
       </Card.Section>
       <Stack justify="space-between" mt="md" mb="xs">
-        <SeasonStatisticPicker
-          startDate={startDate}
-          endDate={endDate}
-          updateSeason={updateScorers}
-        />
+        <SeasonStatisticPicker title={selectorTitle} updateSeason={updateScorers} />
         {playerList}
       </Stack>
     </Card>
