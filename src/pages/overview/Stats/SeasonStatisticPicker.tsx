@@ -1,4 +1,4 @@
-import { Stack, Text, Select } from "@mantine/core";
+import { Stack, Select } from "@mantine/core";
 
 export type SeasonStatisticPickerProps = {
   title: React.JSX.Element;
@@ -8,14 +8,7 @@ export type SeasonStatisticPickerProps = {
 const SeasonStatisticPicker: React.FC<SeasonStatisticPickerProps> = ({ title, updateSeason }) => {
   return (
     <Stack>
-      <Text
-        size="xl"
-        fw={600}
-        variant="gradient"
-        gradient={{ from: "orange", to: "orange", deg: 360 }}
-      >
-        {title}
-      </Text>
+      {title}
       <Select
         onChange={(value) => {
           const season = value?.substring(0, value.indexOf("/"));
