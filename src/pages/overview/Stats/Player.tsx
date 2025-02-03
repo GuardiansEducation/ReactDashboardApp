@@ -27,7 +27,7 @@ const Player: React.FC<PlayerProps> = ({ scorer, position, value }) => {
             <Title size="h5">{scorer.player.name}</Title>
             <CountryFlag countryFullName={scorer.player.nationality} />
           </Group>
-          <Text>{scorer.team.name}</Text>
+          <Text>{scorer.team.shortName}</Text>
         </Stack>
       </Grid.Col>
       <Grid.Col span={2}>

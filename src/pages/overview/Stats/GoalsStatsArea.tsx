@@ -1,4 +1,4 @@
-import { Card, Group, Stack } from "@mantine/core";
+import { Card, Stack } from "@mantine/core";
 import { useState } from "react";
 import { StatsAreaProps } from "./StatsAreaProps";
 import { Scorer } from "@types";
@@ -8,6 +8,7 @@ import StatsAreaHeader from "./StatsAreaHeader";
 import Goals from "/Goals.png";
 import SeasonStatisticPicker from "./SeasonStatisticPicker";
 import OverviewLoader from "../../../components/shared/OverviewLoader";
+import SeasonStatisticPickerTitle from "./SeasonStatisticPickerTitle";
 
 const GoalsStatsArea: React.FC<StatsAreaProps> = ({ competition, season, scorer }) => {
   const [topScorers, updateTopScorers] = useState<Scorer[] | undefined>(scorer);
@@ -39,11 +40,9 @@ const GoalsStatsArea: React.FC<StatsAreaProps> = ({ competition, season, scorer 
       <Player key={index} scorer={player} position={++index} value={player.goals} />
     ));
 
-  const selectorTitle = (
-    <Group h={50}>
-      {startDate} - {endDate} Goals Statistics {loading && <OverviewLoader />}
-    </Group>
-  );
+  const selectorTitle = <SeasonStatisticPickerTitle title={`${startDate} - ${endDate} Goals Statistics`}>
+    {loading && <OverviewLoader />}
+  </SeasonStatisticPickerTitle>;
 
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder>
