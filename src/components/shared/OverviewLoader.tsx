@@ -1,9 +1,13 @@
 import { Center, Loader } from "@mantine/core";
 
-const OverviewLoader: React.FC = () => {
+export type OverviewLoaderProps = {
+  size?: number;
+};
+
+const OverviewLoader: React.FC<OverviewLoaderProps> = ({ size = 20 }) => {
   return (
     <Center>
-      <Loader height={200} size={50} />
+      <Loader size={size} />
     </Center>
   );
 };

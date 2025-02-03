@@ -28,7 +28,7 @@ const CompetitionStatistics: React.FC = () => {
   return (
     <Container fluid>
       {scorers === undefined || !selectedOverview ? (
-        <OverviewLoader />
+        <OverviewLoader size={50} />
       ) : (
         <Stack>
           <Group justify="center" grow>
