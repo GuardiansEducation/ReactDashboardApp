@@ -23,7 +23,7 @@ const initialState: SubscriptionStore = {
           code: "ENG",
           flag: "https://crests.football-data.org/770.svg",
         },
-        teams: [{ id: 1 }, { id: 2 }, { id: 3 }],
+        teams: [{ id: 57 }],
       },
     },
     {
@@ -100,7 +100,7 @@ const initialState: SubscriptionStore = {
       code: "ENG",
       flag: "https://crests.football-data.org/770.svg",
     },
-    teams: [{ id: 1 }, { id: 2 }, { id: 3 }],
+    teams: [{ id: 57 }, { id: 57 }, { id: 57 }, { id: 57 }],
   },
 };
 

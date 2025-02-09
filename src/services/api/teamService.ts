@@ -1,11 +1,11 @@
-import { AxiosInstance } from "axios";
-import { TeamList } from "@types";
-import api from "./footballApi";
+import { TeamList, TeamListItem } from "@types";
+import { cachedApi } from "./footballApi";
+import { AxiosCacheInstance } from "axios-cache-interceptor";
 
 class TeamService {
-  private instance: AxiosInstance;
+  private instance: AxiosCacheInstance;
 
-  constructor(instance: AxiosInstance) {
+  constructor(instance: AxiosCacheInstance) {
     this.instance = instance;
   }
 
@@ -16,6 +16,14 @@ class TeamService {
 
     return response.data;
   }
+
+  async getTeamInfo(teamId: number): Promise<TeamListItem> {
+    const response = await this.instance.get<TeamListItem>(
+      `/football/teams/${teamId}`
+    );
+
+    return response.data;
+  }
 }
 
-export default new TeamService(api);
+export default new TeamService(cachedApi);
