@@ -1,12 +1,12 @@
-import { Title, Text, Stack, Group, SimpleGrid, Center, Tooltip } from "@mantine/core";
+import { Text, Group, Tooltip, Grid } from "@mantine/core";
 import { TeamCoach } from "@types";
 import { CountryFlag } from "@components";
 
-export type TeamCardCoachingSectionProps = {
+export type CoachingSectionProps = {
   coach: TeamCoach;
 };
 
-const TeamCardCoachingSection: React.FC<TeamCardCoachingSectionProps> = ({ coach }) => {
+const CoachingSection: React.FC<CoachingSectionProps> = ({ coach }) => {
   const getCoachContractDates = (coach: TeamCoach) => {
     const startYear = coach.contract.start.split("-")[0];
     const endYear = coach.contract.until.split("-")[0];
@@ -17,25 +17,24 @@ const TeamCardCoachingSection: React.FC<TeamCardCoachingSectionProps> = ({ coach
   }
 
   return (
-    <Stack m="sm">
-      <Center>
-        <Title size="h5">Coaching</Title>
-      </Center>
-      <SimpleGrid cols={2} spacing="xs">
-        <Text ta="right" fw={700}>Team coach:</Text>
+    <Grid>
+      <Grid.Col span="content">
+        <Text fw={700}>Team coach:</Text>
+        <Text fw={700}>Date of birth:</Text>
+        <Text fw={700}>Coach contract:</Text>
+      </Grid.Col>
+      <Grid.Col span="content">
         <Group align="baseline" wrap="nowrap">
           <Text>{coach.name}</Text>
           <Tooltip label={coach.nationality}>
             <CountryFlag countryFullName={coach.nationality} />
           </Tooltip>
         </Group>
-        <Text ta="right" fw={700}>Date of birth:</Text>
         <Text>{coach.dateOfBirth}</Text>
-        <Text ta="right" fw={700}>Coach contract:</Text>
         <Text>{getCoachContractDates(coach)}</Text>
-      </SimpleGrid>
-    </Stack>
+      </Grid.Col>
+    </Grid>
   );
 };
 
-export default TeamCardCoachingSection;
+export default CoachingSection;
