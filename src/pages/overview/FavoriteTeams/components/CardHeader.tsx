@@ -13,9 +13,8 @@ const CardHeader: React.FC<CardHeaderProps> = ({ team }) => {
         <Image src={team.crest} alt="Team logo" h={120} radius="md" />
         <Stack gap="xs" align="center" justify="center">
           <Title size="h1">
-            {team.shortName}
+            {team.name} ({team.tla})
           </Title>
-          <Text>Founded in {team.founded}</Text>
           <Anchor href={team.website} target="_blank">
             Official site&nbsp;<IconExternalLink size={15} />
           </Anchor>

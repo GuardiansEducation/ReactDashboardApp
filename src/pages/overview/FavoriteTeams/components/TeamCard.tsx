@@ -1,18 +1,18 @@
-import { Card, Divider, Flex } from "@mantine/core";
-import { TeamListItem } from "@types";
+import { Card } from "@mantine/core";
+import { TeamListItem, TeamMatches } from "@types";
 import CardHeader from "./CardHeader";
 import CardAccordion from "./CardAccordion";
 
 export type TeamCardProps = {
   team: TeamListItem;
+  matches: TeamMatches;
 };
 
-const TeamCard: React.FC<TeamCardProps> = ({ team }) => {
+const TeamCard: React.FC<TeamCardProps> = ({ team, matches }) => {
   return (
     <Card shadow="sm" radius="md" mt="md" withBorder>
       <CardHeader team={team} />
-      <Divider my="sm" />
-      <CardAccordion team={team} />
+      <CardAccordion team={team} matches={matches} />
     </Card>
   );
 };

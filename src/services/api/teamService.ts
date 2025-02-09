@@ -1,4 +1,4 @@
-import { TeamList, TeamListItem } from "@types";
+import { TeamList, TeamListItem, TeamMatches } from "@types";
 import { cachedApi } from "./footballApi";
 import { AxiosCacheInstance } from "axios-cache-interceptor";
 
@@ -20,6 +20,14 @@ class TeamService {
   async getTeamInfo(teamId: number): Promise<TeamListItem> {
     const response = await this.instance.get<TeamListItem>(
       `/football/teams/${teamId}`
+    );
+
+    return response.data;
+  }
+
+  async getTeamMatches(teamId: number): Promise<TeamMatches> {
+    const response = await this.instance.get<TeamMatches>(
+      `/football/teams/${teamId}/matches`
     );
 
     return response.data;

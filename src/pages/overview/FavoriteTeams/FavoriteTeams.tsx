@@ -1,25 +1,43 @@
 import { useAppSelector } from "@hooks";
 import { Center, Container } from "@mantine/core";
 import { useEffect, useState } from "react";
-import { SubscribedTeam, TeamListItem } from "@types";
+import { SubscribedTeam, TeamListItem, TeamMatches } from "@types";
 import { TeamService } from "@services";
 import TeamCard from "./components/TeamCard";
 import { CommonAlert } from "@components";
 
+interface TeamData {
+  team: TeamListItem;
+  matches: TeamMatches;
+}
+
 const FavoriteTeams: React.FC = () => {
-  const [teams, updateTeams] = useState<TeamListItem[]>([]);
+  const [teamsData, updateTeamsData] = useState<TeamData[]>([]);
   const favoriteTeams = useAppSelector((state) => state.subscription.selectedOverviewCompetition?.teams || []);
   const hasFavoriteTeams = favoriteTeams.length > 0;
 
-  const getTeams = async (subscribedTeams: SubscribedTeam[]) => {
-    const teamRequests = subscribedTeams.map(subscribedTeam => TeamService.getTeamInfo(subscribedTeam.id));
+  const loadTeamsData = async (subscribedTeams: SubscribedTeam[]) => {
+    const dataRequests = subscribedTeams.map(async subscribedTeam => {
+      const teamInfo = await TeamService.getTeamInfo(subscribedTeam.id);
+      const teamMatches = await TeamService.getTeamMatches(subscribedTeam.id);
 
-    Promise.all(teamRequests).then(teamsData => updateTeams(teamsData));
+      const teamData: TeamData = {
+        team: teamInfo,
+        matches: teamMatches
+      };
+
+      return teamData;
+    });
+
+    const teamsData = await Promise.all(dataRequests);
+
+    updateTeamsData(teamsData);
   };
 
   useEffect(() => {
     if (favoriteTeams.length > 0) {
-      getTeams(favoriteTeams);
+      console.log("Executed");
+      loadTeamsData(favoriteTeams);
     }
   }, [favoriteTeams]);
 
@@ -27,8 +45,8 @@ const FavoriteTeams: React.FC = () => {
     <Container fluid>
       {
         hasFavoriteTeams ?
-          teams.map((team, index) => (
-            <TeamCard key={index} team={team} />
+          teamsData.map(({ team, matches }, index) => (
+            <TeamCard key={index} team={team} matches={matches} />
           ))
           :
           <Center mih="50vh">
