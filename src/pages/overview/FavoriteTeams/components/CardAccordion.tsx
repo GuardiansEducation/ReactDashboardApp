@@ -1,18 +1,25 @@
 import { Text, Group, Accordion } from "@mantine/core";
-import { TeamListItem } from "@types";
-import { IconBrain, IconUsersGroup, IconTournament } from "@tabler/icons-react";
+import { TeamListItem, TeamMatches } from "@types";
+import { IconBrain, IconUsersGroup, IconTournament, IconCalendarWeek, IconProgressCheck, IconCalendarCheck } from "@tabler/icons-react";
 import CoachingSection from "./sections/CoachingSection";
 import SquadSection from "./sections/SquadSection";
 import CompetitionsSection from "./sections/CompetitionsSection";
+import UpcomingMatchesSection from "./sections/UpcomingMatchesSection";
+import StatisticSection from "./sections/StatisticSection";
+import PlayedMatchesSection from "./sections/PlayedMatchesSection";
 
 export type CardAccordionProps = {
   team: TeamListItem;
+  matches: TeamMatches
 };
 
-const CardAccordion: React.FC<CardAccordionProps> = ({ team }) => {
-  const squadContent = <SquadSection squad={team.squad} />
-  const coachingContent = <CoachingSection coach={team.coach} />
+const CardAccordion: React.FC<CardAccordionProps> = ({ team, matches }) => {
   const competitionsContent = <CompetitionsSection competitions={team.runningCompetitions} />
+  const statisticContent = <StatisticSection results={matches.resultSet} />
+  const upcomingMatchesContent = <UpcomingMatchesSection matches={matches} />
+  const playedMatchesContent = <PlayedMatchesSection matches={matches} />
+  const coachingContent = <CoachingSection coach={team.coach} />
+  const squadContent = <SquadSection squad={team.squad} />
 
   const accordionItems = [
     {
@@ -20,6 +27,24 @@ const CardAccordion: React.FC<CardAccordionProps> = ({ team }) => {
       icon: <IconTournament />,
       label: 'Running competitions',
       content: competitionsContent,
+    },
+    {
+      id: 'statistic',
+      icon: <IconProgressCheck />,
+      label: 'Competitions statistic',
+      content: statisticContent,
+    },
+    {
+      id: 'upcoming_matches',
+      icon: <IconCalendarWeek />,
+      label: 'Upcoming matches',
+      content: upcomingMatchesContent,
+    },
+    {
+      id: 'played_matches',
+      icon: <IconCalendarCheck />,
+      label: 'Played matches',
+      content: playedMatchesContent,
     },
     {
       id: 'coaching',
