@@ -5,14 +5,14 @@ import CardAccordion from "./CardAccordion";
 
 export type TeamCardProps = {
   team: TeamListItem;
-  matches: TeamMatches;
+  teamMatches: TeamMatches;
 };
 
-const TeamCard: React.FC<TeamCardProps> = ({ team, matches }) => {
+const TeamCard: React.FC<TeamCardProps> = ({ team, teamMatches }) => {
   return (
-    <Card shadow="sm" radius="md" mt="md" withBorder>
+    <Card shadow="sm" radius="md" withBorder p="sm">
       <CardHeader team={team} />
-      <CardAccordion team={team} matches={matches} />
+      <CardAccordion team={team} teamMatches={teamMatches} />
     </Card>
   );
 };

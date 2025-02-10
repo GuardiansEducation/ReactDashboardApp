@@ -1,67 +1,58 @@
 import { Text, Group, Accordion } from "@mantine/core";
 import { TeamListItem, TeamMatches } from "@types";
-import { IconBrain, IconUsersGroup, IconTournament, IconCalendarWeek, IconProgressCheck, IconCalendarCheck } from "@tabler/icons-react";
+import { IconUsersGroup, IconTournament, IconCalendarWeek, IconCalendarCheck } from "@tabler/icons-react";
+
+import CompetitionsSection from "./sections/CompetitionsSection";
+import StatisticSection from "./sections/StatisticSection";
+import UpcomingMatchesSection from "./sections/UpcomingMatchesSection";
+import PlayedMatchesSection from "./sections/PlayedMatchesSection";
 import CoachingSection from "./sections/CoachingSection";
 import SquadSection from "./sections/SquadSection";
-import CompetitionsSection from "./sections/CompetitionsSection";
-import UpcomingMatchesSection from "./sections/UpcomingMatchesSection";
-import StatisticSection from "./sections/StatisticSection";
-import PlayedMatchesSection from "./sections/PlayedMatchesSection";
 
 export type CardAccordionProps = {
   team: TeamListItem;
-  matches: TeamMatches
+  teamMatches: TeamMatches
 };
 
-const CardAccordion: React.FC<CardAccordionProps> = ({ team, matches }) => {
-  const competitionsContent = <CompetitionsSection competitions={team.runningCompetitions} />
-  const statisticContent = <StatisticSection results={matches.resultSet} />
-  const upcomingMatchesContent = <UpcomingMatchesSection matches={matches} />
-  const playedMatchesContent = <PlayedMatchesSection matches={matches} />
-  const coachingContent = <CoachingSection coach={team.coach} />
-  const squadContent = <SquadSection squad={team.squad} />
+const CardAccordion: React.FC<CardAccordionProps> = ({ team, teamMatches }) => {
+  const { runningCompetitions, coach, squad } = team;
+  const { resultSet, matches } = teamMatches;
 
   const accordionItems = [
     {
       id: 'competitions',
       icon: <IconTournament />,
       label: 'Running competitions',
-      content: competitionsContent,
-    },
-    {
-      id: 'statistic',
-      icon: <IconProgressCheck />,
-      label: 'Competitions statistic',
-      content: statisticContent,
+      content: <>
+        <CompetitionsSection competitions={runningCompetitions} />
+        <StatisticSection results={resultSet} />
+      </>,
     },
     {
       id: 'upcoming_matches',
       icon: <IconCalendarWeek />,
       label: 'Upcoming matches',
-      content: upcomingMatchesContent,
+      content: <UpcomingMatchesSection matches={matches} />,
     },
     {
       id: 'played_matches',
       icon: <IconCalendarCheck />,
       label: 'Played matches',
-      content: playedMatchesContent,
-    },
-    {
-      id: 'coaching',
-      icon: <IconBrain />,
-      label: 'Coaching',
-      content: coachingContent,
+      content: <PlayedMatchesSection matches={matches} />,
     },
     {
       id: 'squad',
       icon: <IconUsersGroup />,
       label: 'Squad',
-      content: squadContent,
+      content: <>
+        <CoachingSection coach={coach} />
+        <SquadSection squad={squad} />
+      </>,
     },
   ]
 
   return (
-    <Accordion variant="contained" radius="md" chevronPosition="left">
+    <Accordion variant="contained" radius="md" chevronPosition="left" defaultValue="upcoming_matches">
       {accordionItems.map((item) => (
         <Accordion.Item value={item.id} key={item.label}>
           <Accordion.Control>

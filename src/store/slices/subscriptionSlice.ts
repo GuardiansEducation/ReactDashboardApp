@@ -44,7 +44,7 @@ const initialState: SubscriptionStore = {
           code: "ITA",
           flag: "https://crests.football-data.org/784.svg",
         },
-        teams: [{ id: 1 }, { id: 2 }, { id: 3 }],
+        teams: [{ id: 109 }],
       },
     },
     {
@@ -65,7 +65,7 @@ const initialState: SubscriptionStore = {
           code: "DEU",
           flag: "https://crests.football-data.org/759.svg",
         },
-        teams: [{ id: 1 }, { id: 2 }, { id: 3 }],
+        teams: [{ id: 5 }],
       },
     },
     {
@@ -86,7 +86,7 @@ const initialState: SubscriptionStore = {
           code: "ESP",
           flag: "https://crests.football-data.org/760.svg",
         },
-        teams: [{ id: 1 }, { id: 2 }, { id: 3 }],
+        teams: [{ id: 86 }],
       },
     },
   ],
@@ -100,7 +100,7 @@ const initialState: SubscriptionStore = {
       code: "ENG",
       flag: "https://crests.football-data.org/770.svg",
     },
-    teams: [{ id: 57 }, { id: 57 }, { id: 57 }, { id: 57 }],
+    teams: [{ id: 57 }, { id: 57 }],
   },
 };
 

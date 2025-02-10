@@ -7,22 +7,30 @@ export type SquadSectionProps = {
 };
 
 const SquadSection: React.FC<SquadSectionProps> = ({ squad }) => {
-  const renderMember = (member: TeamMember) => (
-    <Group wrap="nowrap">
-      <Tooltip label={member.nationality}>
-        <CountryFlag countryFullName={member.nationality} />
-      </Tooltip>
-      <Stack gap={0}>
-        <Text>{member.name}</Text>
-        <Text c="dimmed" size="xs">{member.position}</Text>
-      </Stack>
-    </Group>
-  );
+  const renderMember = (member: TeamMember) => {
+    const { nationality, name, position } = member;
+
+    return (
+      <Group wrap="nowrap">
+        <Tooltip label={nationality}>
+          <CountryFlag countryFullName={nationality} />
+        </Tooltip>
+        <Stack gap={0}>
+          <Text>
+            {name}
+          </Text>
+          <Text c="dimmed" size="xs">
+            {position}
+          </Text>
+        </Stack>
+      </Group>
+    )
+  };
 
   return (
     <Grid gutter="xs">
       {squad.map((member, index) => (
-        <Grid.Col key={index} span={{ base: 12, md: 6, lg: 4 }}>
+        <Grid.Col key={index} span={{ base: 12, lg: 6 }}>
           {renderMember(member)}
         </Grid.Col>
       ))}

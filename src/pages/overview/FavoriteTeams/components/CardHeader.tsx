@@ -1,6 +1,6 @@
-import { IconExternalLink } from "@tabler/icons-react";
-import { Title, Text, Stack, Group, Image, Anchor, Flex } from "@mantine/core";
+import { Title, Stack, Image, Anchor, Flex } from "@mantine/core";
 import { TeamListItem } from "@types";
+import { IconExternalLink } from "@tabler/icons-react";
 
 export type CardHeaderProps = {
   team: TeamListItem;
@@ -9,17 +9,17 @@ export type CardHeaderProps = {
 const CardHeader: React.FC<CardHeaderProps> = ({ team }) => {
   return (
     <Flex justify="space-evenly" wrap="wrap">
-      <Group wrap="nowrap" m="sm">
+      <Flex wrap="wrap" m="sm" align="center" justify="center">
         <Image src={team.crest} alt="Team logo" h={120} radius="md" />
         <Stack gap="xs" align="center" justify="center">
-          <Title size="h1">
+          <Title size="h1" ta="center">
             {team.name} ({team.tla})
           </Title>
           <Anchor href={team.website} target="_blank">
             Official site&nbsp;<IconExternalLink size={15} />
           </Anchor>
         </Stack>
-      </Group>
+      </Flex>
     </Flex>
   );
 };
