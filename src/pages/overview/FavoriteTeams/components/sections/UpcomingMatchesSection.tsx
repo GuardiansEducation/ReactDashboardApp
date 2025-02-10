@@ -1,54 +1,84 @@
-import { Text, Image, Table, Flex } from "@mantine/core";
-import { TeamMatches } from "@types";
+import { useState } from "react";
+import { Text, Image, Table, Flex, Stack, Center, Pagination } from "@mantine/core";
+import { TeamMatch } from "@types";
 
 export type UpcomingMatchesSectionProps = {
-  matches: TeamMatches;
+  matches: TeamMatch[];
 };
 
-const UpcomingMatchesSection: React.FC<UpcomingMatchesSectionProps> = ({ matches }) => {
-  const filteredMatches = matches.matches.filter((match) => match.status === "SCHEDULED" || match.status === "TIMED");
+const INITIAL_PAGE = 1;
+const ITEMS_PER_PAGE = 5;
 
-  const rows = filteredMatches.map((match, index) => (
-    <Table.Tr key={index}>
-      <Table.Td ta="center" p={0}>
-        <Text>{index + 1}</Text>
-      </Table.Td>
-      <Table.Td ta="center">
-        <Text>{new Date(match.utcDate).toLocaleDateString()}</Text>
-      </Table.Td>
-      <Table.Td>
-        <Flex align="center" justify="flex-end">
-          <Text mr="xs" ta="right">{match.homeTeam.shortName}</Text>
-          <Image src={match.homeTeam.crest} h={20} />
-        </Flex>
-      </Table.Td>
-      <Table.Td ta="center" p={0}>
-        <Text>{new Date(match.utcDate).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</Text>
-      </Table.Td>
-      <Table.Td>
-        <Flex align="center" justify="flex-start">
-          <Image src={match.awayTeam.crest} h={20} />
-          <Text ml="xs" ta="left">{match.awayTeam.shortName}</Text>
-        </Flex>
-      </Table.Td>
-    </Table.Tr>
-  ));
+const UpcomingMatchesSection: React.FC<UpcomingMatchesSectionProps> = ({ matches }) => {
+  const [page, setPage] = useState(INITIAL_PAGE);
+
+  const filteredMatches = matches.filter((match) => match.status === "SCHEDULED" || match.status === "TIMED");
+  const currentPageMatches = filteredMatches.slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE);
+
+  const totalPages = Math.ceil(filteredMatches.length / ITEMS_PER_PAGE);
+
+  const rows = currentPageMatches.map(({ utcDate, homeTeam, awayTeam }, index) => {
+    const matchDate = new Date(utcDate).toLocaleDateString();
+    const matchTime = new Date(utcDate).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+    return (
+      <Table.Tr key={index}>
+        <Table.Td ta="center">
+          <Text>
+            {matchDate}
+          </Text>
+        </Table.Td>
+        <Table.Td>
+          <Flex align="center" justify="flex-end">
+            <Text mr="xs" ta="right">
+              {homeTeam.shortName}
+            </Text>
+            <Image src={homeTeam.crest} h={30} />
+          </Flex>
+        </Table.Td>
+        <Table.Td ta="center" p={0}>
+          <Text>
+            {matchTime}
+          </Text>
+        </Table.Td>
+        <Table.Td>
+          <Flex align="center" justify="flex-start">
+            <Image src={awayTeam.crest} h={30} />
+            <Text ml="xs" ta="left">
+              {awayTeam.shortName}
+            </Text>
+          </Flex>
+        </Table.Td>
+      </Table.Tr>
+    )
+  });
 
   return (
-    <Table>
-      <Table.Thead>
-        <Table.Tr>
-          <Table.Th ta="center" p={0}>#</Table.Th>
-          <Table.Th ta="center">Date</Table.Th>
-          <Table.Th ta="right">Home team</Table.Th>
-          <Table.Th ta="center" p={0}>Time</Table.Th>
-          <Table.Th ta="left">Guest team</Table.Th>
-        </Table.Tr>
-      </Table.Thead>
-      <Table.Tbody>
-        {rows}
-      </Table.Tbody>
-    </Table>
+    <Stack>
+      <Table highlightOnHover>
+        <Table.Thead>
+          <Table.Tr>
+            <Table.Th ta="center">Date</Table.Th>
+            <Table.Th ta="right">Home team</Table.Th>
+            <Table.Th ta="center" p={0}>Time</Table.Th>
+            <Table.Th ta="left">Guest team</Table.Th>
+          </Table.Tr>
+        </Table.Thead>
+        <Table.Tbody>
+          {rows}
+        </Table.Tbody>
+      </Table>
+      <Center>
+        <Pagination
+          total={totalPages}
+          value={page}
+          onChange={setPage}
+          radius="md"
+          color="orange"
+          withControls={false}
+        />
+      </Center>
+    </Stack>
   );
 };
 

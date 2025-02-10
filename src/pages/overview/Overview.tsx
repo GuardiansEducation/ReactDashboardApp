@@ -17,7 +17,7 @@ const Overview: React.FC = () => {
   const hasItems = subscriptions.length > 0;
 
   return (
-    <Container fluid>
+    <Container fluid p={0}>
       {hasItems ? (
         <Tabs
           keepMounted={false}

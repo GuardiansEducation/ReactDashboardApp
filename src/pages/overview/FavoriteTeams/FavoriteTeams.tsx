@@ -1,5 +1,5 @@
 import { useAppSelector } from "@hooks";
-import { Center, Container } from "@mantine/core";
+import { Center, SimpleGrid } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { SubscribedTeam, TeamListItem, TeamMatches } from "@types";
 import { TeamService } from "@services";
@@ -8,7 +8,7 @@ import { CommonAlert } from "@components";
 
 interface TeamData {
   team: TeamListItem;
-  matches: TeamMatches;
+  teamMatches: TeamMatches;
 }
 
 const FavoriteTeams: React.FC = () => {
@@ -18,12 +18,12 @@ const FavoriteTeams: React.FC = () => {
 
   const loadTeamsData = async (subscribedTeams: SubscribedTeam[]) => {
     const dataRequests = subscribedTeams.map(async subscribedTeam => {
-      const teamInfo = await TeamService.getTeamInfo(subscribedTeam.id);
+      const team = await TeamService.getTeamInfo(subscribedTeam.id);
       const teamMatches = await TeamService.getTeamMatches(subscribedTeam.id);
 
       const teamData: TeamData = {
-        team: teamInfo,
-        matches: teamMatches
+        team,
+        teamMatches,
       };
 
       return teamData;
@@ -41,19 +41,19 @@ const FavoriteTeams: React.FC = () => {
     }
   }, [favoriteTeams]);
 
+  const columnMapping = teamsData.length > 1 ? { base: 1, lg: 2 } : { base: 1 };
+
   return (
-    <Container fluid>
-      {
-        hasFavoriteTeams ?
-          teamsData.map(({ team, matches }, index) => (
-            <TeamCard key={index} team={team} matches={matches} />
-          ))
-          :
-          <Center mih="50vh">
-            <CommonAlert message="No teams selected. Please, get back to the main page and tick some" />
-          </Center>
-      }
-    </Container >
+    hasFavoriteTeams ?
+      <SimpleGrid mt="md" cols={columnMapping} spacing="sm">
+        {teamsData.map(({ team, teamMatches }, index) => (
+          <TeamCard key={index} team={team} teamMatches={teamMatches} />
+        ))}
+      </SimpleGrid >
+      :
+      <Center mih="50vh">
+        <CommonAlert message="No teams selected. Please, get back to the main page and tick some" />
+      </Center>
   );
 };
 

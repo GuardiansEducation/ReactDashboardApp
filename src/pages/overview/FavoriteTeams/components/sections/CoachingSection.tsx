@@ -1,4 +1,4 @@
-import { Text, Group, Tooltip, Grid } from "@mantine/core";
+import { Text, Group, Tooltip, Paper, Grid, Divider } from "@mantine/core";
 import { TeamCoach } from "@types";
 import { CountryFlag } from "@components";
 
@@ -7,33 +7,47 @@ export type CoachingSectionProps = {
 };
 
 const CoachingSection: React.FC<CoachingSectionProps> = ({ coach }) => {
-  const getCoachContractDates = (coach: TeamCoach) => {
-    const startYear = coach.contract.start.split("-")[0];
-    const endYear = coach.contract.until.split("-")[0];
+  const { contract, name, nationality } = coach;
 
-    const result = `${startYear} - ${endYear}`;
+  const contractStartDate = contract.start.split("-")[0];
+  const contractEndDate = contract.until.split("-")[0];
 
-    return result;
-  }
+  const coachName = (
+    <Group align="baseline" wrap="nowrap" justify="center">
+      <Text ta="center" size="sm">
+        {name}
+      </Text>
+      <Tooltip label={nationality}>
+        <CountryFlag countryFullName={nationality} />
+      </Tooltip>
+    </Group>
+  )
+
+  const contractDates = (
+    <Text ta="center" size="sm">
+      {contractStartDate} - {contractEndDate}
+    </Text>
+  )
 
   return (
-    <Grid>
-      <Grid.Col span="content">
-        <Text fw={700}>Team coach:</Text>
-        <Text fw={700}>Date of birth:</Text>
-        <Text fw={700}>Coach contract:</Text>
-      </Grid.Col>
-      <Grid.Col span="content">
-        <Group align="baseline" wrap="nowrap">
-          <Text>{coach.name}</Text>
-          <Tooltip label={coach.nationality}>
-            <CountryFlag countryFullName={coach.nationality} />
-          </Tooltip>
-        </Group>
-        <Text>{coach.dateOfBirth}</Text>
-        <Text>{getCoachContractDates(coach)}</Text>
-      </Grid.Col>
-    </Grid>
+    <Paper mb="md" radius="md" px="sm">
+      <Grid gutter="md">
+        <Grid.Col span={6}>
+          <Text ta="center" fw="bold" size="sm">
+            Team coach
+          </Text>
+          <Divider my="xs" />
+          {coachName}
+        </Grid.Col>
+        <Grid.Col span={6}>
+          <Text ta="center" fw="bold" size="sm">
+            Coach contract
+          </Text>
+          <Divider my="xs" />
+          {contractDates}
+        </Grid.Col>
+      </Grid>
+    </Paper>
   );
 };
 

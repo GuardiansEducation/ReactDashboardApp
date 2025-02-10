@@ -6,8 +6,10 @@ export type StatisticSectionProps = {
 };
 
 const StatisticSection: React.FC<StatisticSectionProps> = ({ results }) => {
+  const { count, played, wins, draws, losses } = results;
+
   return (
-    <Table withColumnBorders>
+    <Table withColumnBorders mt="md">
       <Table.Thead>
         <Table.Tr>
           <Table.Th ta="center">Total matches</Table.Th>
@@ -19,11 +21,11 @@ const StatisticSection: React.FC<StatisticSectionProps> = ({ results }) => {
       </Table.Thead>
       <Table.Tbody>
         <Table.Tr ta="center">
-          <Table.Td>{results.count}</Table.Td>
-          <Table.Td>{results.played}</Table.Td>
-          <Table.Td>{results.wins}</Table.Td>
-          <Table.Td>{results.draws}</Table.Td>
-          <Table.Td>{results.losses}</Table.Td>
+          <Table.Td>{count}</Table.Td>
+          <Table.Td>{played}</Table.Td>
+          <Table.Td>{wins}</Table.Td>
+          <Table.Td>{draws}</Table.Td>
+          <Table.Td>{losses}</Table.Td>
         </Table.Tr>
       </Table.Tbody>
     </Table>
