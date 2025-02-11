@@ -1,5 +1,5 @@
 import { useAppSelector } from "@hooks";
-import { Center, SimpleGrid } from "@mantine/core";
+import { Center, Flex } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { SubscribedTeam, TeamListItem, TeamMatches } from "@types";
 import { TeamService } from "@services";
@@ -41,15 +41,15 @@ const FavoriteTeams: React.FC = () => {
     }
   }, [favoriteTeams]);
 
-  const columnMapping = teamsData.length > 1 ? { base: 1, lg: 2 } : { base: 1 };
-
   return (
     hasFavoriteTeams ?
-      <SimpleGrid mt="md" cols={columnMapping} spacing="sm">
+      <Flex mt="md" justify="center" wrap="wrap" gap="sm" direction={{ base: "column", lg: "row" }}>
         {teamsData.map(({ team, teamMatches }, index) => (
-          <TeamCard key={index} team={team} teamMatches={teamMatches} />
+          <Flex key={index} flex={{ base: "1 1 100%", lg: "1 1 40%" }}>
+            <TeamCard team={team} teamMatches={teamMatches} />
+          </Flex>
         ))}
-      </SimpleGrid >
+      </Flex>
       :
       <Center mih="50vh">
         <CommonAlert message="No teams selected. Please, get back to the main page and tick some" />
