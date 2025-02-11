@@ -20,6 +20,7 @@ const Overview: React.FC = () => {
     <Container fluid>
       {hasItems ? (
         <Tabs
+          keepMounted={false}
           variant="outline"
           defaultValue={selectedOverview?.code}
           color="orange"
