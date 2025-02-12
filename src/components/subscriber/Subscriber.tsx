@@ -13,7 +13,6 @@ const competitionsItemId = "competitions";
 export interface SubscriberProps {
   id: number;
   areas: ComboboxItem[];
-  defaultArea?: Area;
 }
 
 const Subscriber: React.FC<SubscriberProps> = ({ id, areas }) => {
