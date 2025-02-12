@@ -1,2 +1,2 @@
-export * from './countries'
+export * from './subscriptions'
 export * from './overview'

@@ -12,20 +12,20 @@ const subscriptionSlice = createSlice({
     subscribeCompetition: (
       state,
       action: PayloadAction<{
-        id: number;
+        subscriptionId: number;
         area: SubscribedArea;
         competition: SubscribedCompetition;
       }>
     ) => {
-      const { id, area, competition } = action.payload;
+      const { subscriptionId, area, competition } = action.payload;
       state.subscriptions = [
-        ...state.subscriptions.filter((x) => x.id !== id),
-        { id, area, competition },
+        ...state.subscriptions.filter((x) => x.id !== subscriptionId),
+        { id: subscriptionId, area, competition },
       ];
     },
-    unsubscribeCompetition: (state, action: PayloadAction<{ id: number }>) => {
-      const { id } = action.payload;
-      state.subscriptions = state.subscriptions.filter((x) => x.id !== id);
+    unsubscribeCompetition: (state, action: PayloadAction<{ subscriptionId: number }>) => {
+      const { subscriptionId } = action.payload;
+      state.subscriptions = state.subscriptions.filter((x) => x.id !== subscriptionId);
     },
     subscribeCompetitionTeam: (
       state,

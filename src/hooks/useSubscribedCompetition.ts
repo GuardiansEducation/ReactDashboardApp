@@ -1,43 +1,32 @@
-import { useCallback, useEffect, useState } from "react";
-import { CompetitionList, SubscribedArea, SubscribedCompetition } from "@types";
-import { CompetitionService, SubscribedCompetitionFactory } from "@services";
+import { useCallback } from "react";
+import { SubscribedArea, SubscribedCompetition } from "@types";
 import { subscribeCompetition, unsubscribeCompetition } from "@store";
 import { useAppDispatch } from "./useAppDispatch";
 import { useAppSelector } from "./useAppSelector";
 
-export interface CompetitionActions {
-  competitions: SubscribedCompetition[];
+export interface SubscribedCompetitionActions {
   subscribedCompetition?: SubscribedCompetition;
-  subscribe: (subscribedCompetition: SubscribedCompetition) => void;
+  subscribe: (subscribedArea: SubscribedArea, subscribedCompetition: SubscribedCompetition) => void;
   unsubscribe: (subscribedCompetition: SubscribedCompetition) => void;
 }
 
-export const useSubscribedCompetition = (
-  subscriberId: number,
-  subscribedArea?: SubscribedArea
-): CompetitionActions => {
+export const useSubscribedCompetition = (subscriberId: number): SubscribedCompetitionActions => {
   const dispatch = useAppDispatch();
   const subscription = useAppSelector((state) =>
     state.subscription.subscriptions.find((x) => x.id === subscriberId)
   );
 
-  const [competitions, setCompetitions] = useState<SubscribedCompetition[]>([]);
-
   const subscribe = useCallback(
-    (subscribedCompetition: SubscribedCompetition) => {
-      if (subscribedArea == null) {
-        return;
-      }
-
+    (subscribedArea: SubscribedArea, subscribedCompetition: SubscribedCompetition) => {
       dispatch(
         subscribeCompetition({
-          id: subscriberId,
+          subscriptionId: subscriberId,
           area: subscribedArea,
           competition: subscribedCompetition,
         })
       );
     },
-    [subscriberId, subscribedArea]
+    [subscriberId]
   );
 
   const unsubscribe = useCallback(
@@ -46,35 +35,12 @@ export const useSubscribedCompetition = (
         return;
       }
 
-      dispatch(unsubscribeCompetition({ id: subscriberId }));
+      dispatch(unsubscribeCompetition({ subscriptionId: subscriberId }));
     },
     [subscriberId, subscription]
   );
 
-  useEffect(() => {
-    if (subscribedArea == null) {
-      return;
-    }
-
-    if (subscribedArea.id !== subscription?.area.id) {
-      dispatch(unsubscribeCompetition({ id: subscriberId }));
-    }
-
-    const fetchData = async () => {
-      const list: CompetitionList = await CompetitionService.listAreaCompetitions(
-        subscribedArea.id
-      );
-      const competitions: SubscribedCompetition[] = list.competitions.map((x) =>
-        SubscribedCompetitionFactory.create(x)
-      );
-      setCompetitions(competitions);
-    };
-
-    fetchData();
-  }, [subscribedArea]);
-
   return {
-    competitions: competitions,
     subscribedCompetition: subscription?.competition,
     subscribe: subscribe,
     unsubscribe: unsubscribe,

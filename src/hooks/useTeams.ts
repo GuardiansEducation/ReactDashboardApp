@@ -1,32 +1,39 @@
 import { TeamFactory, TeamService } from "@services";
 import { Team } from "@types";
 import { useEffect, useState } from "react";
-import { useAppSelector } from "./useAppSelector";
+import { useSubscribedCompetition } from "./useSubscribedCompetition";
 
-export const useTeams = (subscriptionId: number): { teams: Team[]; isLoading: boolean } => {
-  const competitionId = useAppSelector(
-    (state) => state.subscription.subscriptions.find((s) => s.id === subscriptionId)?.competition.id
-  );
+export interface TeamsActions {
+  teams: Team[];
+  loading: boolean;
+}
+
+export const useTeams = (subscriptionId: number): TeamsActions => {
   const [teams, setTeams] = useState<Team[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const { subscribedCompetition } = useSubscribedCompetition(subscriptionId);
+  const competitionId = subscribedCompetition?.id;
 
   useEffect(() => {
-    if (competitionId) {
-      const fetchData = async () => {
-        setIsLoading(true);
-        try {
-          const teams = await TeamService.listCompetitionTeams(competitionId);
-          const teamsViewModel: Team[] = teams.teams.map((t) => TeamFactory.create(t));
-          setTeams(teamsViewModel);
-        } catch (error) {
-          console.error("Failed to fetch teams:", error);
-        } finally {
-          setIsLoading(false);
-        }
-      };
-      fetchData();
+    if (competitionId == null) {
+      return;
     }
+
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const list = await TeamService.listCompetitionTeams(competitionId);
+        const teamsViewModel: Team[] = list.teams.map((x) => TeamFactory.create(x));
+        setTeams(teamsViewModel);
+      } catch (error) {
+        console.error("Failed to fetch teams:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
   }, [competitionId]);
 
-  return { teams, isLoading };
+  return { teams, loading };
 };

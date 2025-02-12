@@ -1,4 +1,13 @@
-import { AppShell, Burger, createTheme, MantineProvider, Paper, Title } from "@mantine/core";
+import {
+  Accordion,
+  AppShell,
+  Burger,
+  createTheme,
+  MantineProvider,
+  Paper,
+  Select,
+  Title,
+} from "@mantine/core";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { Layout } from "@components";
@@ -65,6 +74,25 @@ function App() {
       Burger: Burger.extend({
         defaultProps: {
           color: "tomato",
+        },
+      }),
+      Select: Select.extend({
+        styles: {
+          input: {
+            background: secondaryBackround,
+            color: "white",
+          },
+          dropdown: {
+            background: secondaryBackround,
+            color: "white",
+          },
+        },
+      }),
+      Accordion: Accordion.extend({
+        styles: {
+          root: {
+            background: secondaryBackround,
+          },
         },
       }),
     },

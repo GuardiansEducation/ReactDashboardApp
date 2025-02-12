@@ -1,14 +1,14 @@
 import React from "react";
 import { routes } from "@constants";
 import { useDisclosure } from "@mantine/hooks";
-import { AppShell, Burger, Group, Image, MantineTheme, Title } from "@mantine/core";
+import { AppShell, Burger, Group, Image, Title } from "@mantine/core";
 import { DashboardRouter, NavigateButton } from "@components";
 import logo from "/logo.svg";
 
 const navigationLinks = [
   {
-    text: "Countries",
-    route: routes.countries,
+    text: "Subscriptions",
+    route: routes.subscriptions,
   },
   {
     text: "Overview",

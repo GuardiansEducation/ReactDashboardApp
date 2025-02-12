@@ -1,13 +1,13 @@
 import React, { useCallback } from "react";
 import { ComboboxItem, Select } from "@mantine/core";
 
-export type AreaSelectorProps = {
+export interface AreaSelectorProps {
   areas: ComboboxItem[];
   selectedValue?: number;
   onAreaChanged: (id: number, name: string) => void;
-};
+}
 
-const AreaSelector: React.FC<AreaSelectorProps> = ({ areas, selectedValue, onAreaChanged }) => {
+const AreaSelect: React.FC<AreaSelectorProps> = ({ areas, selectedValue, onAreaChanged }) => {
   const handleChange = useCallback(
     (value: string | null, option: ComboboxItem) => {
       if (value === null) {
@@ -30,4 +30,4 @@ const AreaSelector: React.FC<AreaSelectorProps> = ({ areas, selectedValue, onAre
   );
 };
 
-export default AreaSelector;
+export default AreaSelect;
