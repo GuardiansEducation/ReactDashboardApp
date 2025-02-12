@@ -15,6 +15,8 @@ const CountryFlag = forwardRef<HTMLSpanElement, CountryFlagProps>(({ countryFull
     ["NorthernIreland", "gb-nir"],
     ["DR Congo", "cd"],
     ["Russia", "ru"],
+    ["USA", "us"],
+    ["South Korea", "kr"],
   ]);
 
   const countryCode = () => {

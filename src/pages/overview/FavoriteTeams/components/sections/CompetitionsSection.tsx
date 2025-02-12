@@ -1,11 +1,13 @@
 import { Image, Flex, Tooltip, Text, Center, useMantineTheme } from "@mantine/core";
-import { TeamCompetition } from "@types";
+import { TeamCompetition, TeamMatchResultSet } from "@types";
+import StatisticSection from "./StatisticSection";
 
 export type CompetitionsSectionProps = {
   competitions: TeamCompetition[];
+  results: TeamMatchResultSet;
 };
 
-const CompetitionsSection: React.FC<CompetitionsSectionProps> = ({ competitions }) => {
+const CompetitionsSection: React.FC<CompetitionsSectionProps> = ({ competitions, results }) => {
   const theme = useMantineTheme();
 
   const renderCompetition = (competition: TeamCompetition, index: number) => {
@@ -27,9 +29,12 @@ const CompetitionsSection: React.FC<CompetitionsSectionProps> = ({ competitions 
   };
 
   return (
-    <Flex wrap="wrap" gap="xl" justify="center">
-      {competitions.map((competition, index) => renderCompetition(competition, index))}
-    </Flex>
+    <>
+      <Flex wrap="wrap" gap="xl" justify="center">
+        {competitions.map((competition, index) => renderCompetition(competition, index))}
+      </Flex>
+      <StatisticSection results={results} />
+    </>
   );
 };
 

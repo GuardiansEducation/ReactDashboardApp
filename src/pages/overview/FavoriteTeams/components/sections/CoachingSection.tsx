@@ -30,7 +30,7 @@ const CoachingSection: React.FC<CoachingSectionProps> = ({ coach }) => {
   )
 
   return (
-    <Paper mb="md" radius="md" px="sm">
+    <Paper mb="md" radius="md" px="sm" shadow="xs">
       <Grid gutter="md">
         <Grid.Col span={6}>
           <Text ta="center" fw="bold" size="sm">

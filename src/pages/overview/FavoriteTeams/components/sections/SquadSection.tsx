@@ -1,12 +1,14 @@
 import { Text, Group, Grid, Tooltip, Stack } from "@mantine/core";
-import { TeamMember } from "@types";
+import { TeamCoach, TeamMember } from "@types";
 import { CountryFlag } from "@components";
+import CoachingSection from "./CoachingSection";
 
 export type SquadSectionProps = {
   squad: TeamMember[];
+  coach: TeamCoach;
 };
 
-const SquadSection: React.FC<SquadSectionProps> = ({ squad }) => {
+const SquadSection: React.FC<SquadSectionProps> = ({ squad, coach }) => {
   const renderMember = (member: TeamMember) => {
     const { nationality, name, position } = member;
 
@@ -28,13 +30,16 @@ const SquadSection: React.FC<SquadSectionProps> = ({ squad }) => {
   };
 
   return (
-    <Grid gutter="xs">
-      {squad.map((member, index) => (
-        <Grid.Col key={index} span={{ base: 12, lg: 6 }}>
-          {renderMember(member)}
-        </Grid.Col>
-      ))}
-    </Grid>
+    <>
+      <CoachingSection coach={coach} />
+      <Grid gutter="xs">
+        {squad.map((member, index) => (
+          <Grid.Col key={index} span={{ base: 12, lg: 6 }}>
+            {renderMember(member)}
+          </Grid.Col>
+        ))}
+      </Grid>
+    </>
   );
 };
 
