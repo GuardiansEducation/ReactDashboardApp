@@ -13,7 +13,7 @@ const initialIndex = 0;
 const layoutContent = [<StandingsArea />, <CompetitionStats />, <FavoriteTeams />];
 
 const OverviewLayout: React.FC<OverviewLayoutProps> = ({ content }) => {
-  const [currentIndex, setCurrentIndex] = useState(2);
+  const [currentIndex, setCurrentIndex] = useState(initialIndex);
 
   return (
     <Grid align="center" grow>

@@ -77,7 +77,7 @@ const CardAccordion: React.FC<CardAccordionProps> = ({ team, teamMatches }) => {
   ]
 
   return (
-    <Accordion variant="contained" radius="md" chevronPosition="left" defaultValue="squad">
+    <Accordion variant="contained" radius="md" chevronPosition="left" defaultValue="upcoming_matches">
       {accordionItems.map((item) => (
         <Accordion.Item value={item.id} key={item.label}>
           <Accordion.Control>
