@@ -1,7 +1,9 @@
+import { TeamMemberPosition } from "./TeamMemberPosition";
+
 export interface TeamMember {
   id: number;
   name: string;
-  position: string;
+  position: TeamMemberPosition;
   dateOfBirth?: string;
   nationality: string;
 }

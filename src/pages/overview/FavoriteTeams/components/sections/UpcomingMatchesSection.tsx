@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Text, Image, Table, Flex, Stack, Center, Pagination } from "@mantine/core";
-import { TeamMatch } from "@types";
+import { TeamMatch, TeamMatchStatus } from "@types";
 
 export type UpcomingMatchesSectionProps = {
   matches: TeamMatch[];
@@ -12,7 +12,9 @@ const ITEMS_PER_PAGE = 5;
 const UpcomingMatchesSection: React.FC<UpcomingMatchesSectionProps> = ({ matches }) => {
   const [page, setPage] = useState(INITIAL_PAGE);
 
-  const filteredMatches = matches.filter((match) => match.status === "SCHEDULED" || match.status === "TIMED");
+  const filteredMatches = matches.filter((match) =>
+    match.status === TeamMatchStatus.Scheduled || match.status === TeamMatchStatus.Timed
+  );
   const currentPageMatches = filteredMatches.slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE);
 
   const totalPages = Math.ceil(filteredMatches.length / ITEMS_PER_PAGE);

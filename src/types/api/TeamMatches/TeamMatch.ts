@@ -5,6 +5,7 @@ import { TeamMatchHomeTeam } from "./TeamMatchHomeTeam";
 import { TeamMatchScore } from "./TeamMatchScore";
 import { TeamMatchOdds } from "./TeamMatchOdds";
 import { TeamMatchReferee } from "./TeamMatchReferee";
+import { TeamMatchStatus } from "./TeamMatchStatus";
 
 export interface TeamMatch {
   area: TeamMatchArea;
@@ -12,7 +13,7 @@ export interface TeamMatch {
   season: TeamMatchSeason;
   id: number;
   utcDate: string;
-  status: string;
+  status: TeamMatchStatus;
   matchday: number;
   stage: string;
   group: null;

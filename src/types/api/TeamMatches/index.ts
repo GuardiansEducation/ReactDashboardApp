@@ -10,3 +10,4 @@ export * from './TeamMatchReferee';
 export * from './TeamMatchResultSet';
 export * from './TeamMatchScore';
 export * from './TeamMatchSeason';
+export * from './TeamMatchStatus';

@@ -1,32 +1,55 @@
-import { Text, Group, Accordion } from "@mantine/core";
+import { useState } from "react";
+import { Text, Group, Accordion, Flex, Tooltip, ActionIcon } from "@mantine/core";
 import { TeamListItem, TeamMatches } from "@types";
-import { IconUsersGroup, IconTournament, IconCalendarWeek, IconCalendarCheck } from "@tabler/icons-react";
+import {
+  IconUsersGroup, IconTournament, IconCalendarWeek,
+  IconCalendarCheck, IconSoccerField, IconColumns
+} from "@tabler/icons-react";
 
 import CompetitionsSection from "./sections/CompetitionsSection";
-import StatisticSection from "./sections/StatisticSection";
 import UpcomingMatchesSection from "./sections/UpcomingMatchesSection";
 import PlayedMatchesSection from "./sections/PlayedMatchesSection";
-import CoachingSection from "./sections/CoachingSection";
 import SquadSection from "./sections/SquadSection";
+import { SquadOnFieldSection } from "./sections/SquadOnFieldSection";
 
 export type CardAccordionProps = {
   team: TeamListItem;
   teamMatches: TeamMatches
 };
 
+type AccordionItemData = {
+  id: string;
+  icon: React.ReactNode;
+  label: string;
+  content: React.ReactNode;
+  controls?: React.ReactNode[];
+}
+
 const CardAccordion: React.FC<CardAccordionProps> = ({ team, teamMatches }) => {
   const { runningCompetitions, coach, squad } = team;
   const { resultSet, matches } = teamMatches;
 
-  const accordionItems = [
+  const [showSquadOnField, setShowSquadOnField] = useState(true);
+
+  const toggleSquadView = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    setShowSquadOnField(!showSquadOnField);
+  };
+
+  const squadViewToggle = (
+    <Tooltip label="Toggle squad view" key="toggle_squad_view">
+      <ActionIcon component="div" onClick={toggleSquadView} variant="outline" color="orange" radius="md" my={-5}>
+        {showSquadOnField ? <IconColumns stroke={2} /> : <IconSoccerField stroke={2} />}
+      </ActionIcon>
+    </Tooltip>
+  );
+
+  const accordionItems: AccordionItemData[] = [
     {
       id: 'competitions',
       icon: <IconTournament />,
       label: 'Running competitions',
-      content: <>
-        <CompetitionsSection competitions={runningCompetitions} />
-        <StatisticSection results={resultSet} />
-      </>,
+      content: <CompetitionsSection competitions={runningCompetitions} results={resultSet} />,
     },
     {
       id: 'upcoming_matches',
@@ -44,21 +67,28 @@ const CardAccordion: React.FC<CardAccordionProps> = ({ team, teamMatches }) => {
       id: 'squad',
       icon: <IconUsersGroup />,
       label: 'Squad',
-      content: <>
-        <CoachingSection coach={coach} />
-        <SquadSection squad={squad} />
-      </>,
+      content: (
+        showSquadOnField
+          ? <SquadOnFieldSection squad={squad} />
+          : <SquadSection squad={squad} coach={coach} />
+      ),
+      controls: [squadViewToggle],
     },
   ]
 
   return (
-    <Accordion variant="contained" radius="md" chevronPosition="left" defaultValue="upcoming_matches">
+    <Accordion variant="contained" radius="md" chevronPosition="left" defaultValue="squad">
       {accordionItems.map((item) => (
         <Accordion.Item value={item.id} key={item.label}>
           <Accordion.Control>
             <Group wrap="nowrap">
               {item.icon}
               <Text>{item.label}</Text>
+              <Flex justify="flex-end" flex={1}>
+                <ActionIcon.Group>
+                  {item.controls}
+                </ActionIcon.Group>
+              </Flex>
             </Group>
           </Accordion.Control>
           <Accordion.Panel>

@@ -7,3 +7,4 @@ export * from "./TeamCompetition";
 export * from "./TeamListItem";
 export * from "./TeamMember";
 export * from "./TeamSeason";
+export * from "./TeamMemberPosition";
