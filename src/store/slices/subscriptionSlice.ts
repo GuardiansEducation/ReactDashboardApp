@@ -4,6 +4,12 @@ import { SubscribedArea, SubscribedCompetition, SubscribedTeam, SubscriptionStor
 //#region Initial State
 
 const initialState: SubscriptionStore = {
+  subscriptions: [],
+  selectedOverviewCompetition: undefined,
+};
+
+/*
+{
   subscriptions: [
     {
       id: 1,
@@ -17,6 +23,7 @@ const initialState: SubscriptionStore = {
         id: 2021,
         name: "Premier League",
         code: "PL",
+        emblem: "",
         area: {
           id: 2072,
           name: "England",
@@ -38,6 +45,7 @@ const initialState: SubscriptionStore = {
         id: 2019,
         name: "Serie A",
         code: "SA",
+        emblem: "",
         area: {
           id: 2114,
           name: "Italy",
@@ -59,6 +67,7 @@ const initialState: SubscriptionStore = {
         id: 2002,
         name: "Bundesliga",
         code: "BL1",
+        emblem: "",
         area: {
           id: 2088,
           name: "Germany",
@@ -80,6 +89,7 @@ const initialState: SubscriptionStore = {
         id: 2014,
         name: "Primera Division",
         code: "PD",
+        emblem: "",
         area: {
           id: 2224,
           name: "Spain",
@@ -94,6 +104,7 @@ const initialState: SubscriptionStore = {
     id: 2021,
     name: "Premier League",
     code: "PL",
+    emblem: "",
     area: {
       id: 2072,
       name: "England",
@@ -103,6 +114,7 @@ const initialState: SubscriptionStore = {
     teams: [{ id: 57 }, { id: 57 }, { id: 57 }, { id: 57 }],
   },
 };
+*/
 
 //#endregion
 
@@ -110,51 +122,61 @@ const subscriptionSlice = createSlice({
   name: "subscription",
   initialState,
   reducers: {
-    subscrubeCompetition: (
+    subscribeCompetition: (
       state,
       action: PayloadAction<{
-        id: number;
+        subscriptionId: number;
         area: SubscribedArea;
         competition: SubscribedCompetition;
       }>
     ) => {
-      const { id, area, competition } = action.payload;
+      const { subscriptionId, area, competition } = action.payload;
       state.subscriptions = [
-        ...state.subscriptions.filter((x) => x.id !== id),
-        { id, area, competition },
+        ...state.subscriptions.filter((x) => x.id !== subscriptionId),
+        { id: subscriptionId, area, competition },
       ];
 
       if (state.selectedOverviewCompetition === undefined)
         state.selectedOverviewCompetition = competition;
     },
-    unsubscrubeCompetition: (state, action: PayloadAction<{ id: number }>) => {
-      const { id } = action.payload;
-      state.subscriptions = state.subscriptions.filter((x) => x.id !== id);
+    unsubscribeCompetition: (state, action: PayloadAction<{ subscriptionId: number }>) => {
+      const { subscriptionId } = action.payload;
+      state.subscriptions = state.subscriptions.filter((x) => x.id !== subscriptionId);
 
-      if (state.subscriptions.length === 0) state.selectedOverviewCompetition = undefined;
+      if (state.subscriptions.length === 0)
+        state.selectedOverviewCompetition = undefined;
     },
     subscribeCompetitionTeam: (
       state,
-      action: PayloadAction<{ id: number; team: SubscribedTeam }>
+      action: PayloadAction<{ subscriptionId: number; team: SubscribedTeam }>
     ) => {
-      const { id, team } = action.payload;
-      const index = state.subscriptions.findIndex((x) => x.id === id);
+      const { subscriptionId, team } = action.payload;
+      const index = state.subscriptions.findIndex((x) => x.id === subscriptionId);
       if (index < 0) {
         return;
       }
 
       const { competition } = state.subscriptions[index];
       competition.teams = [...competition.teams.filter((x) => x.id !== team.id), team];
+
+      if (state.selectedOverviewCompetition?.id === competition.id)
+        state.selectedOverviewCompetition.teams = competition.teams;
     },
-    unsubscrubeCompetitionTeam: (state, action: PayloadAction<{ id: number; teamId: number }>) => {
-      const { id, teamId } = action.payload;
-      const index = state.subscriptions.findIndex((x) => x.id === id);
+    unsubscribeCompetitionTeam: (
+      state,
+      action: PayloadAction<{ subscriptionId: number; teamId: number }>
+    ) => {
+      const { subscriptionId, teamId } = action.payload;
+      const index = state.subscriptions.findIndex((x) => x.id === subscriptionId);
       if (index < 0) {
         return;
       }
 
       const { competition } = state.subscriptions[index];
       competition.teams = competition.teams.filter((x) => x.id !== teamId);
+
+      if (state.selectedOverviewCompetition?.id === competition.id)
+        state.selectedOverviewCompetition.teams = competition.teams;
     },
     selectOverviewCompetition: (state, action: PayloadAction<{ code: string | null }>) => {
       const { code } = action.payload;
@@ -170,10 +192,12 @@ const subscriptionSlice = createSlice({
 });
 
 export const {
-  subscrubeCompetition,
-  unsubscrubeCompetition,
+  subscribeCompetition,
+  unsubscribeCompetition,
   subscribeCompetitionTeam,
-  unsubscrubeCompetitionTeam,
+  unsubscribeCompetitionTeam,
   selectOverviewCompetition,
 } = subscriptionSlice.actions;
 export const subscriptionSliceReducer = subscriptionSlice.reducer;
+export const selectSubscription = (state: { subscription: SubscriptionStore }) =>
+  state.subscription.subscriptions;

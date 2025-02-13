@@ -30,7 +30,8 @@
       "@store": ["./src/store"],
       "@services": ["./src/services"],
       "@constants": ["./src/constants"],
-      "@components": ["./src/components"]
+      "@components": ["./src/components"],
+      "@operations": ["./src/operations"]
     }
   },
   "include": ["${configDir}/src/**/*"]

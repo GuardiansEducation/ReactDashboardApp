@@ -1,20 +1,12 @@
-import { AxiosInstance } from "axios";
-import api from "./footballApi";
+import { cachedApi } from "./footballApi";
 import { CompetitionStandings } from "../../types/api/Standings";
+import { AxiosCacheInstance } from "axios-cache-interceptor";
 
 class StandingsService {
-  private instance: AxiosInstance;
+  private instance: AxiosCacheInstance;
 
-  constructor(instance: AxiosInstance) {
+  constructor(instance: AxiosCacheInstance) {
     this.instance = instance;
-  }
-
-  async get(id: string): Promise<CompetitionStandings> {
-    const response = await this.instance.get<CompetitionStandings>(
-      `/football/competitions/${id}/standings`
-    );
-
-    return response.data;
   }
 
   async getBySeason(id: string, season: string): Promise<CompetitionStandings> {
@@ -26,4 +18,4 @@ class StandingsService {
   }
 }
 
-export default new StandingsService(api);
+export default new StandingsService(cachedApi);

@@ -9,7 +9,7 @@ class TeamService {
     this.instance = instance;
   }
 
-  async listCompetitionTeams(competitionId: string): Promise<TeamList> {
+  async listCompetitionTeams(competitionId: number): Promise<TeamList> {
     const response = await this.instance.get<TeamList>(
       `/football/competitions/${competitionId}/teams`
     );
