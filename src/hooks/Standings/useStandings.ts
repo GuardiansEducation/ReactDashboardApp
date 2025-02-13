@@ -7,9 +7,9 @@ export const useStandings = (selectedOverview: SubscribedCompetition | undefined
   const [standings, setStandings] = useState<CompetitionStandings>();
 
   const fetchStandings = async (code: string) => {
-    const response = await standingsService.get(code);
+    const currentSeason = (new Date().getFullYear() - 1).toString();
+    const response = await standingsService.getBySeason(code, currentSeason);
     setStandings(response);
-    console.log("call");
   };
 
   const updateStandingsBySeason = async (season: string | undefined) => {

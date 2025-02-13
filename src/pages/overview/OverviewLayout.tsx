@@ -3,7 +3,7 @@ import { Grid, GridCol, Button, Text, Group, Progress } from "@mantine/core";
 import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
 import CompetitionStats from "./Stats/CompetitionStatistics";
 import CompetitionMatches from "./Matches/CompetitionMatches";
-import StandingsArea from "./Table/StandingsArea";
+import StandingsArea from "./Standings/StandingsArea";
 
 export type OverviewLayoutProps = {
   content: string;

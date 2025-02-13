@@ -1,8 +1,7 @@
 export interface StandingsCompetition {
-    id: number;
-    name: string;
-    code: string;
-    type: string;
-    emblem?: string;
-  }
-  
+  id: number;
+  name: string;
+  code: string;
+  type: string;
+  emblem?: string;
+}

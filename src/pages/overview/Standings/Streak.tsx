@@ -1,4 +1,4 @@
-import { Badge, Group } from "@mantine/core";
+import { Badge, Flex, Group, Text } from "@mantine/core";
 
 export type StreakProps = {
   streak: string;
@@ -12,7 +12,7 @@ const STREAK_COLORS: Record<string, string> = {
 
 const Streak: React.FC<StreakProps> = ({ streak }) => {
   return (
-    <Group>
+    <Group justify="center">
       {streak.split(",").map((result, index) => {
         return (
           <Badge
@@ -20,17 +20,14 @@ const Streak: React.FC<StreakProps> = ({ streak }) => {
             color={STREAK_COLORS[result.toLowerCase()] || "gray"}
             radius="xl"
             size="lg"
-            style={{
-              width: 32,
-              height: 32,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: 16,
-              padding: 0,
-            }}
+            w={32}
+            h={32}
+            display="flex"
+            p={0}
           >
-            {result.toUpperCase()}
+            <Flex align="center" justify="center">
+              <Text>{result.toUpperCase()}</Text>
+            </Flex>
           </Badge>
         );
       })}

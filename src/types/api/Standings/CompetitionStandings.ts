@@ -6,7 +6,7 @@ import { Standings } from "./Standings";
 
 export interface CompetitionStandings {
   filters: StandingsFilters;
-  area: StandingsArea
+  area: StandingsArea;
   competition: StandingsCompetition;
   season: StandingsSeason;
   standings: Standings[];

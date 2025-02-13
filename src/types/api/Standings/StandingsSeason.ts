@@ -1,8 +1,7 @@
 export interface StandingsSeason {
-    id: number;
-    startDate: string;
-    endDate: string;
-    currentMatchday: number;
-    winner: unknown;
-  }
-  
+  id: number;
+  startDate: string;
+  endDate: string;
+  currentMatchday: number;
+  winner: unknown;
+}
