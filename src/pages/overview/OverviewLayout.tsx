@@ -2,15 +2,15 @@ import { useState } from "react";
 import { Grid, GridCol, Button, Text, Group, Progress } from "@mantine/core";
 import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
 import CompetitionStats from "./Stats/CompetitionStatistics";
-import CompetitionTable from "./Table/CompetitionTable";
 import CompetitionMatches from "./Matches/CompetitionMatches";
+import StandingsArea from "./Standings/StandingsArea";
 
 export type OverviewLayoutProps = {
   content: string;
 };
 
 const initialIndex = 0;
-const layoutContent = [<CompetitionTable />, <CompetitionStats />, <CompetitionMatches />];
+const layoutContent = [<StandingsArea />, <CompetitionStats />, <CompetitionMatches />];
 
 const OverviewLayout: React.FC<OverviewLayoutProps> = ({ content }) => {
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
