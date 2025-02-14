@@ -1,4 +1,4 @@
-import { Container, Image, Stack } from "@mantine/core";
+import { Container, Flex, Image, Stack } from "@mantine/core";
 import CompetitionTable from "./CompetitionTable";
 import { SubscribedCompetition } from "@types";
 import { useAppSelector } from "@hooks";
@@ -7,6 +7,7 @@ import SeasonStatisticPickerTitle from "../Stats/SeasonStatisticPickerTitle";
 import OverviewLoader from "../../../components/shared/OverviewLoader";
 import { useStandings } from "../../../hooks/Standings/useStandings";
 import { useSeasonDates } from "../../../hooks/Standings/useSeasonDates";
+import OverviewLayout from "../OverviewLayout";
 
 const StandingsArea: React.FC = () => {
   const selectedOverview: SubscribedCompetition | undefined = useAppSelector(
@@ -21,19 +22,23 @@ const StandingsArea: React.FC = () => {
   );
 
   return (
-    <Container fluid>
-      {standings === undefined || !selectedOverview ? (
-        <OverviewLoader size={50} />
-      ) : (
-        <Stack justify="space-between" mt="md" mb="xs">
-          <SeasonStatisticPicker title={selectorTitle} updateSeason={updateStandingsBySeason} />
-          <Stack align="stretch" justify="center" gap="xs">
-            <Image w={80} h={80} src={standings.competition.emblem} />
+    <OverviewLayout>
+      <Container fluid>
+        {standings === undefined || !selectedOverview ? (
+          <Flex justify="center" align="center" mih="50vh">
+            <OverviewLoader size={50} />
+          </Flex>
+        ) : (
+          <Stack justify="space-between" mt="md" mb="xs">
+            <SeasonStatisticPicker title={selectorTitle} updateSeason={updateStandingsBySeason} />
+            <Stack align="stretch" justify="center" gap="xs">
+              <Image w={80} h={80} src={standings.competition.emblem} />
+            </Stack>
+            <CompetitionTable standings={standings} />
           </Stack>
-          <CompetitionTable standings={standings} />
-        </Stack>
-      )}
-    </Container>
+        )}
+      </Container>
+    </OverviewLayout>
   );
 };
 

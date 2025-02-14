@@ -10,7 +10,7 @@ export type TeamCardProps = {
 
 const TeamCard: React.FC<TeamCardProps> = ({ team, teamMatches }) => {
   return (
-    <Card shadow="sm" radius="md" withBorder p="sm" w="100%">
+    <Card shadow="sm" withBorder p="sm" w="100%">
       <CardHeader team={team} />
       <CardAccordion team={team} teamMatches={teamMatches} />
     </Card>

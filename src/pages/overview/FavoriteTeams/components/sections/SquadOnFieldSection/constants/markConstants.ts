@@ -5,6 +5,8 @@ export const THIRDS_LINES_OFFSET_Y = BASE_MARK_SIZE * 4;
 export const CENTER_LINE_OFFSET_Y = BASE_MARK_SIZE * 1.75;
 export const SIDE_DOTS_LINE_OFFSET = BASE_MARK_SIZE * 4;
 
+export const MARK_FILL_COLOR = "#f8523c";
+
 export const DIMENSIONS = {
   CIRCLE: {
     RADIUS: BASE_MARK_SIZE,

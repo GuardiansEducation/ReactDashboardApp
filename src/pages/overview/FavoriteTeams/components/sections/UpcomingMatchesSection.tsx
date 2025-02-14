@@ -32,7 +32,7 @@ const UpcomingMatchesSection: React.FC<UpcomingMatchesSectionProps> = ({ matches
         </Table.Td>
         <Table.Td p={3}>
           <Flex align="center" justify="flex-end">
-            <Text mr="xs" ta="right">
+            <Text mr="xs" ta="right" truncate="end">
               {homeTeam.shortName}
             </Text>
             <Image src={homeTeam.crest} h={30} />
@@ -46,7 +46,7 @@ const UpcomingMatchesSection: React.FC<UpcomingMatchesSectionProps> = ({ matches
         <Table.Td p={3}>
           <Flex align="center" justify="flex-start">
             <Image src={awayTeam.crest} h={30} />
-            <Text ml="xs" ta="left">
+            <Text ml="xs" ta="left" truncate="end">
               {awayTeam.shortName}
             </Text>
           </Flex>
@@ -75,7 +75,6 @@ const UpcomingMatchesSection: React.FC<UpcomingMatchesSectionProps> = ({ matches
           total={totalPages}
           value={page}
           onChange={setPage}
-          radius="md"
           color="orange"
           withControls={false}
         />

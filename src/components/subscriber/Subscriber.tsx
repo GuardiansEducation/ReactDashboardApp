@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Accordion, ComboboxItem, Group, Space } from "@mantine/core";
 import { useSubscribedArea, useSubscribedCompetition } from "@hooks";
 import { IconUsersGroup, IconTournament } from "@tabler/icons-react";
@@ -52,7 +52,7 @@ const Subscriber: React.FC<SubscriberProps> = ({ id, areas }) => {
   }, [subscribedArea, subscribedCompetition]);
 
   return (
-    <div>
+    <>
       <AreaSelect
         areas={areas}
         selectedValue={subscribedArea?.id}
@@ -60,9 +60,7 @@ const Subscriber: React.FC<SubscriberProps> = ({ id, areas }) => {
       />
       <Space h="xs" />
       <Accordion
-        radius="md"
         chevronPosition="left"
-        defaultValue="squad"
         variant="contained"
         value={selectedItem}
         onChange={setSelectedItem}
@@ -79,7 +77,7 @@ const Subscriber: React.FC<SubscriberProps> = ({ id, areas }) => {
           </Accordion.Item>
         ))}
       </Accordion>
-    </div>
+    </>
   );
 };
 

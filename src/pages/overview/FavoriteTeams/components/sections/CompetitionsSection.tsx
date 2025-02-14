@@ -18,7 +18,7 @@ const CompetitionsSection: React.FC<CompetitionsSectionProps> = ({ competitions,
         {emblem ?
           <Image src={emblem} alt={name} h={100} radius="md" bg="white" p="md" />
           :
-          <Center h={100} w={100} bg="white" style={{ borderRadius: theme.radius.md }}>
+          <Center h={100} w={100} bg="white" style={{ borderRadius: theme.defaultRadius }}>
             <Text ta="center" c="dark" fw="bold">
               {name}
             </Text>
@@ -30,7 +30,7 @@ const CompetitionsSection: React.FC<CompetitionsSectionProps> = ({ competitions,
 
   return (
     <>
-      <Flex wrap="wrap" gap="xl" justify="center">
+      <Flex wrap="wrap" gap="xl" justify="center" mt="md">
         {competitions.map((competition, index) => renderCompetition(competition, index))}
       </Flex>
       <StatisticSection results={results} />

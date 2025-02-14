@@ -38,7 +38,7 @@ const CardAccordion: React.FC<CardAccordionProps> = ({ team, teamMatches }) => {
 
   const squadViewToggle = (
     <Tooltip label="Toggle squad view" key="toggle_squad_view">
-      <ActionIcon component="div" onClick={toggleSquadView} variant="outline" color="orange" radius="md" my={-5}>
+      <ActionIcon component="div" onClick={toggleSquadView} variant="outline" my={-5}>
         {showSquadOnField ? <IconColumns stroke={2} /> : <IconSoccerField stroke={2} />}
       </ActionIcon>
     </Tooltip>

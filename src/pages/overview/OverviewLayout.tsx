@@ -1,67 +1,69 @@
-import { useState } from "react";
-import { Grid, GridCol, Button, Text, Group, Progress } from "@mantine/core";
-import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
-import CompetitionStats from "./Stats/CompetitionStatistics";
-import StandingsArea from "./Standings/StandingsArea";
-import { FavoriteTeams } from "./FavoriteTeams";
+import { Center, Container, Image, Tabs } from "@mantine/core";
+import { useAppSelector, useAppDispatch } from "@hooks";
+import { CommonAlert } from "@components";
+import { selectOverviewCompetition } from "@store";
+import { SubscribedCompetition } from "@types";
+import classes from "./OverviewLayout.module.css";
 
 export type OverviewLayoutProps = {
-  content: string;
-};
+  children: React.ReactNode;
+}
 
-const initialIndex = 0;
-const layoutContent = [<StandingsArea />, <CompetitionStats />, <FavoriteTeams />];
+const OverviewLayout: React.FC<OverviewLayoutProps> = ({ children }) => {
+  const dispatch = useAppDispatch();
+  const { subscriptions, selectedOverviewCompetition } = useAppSelector((state) => state.subscription);
 
-const OverviewLayout: React.FC<OverviewLayoutProps> = ({ content }) => {
-  const [currentIndex, setCurrentIndex] = useState(initialIndex);
+  const hasItems = subscriptions.length > 0;
+  const hasSelectedCompetition = selectedOverviewCompetition?.code !== undefined;
+  const isTabsVisible = hasItems && hasSelectedCompetition;
+
+  const tabChangeHandler = (code?: string | null) => {
+    if (code) {
+      dispatch(selectOverviewCompetition({ code }));
+    }
+  };
+
+  const renderTab = (competition: SubscribedCompetition, index: number) => {
+    const { code, area } = competition;
+
+    const competitionFlag = (<Image h={20} src={area.flag} radius="md" />);
+
+    return (
+      <Tabs.Tab key={area.code+index} value={code} leftSection={competitionFlag}>
+        {area.name}
+      </Tabs.Tab>
+    )
+  };
+
+  const tabsComponent = selectedOverviewCompetition && (
+    <Tabs
+      keepMounted={false}
+      defaultValue={selectedOverviewCompetition.code}
+      variant="pills"
+      color="orange"
+      onChange={tabChangeHandler}
+      classNames={classes}
+    >
+      <Tabs.List justify="center" grow>
+        {subscriptions.map(({ competition }, index) => renderTab(competition, index))}
+      </Tabs.List>
+
+      <Tabs.Panel value={selectedOverviewCompetition.code}>
+        {children}
+      </Tabs.Panel>
+    </Tabs>
+  );
+
+  const noSubscriptionsComponent = (
+    <Center mih="50vh">
+      <CommonAlert title="No subscriptions made" message="Please choose your subscriptions" />
+    </Center>
+  );
 
   return (
-    <Grid align="center" grow>
-      <GridCol span="auto">
-        <Button
-          disabled={currentIndex === initialIndex}
-          variant="transparent"
-          fullWidth
-          onClick={() => setCurrentIndex((index) => index - 1)}
-        >
-          <IconArrowLeft />
-        </Button>
-      </GridCol>
-      <GridCol span={10}>
-        <Text
-          ta="center"
-          size="xl"
-          fw={900}
-          variant="gradient"
-          gradient={{ from: "orange", to: "orange", deg: 360 }}
-        >
-          {content}
-        </Text>
-        {layoutContent[currentIndex]}
-        <Group grow gap={5} mt="xs">
-          {layoutContent.map((_, index) => (
-            <Progress
-              key={index}
-              radius="xs"
-              size="xs"
-              transitionDuration={0}
-              value={currentIndex == index ? 100 : 0}
-              color="orange"
-            />
-          ))}
-        </Group>
-      </GridCol>
-      <GridCol span="auto">
-        <Button
-          disabled={currentIndex === layoutContent.length - 1}
-          variant="transparent"
-          fullWidth
-          onClick={() => setCurrentIndex((index) => index + 1)}
-        >
-          <IconArrowRight />
-        </Button>
-      </GridCol>
-    </Grid>
+    <Container fluid p={0}>
+      {isTabsVisible ? tabsComponent : noSubscriptionsComponent}
+    </Container >
   );
 };
 

@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { SubscribedArea, SubscribedCompetition } from "@types";
 import { Table, Image, Button, Group, Text, Center, Loader } from "@mantine/core";
 import { useCompetitions, useSubscribedCompetition } from "@hooks";
@@ -13,8 +13,7 @@ const CompetitionsSection: React.FC<CompetitionsSectionProps> = ({
   subscribedArea,
 }) => {
   const { loading, competitions } = useCompetitions(subscribedArea);
-  const { subscribedCompetition, subscribe, unsubscribe } =
-    useSubscribedCompetition(subscriptionId);
+  const { subscribedCompetition, subscribe, unsubscribe } = useSubscribedCompetition(subscriptionId);
 
   const getSubscriptionButton = useCallback(
     (competition: SubscribedCompetition) => {

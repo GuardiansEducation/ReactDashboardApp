@@ -1,5 +1,5 @@
 import { Card, Stack } from "@mantine/core";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { StatsAreaProps } from "./StatsAreaProps";
 import { Scorer } from "@types";
 import Player from "./Player";
@@ -10,8 +10,8 @@ import SeasonStatisticPicker from "./SeasonStatisticPicker";
 import OverviewLoader from "../../../components/shared/OverviewLoader";
 import SeasonStatisticPickerTitle from "./SeasonStatisticPickerTitle";
 
-const AssistsStatsArea: React.FC<StatsAreaProps> = ({ competition, season, scorer }) => {
-  const [topScorers, updateTopScorers] = useState<Scorer[] | undefined>(scorer);
+const AssistsStatsArea: React.FC<StatsAreaProps> = ({ competition, season, scorers }) => {
+  const [topScorers, updateTopScorers] = useState<Scorer[] | undefined>(scorers);
   const [startDate, updateStartDate] = useState<string | undefined>(
     season.startDate.substring(0, season.startDate.indexOf("-"))
   );
@@ -19,6 +19,10 @@ const AssistsStatsArea: React.FC<StatsAreaProps> = ({ competition, season, score
     season.endDate.substring(0, season.endDate.indexOf("-"))
   );
   const [loading, setLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    updateTopScorers(scorers);
+  }, [scorers]);
 
   const updateScorers = async (season: string | undefined) => {
     if (season === undefined) return;
@@ -56,12 +60,14 @@ const AssistsStatsArea: React.FC<StatsAreaProps> = ({ competition, season, score
       <Player key={index} scorer={player} position={++index} value={player.assists} />
     ));
 
-  const selectorTitle = <SeasonStatisticPickerTitle title={`${startDate} - ${endDate} Assistants Statistics`}>
-    {loading && <OverviewLoader />}
-  </SeasonStatisticPickerTitle>;
+  const selectorTitle = (
+    <SeasonStatisticPickerTitle title={`${startDate} - ${endDate} Assistants Statistics`}>
+      {loading && <OverviewLoader />}
+    </SeasonStatisticPickerTitle>
+  );
 
   return (
-    <Card shadow="sm" padding="lg" radius="md" withBorder>
+    <Card shadow="sm" padding="lg" withBorder w="100%">
       <Card.Section>
         <StatsAreaHeader title="Assists" emblem={competition.emblem} backgroundImage={Assists} />
       </Card.Section>

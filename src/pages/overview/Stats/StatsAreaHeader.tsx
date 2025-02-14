@@ -8,7 +8,7 @@ export type StatsAreaHeaderProps = {
 
 const StatsAreaHeader: React.FC<StatsAreaHeaderProps> = ({ title, emblem, backgroundImage }) => {
   return (
-    <BackgroundImage h={200} src={backgroundImage} radius="md">
+    <BackgroundImage h={200} src={backgroundImage}>
       <Flex mih={200} justify="flex-end" align="flex-start" direction="row">
         <Stack>
           <Space />
