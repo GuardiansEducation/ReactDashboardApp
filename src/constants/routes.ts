@@ -1,4 +1,4 @@
 export const routes = Object.freeze({
-  countries: "/countries",
+  subscriptions: "/subscriptions",
   overview: "/overview",
 });

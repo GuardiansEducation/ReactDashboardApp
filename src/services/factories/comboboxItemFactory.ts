@@ -6,7 +6,7 @@ class ComboboxItemFactory {
     const result = areas.map<ComboboxItem>((x) => {
       return {
         value: x.id,
-        label: x.code,
+        label: x.name,
       };
     });
 

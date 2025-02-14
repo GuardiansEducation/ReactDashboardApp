@@ -9,30 +9,30 @@ const subscriptionSlice = createSlice({
   name: "subscription",
   initialState,
   reducers: {
-    subscrubeCompetition: (
+    subscribeCompetition: (
       state,
       action: PayloadAction<{
-        id: number;
+        subscriptionId: number;
         area: SubscribedArea;
         competition: SubscribedCompetition;
       }>
     ) => {
-      const { id, area, competition } = action.payload;
+      const { subscriptionId, area, competition } = action.payload;
       state.subscriptions = [
-        ...state.subscriptions.filter((x) => x.id !== id),
-        { id, area, competition },
+        ...state.subscriptions.filter((x) => x.id !== subscriptionId),
+        { id: subscriptionId, area, competition },
       ];
     },
-    unsubscrubeCompetition: (state, action: PayloadAction<{ id: number }>) => {
-      const { id } = action.payload;
-      state.subscriptions = state.subscriptions.filter((x) => x.id !== id);
+    unsubscribeCompetition: (state, action: PayloadAction<{ subscriptionId: number }>) => {
+      const { subscriptionId } = action.payload;
+      state.subscriptions = state.subscriptions.filter((x) => x.id !== subscriptionId);
     },
     subscribeCompetitionTeam: (
       state,
-      action: PayloadAction<{ id: number; team: SubscribedTeam }>
+      action: PayloadAction<{ subscriptionId: number; team: SubscribedTeam }>
     ) => {
-      const { id, team } = action.payload;
-      const index = state.subscriptions.findIndex((x) => x.id === id);
+      const { subscriptionId, team } = action.payload;
+      const index = state.subscriptions.findIndex((x) => x.id === subscriptionId);
       if (index < 0) {
         return;
       }
@@ -40,9 +40,12 @@ const subscriptionSlice = createSlice({
       const { competition } = state.subscriptions[index];
       competition.teams = [...competition.teams.filter((x) => x.id !== team.id), team];
     },
-    unsubscrubeCompetitionTeam: (state, action: PayloadAction<{ id: number; teamId: number }>) => {
-      const { id, teamId } = action.payload;
-      const index = state.subscriptions.findIndex((x) => x.id === id);
+    unsubscribeCompetitionTeam: (
+      state,
+      action: PayloadAction<{ subscriptionId: number; teamId: number }>
+    ) => {
+      const { subscriptionId, teamId } = action.payload;
+      const index = state.subscriptions.findIndex((x) => x.id === subscriptionId);
       if (index < 0) {
         return;
       }
@@ -54,9 +57,11 @@ const subscriptionSlice = createSlice({
 });
 
 export const {
-  subscrubeCompetition,
-  unsubscrubeCompetition,
+  subscribeCompetition,
+  unsubscribeCompetition,
   subscribeCompetitionTeam,
-  unsubscrubeCompetitionTeam,
+  unsubscribeCompetitionTeam,
 } = subscriptionSlice.actions;
 export const subscriptionSliceReducer = subscriptionSlice.reducer;
+export const selectSubscription = (state: { subscription: SubscriptionStore }) =>
+  state.subscription.subscriptions;
