@@ -1,111 +1,96 @@
 import { TeamMember, TeamMemberPosition } from "@types";
-import SquadPositionMark, { MarkShape, TooltipProperties } from "./SquadPositionMark";
+import SvgPositionMark, { MarkProperties } from "./SvgPositionMark";
 import * as MARK from "./constants/markConstants";
+import { text } from "stream/consumers";
 
 export type SquadPositionsProps = {
   squad: TeamMember[];
 };
 
-type TooltipMapping = Record<TeamMemberPosition, TooltipProperties>;
+type PartialTeamMembersPosition = Exclude<
+  TeamMemberPosition,
+  TeamMemberPosition.Defence |
+  TeamMemberPosition.Offence |
+  TeamMemberPosition.Midfield
+>;
+type TooltipMapping = Record<PartialTeamMembersPosition, MarkProperties>;
+
+const commonMarkProperties = {
+  radius: MARK.MARK_RADIUS,
+  fill: MARK.MARK_FILL_COLOR,
+  textColor: MARK.MARK_TEXT_COLOR,
+  textSize: MARK.MARK_TEXT_SIZE,
+}
 
 const goalkeeperMark = {
   [TeamMemberPosition.Goalkeeper]: {
-    shape: MarkShape.Circle,
+    text: "GK",
     x: MARK.GOALKEEPER.X,
     y: MARK.GOALKEEPER.Y,
-    radius: MARK.DIMENSIONS.CIRCLE.RADIUS
+    ...commonMarkProperties,
   },
 }
 
 const backLineMarks = {
   [TeamMemberPosition.LeftBack]: {
-    shape: MarkShape.Circle,
+    text: "LB",
     x: MARK.SIDE_DOTS.LEFT_X,
-    y: MARK.THIRDS_CENTER_LINES.BACK_Y,
-    radius: MARK.DIMENSIONS.CIRCLE.RADIUS
+    y: MARK.SIDE_DOTS.BACK_Y,
+    ...commonMarkProperties,
   },
   [TeamMemberPosition.CentreBack]: {
-    shape: MarkShape.Rectangle,
-    x: MARK.THIRDS_CENTER_LINES.X,
-    y: MARK.THIRDS_CENTER_LINES.BACK_Y,
-    width: MARK.DIMENSIONS.RECTANGLE.HORIZONTAL.SHORT.WIDTH,
-    height: MARK.DIMENSIONS.RECTANGLE.HORIZONTAL.SHORT.HEIGHT
+    text: "CB",
+    x: MARK.THIRDS_CENTER_DOTS.X,
+    y: MARK.THIRDS_CENTER_DOTS.BACK_Y,
+    ...commonMarkProperties,
   },
   [TeamMemberPosition.RightBack]: {
-    shape: MarkShape.Circle,
+    text: "RB",
     x: MARK.SIDE_DOTS.RIGHT_X,
-    y: MARK.THIRDS_CENTER_LINES.BACK_Y,
-    radius: MARK.DIMENSIONS.CIRCLE.RADIUS
+    y: MARK.SIDE_DOTS.BACK_Y,
+    ...commonMarkProperties,
   },
 }
 
 const midfieldLineMarks = {
   [TeamMemberPosition.DefensiveMidfield]: {
-    shape: MarkShape.Rectangle,
-    x: MARK.CENTER_LINES.X,
-    y: MARK.CENTER_LINES.DEFENCE_Y,
-    width: MARK.DIMENSIONS.RECTANGLE.HORIZONTAL.LONG.WIDTH,
-    height: MARK.DIMENSIONS.RECTANGLE.HORIZONTAL.LONG.HEIGHT
+    text: "CDM",
+    x: MARK.MIDFIELD_DOTS.X,
+    y: MARK.MIDFIELD_DOTS.DEFENCE_Y,
+    ...commonMarkProperties,
   },
   [TeamMemberPosition.CentralMidfield]: {
-    shape: MarkShape.Rectangle,
-    x: MARK.CENTER_LINES.X,
-    y: MARK.CENTER_LINES.MIDFIELD_Y,
-    width: MARK.DIMENSIONS.RECTANGLE.HORIZONTAL.LONG.WIDTH,
-    height: MARK.DIMENSIONS.RECTANGLE.HORIZONTAL.LONG.HEIGHT
+    text: "CM",
+    x: MARK.MIDFIELD_DOTS.X,
+    y: MARK.MIDFIELD_DOTS.MIDFIELD_Y,
+    ...commonMarkProperties,
   },
   [TeamMemberPosition.AttackingMidfield]: {
-    shape: MarkShape.Rectangle,
-    x: MARK.CENTER_LINES.X,
-    y: MARK.CENTER_LINES.ATTACK_Y,
-    width: MARK.DIMENSIONS.RECTANGLE.HORIZONTAL.LONG.WIDTH,
-    height: MARK.DIMENSIONS.RECTANGLE.HORIZONTAL.LONG.HEIGHT
+    text: "CAM",
+    x: MARK.MIDFIELD_DOTS.X,
+    y: MARK.MIDFIELD_DOTS.ATTACK_Y,
+    ...commonMarkProperties,
   },
 }
 
 const forwardLineMarks = {
   [TeamMemberPosition.LeftWinger]: {
-    shape: MarkShape.Circle,
+    text: "LW",
     x: MARK.SIDE_DOTS.LEFT_X,
-    y: MARK.THIRDS_CENTER_LINES.FORWARD_Y,
-    radius: MARK.DIMENSIONS.CIRCLE.RADIUS
+    y: MARK.SIDE_DOTS.FORWARD_Y,
+    ...commonMarkProperties,
   },
   [TeamMemberPosition.CentreForward]: {
-    shape: MarkShape.Rectangle,
-    x: MARK.THIRDS_CENTER_LINES.X,
-    y: MARK.THIRDS_CENTER_LINES.FORWARD_Y,
-    width: MARK.DIMENSIONS.RECTANGLE.HORIZONTAL.SHORT.WIDTH,
-    height: MARK.DIMENSIONS.RECTANGLE.HORIZONTAL.SHORT.HEIGHT
+    text: "CF",
+    x: MARK.THIRDS_CENTER_DOTS.X,
+    y: MARK.THIRDS_CENTER_DOTS.FORWARD_Y,
+    ...commonMarkProperties,
   },
   [TeamMemberPosition.RightWinger]: {
-    shape: MarkShape.Circle,
+    text: "RW",
     x: MARK.SIDE_DOTS.RIGHT_X,
-    y: MARK.THIRDS_CENTER_LINES.FORWARD_Y,
-    radius: MARK.DIMENSIONS.CIRCLE.RADIUS
-  },
-}
-
-const verticalLeftLineMarks = {
-  [TeamMemberPosition.Defence]: {
-    shape: MarkShape.Rectangle,
-    x: MARK.LEFT_VERTICAL_MARKERS.X,
-    y: MARK.LEFT_VERTICAL_MARKERS.DEFENCE_Y,
-    width: MARK.DIMENSIONS.RECTANGLE.VERTICAL.WIDTH,
-    height: MARK.DIMENSIONS.RECTANGLE.VERTICAL.HEIGHT
-  },
-  [TeamMemberPosition.Midfield]: {
-    shape: MarkShape.Rectangle,
-    x: MARK.LEFT_VERTICAL_MARKERS.X,
-    y: MARK.LEFT_VERTICAL_MARKERS.MIDFIELD_Y,
-    width: MARK.DIMENSIONS.RECTANGLE.VERTICAL.WIDTH,
-    height: MARK.DIMENSIONS.RECTANGLE.VERTICAL.HEIGHT
-  },
-  [TeamMemberPosition.Offence]: {
-    shape: MarkShape.Rectangle,
-    x: MARK.LEFT_VERTICAL_MARKERS.X,
-    y: MARK.LEFT_VERTICAL_MARKERS.OFFENCE_Y,
-    width: MARK.DIMENSIONS.RECTANGLE.VERTICAL.WIDTH,
-    height: MARK.DIMENSIONS.RECTANGLE.VERTICAL.HEIGHT
+    y: MARK.SIDE_DOTS.FORWARD_Y,
+    ...commonMarkProperties,
   },
 }
 
@@ -114,12 +99,23 @@ const tooltipMapping: TooltipMapping = {
   ...backLineMarks,
   ...midfieldLineMarks,
   ...forwardLineMarks,
-  ...verticalLeftLineMarks,
 };
 
 const SquadPositions: React.FC<SquadPositionsProps> = ({ squad }) => {
   const squadOnField = squad.reduce((acc, member) => {
-    const { position } = member;
+    let { position } = member;
+
+    switch (position) {
+      case TeamMemberPosition.Offence:
+        position = TeamMemberPosition.AttackingMidfield;
+        break;
+      case TeamMemberPosition.Midfield:
+        position = TeamMemberPosition.CentralMidfield;
+        break;
+      case TeamMemberPosition.Defence:
+        position = TeamMemberPosition.DefensiveMidfield;
+        break;
+    }
 
     if (!acc[position]) {
       acc[position] = [];
@@ -133,7 +129,7 @@ const SquadPositions: React.FC<SquadPositionsProps> = ({ squad }) => {
   const result = Object
     .entries(tooltipMapping)
     .map(([position, properties]) => (
-      <SquadPositionMark
+      <SvgPositionMark
         key={position}
         position={position as TeamMemberPosition}
         properties={properties}
