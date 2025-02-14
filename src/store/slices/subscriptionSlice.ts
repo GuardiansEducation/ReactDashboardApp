@@ -3,6 +3,11 @@ import { SubscribedArea, SubscribedCompetition, SubscribedTeam, SubscriptionStor
 
 //#region Initial State
 
+// const initialState: SubscriptionStore = {
+//   subscriptions: [],
+//   selectedOverviewCompetition: undefined,
+// };
+
 const initialState: SubscriptionStore = {
   subscriptions: [
     {
