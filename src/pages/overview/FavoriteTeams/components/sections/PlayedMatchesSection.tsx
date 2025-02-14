@@ -28,13 +28,13 @@ const PlayedMatchesSection: React.FC<PlayedMatchesSectionProps> = ({ matches }) 
     return (
       <Table.Tr key={index}>
         <Table.Td ta="center" p={3}>
-          <Text>
+          <Text >
             {matchDate}
           </Text>
         </Table.Td>
         <Table.Td p={3}>
           <Flex align="center" justify="flex-end">
-            <Text mr="xs" ta="right">
+            <Text mr="xs" ta="right" truncate="end">
               {homeTeam.shortName}
             </Text>
             <Image src={homeTeam.crest} h={30} alt={homeTeam.shortName} />
@@ -48,7 +48,7 @@ const PlayedMatchesSection: React.FC<PlayedMatchesSectionProps> = ({ matches }) 
         <Table.Td p={3}>
           <Flex align="center" justify="flex-start">
             <Image src={awayTeam.crest} h={30} alt={awayTeam.shortName} />
-            <Text ml="xs" ta="left">
+            <Text ml="xs" ta="left" truncate="end">
               {awayTeam.shortName}
             </Text>
           </Flex>
@@ -77,7 +77,6 @@ const PlayedMatchesSection: React.FC<PlayedMatchesSectionProps> = ({ matches }) 
           total={totalPages}
           value={page}
           onChange={setPage}
-          radius="md"
           color="orange"
           withControls={false}
         />

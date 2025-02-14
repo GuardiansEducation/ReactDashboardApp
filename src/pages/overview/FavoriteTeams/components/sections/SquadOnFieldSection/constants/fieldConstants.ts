@@ -1,7 +1,7 @@
 export const FIELD = {
   WIDTH: 74,
   HEIGHT: 111,
-  COLOR: "#00a000",
+  COLOR: "#046304",
 };
 
 export const MARKUP_OFFSET = 3;
@@ -11,7 +11,7 @@ export const MARKUP = {
     LINE_WIDTH: 0.5,
     DOT_RADIUS: 0.75,
     CENTRAL_CIRCLE_RADIUS: 9.15,
-    COLOR: "#fff",
+    COLOR: "#C9C9C9",
     FILL: "none",
     CIRCLE_LINE_WIDTH: "none",
     RELATIVE_LEFT_MOST_X: 0,

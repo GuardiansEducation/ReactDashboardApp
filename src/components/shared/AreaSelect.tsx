@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { ComboboxItem, Select } from "@mantine/core";
 
 export interface AreaSelectorProps {

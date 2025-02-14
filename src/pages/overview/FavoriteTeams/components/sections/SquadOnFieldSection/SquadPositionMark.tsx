@@ -2,6 +2,7 @@ import { TeamMember, TeamMemberPosition } from "@types";
 import TooltipContent from "./TooltipContent";
 import SvgPositionCircleMark from "./SvgComponents/SvgPositionCircleMark";
 import SvgPositionRectangleMark from "./SvgComponents/SvgPositionRectangleMark";
+import { MARK_FILL_COLOR } from "./constants/markConstants";
 
 export type SquadPositionMarkProps = {
   position: TeamMemberPosition;
@@ -33,14 +34,14 @@ const SquadPositionMark: React.FC<SquadPositionMarkProps> = ({ position, members
 
   if (isValidCircle) {
     result = (
-      <SvgPositionCircleMark x={x} y={y} radius={radius} fill="red">
+      <SvgPositionCircleMark x={x} y={y} radius={radius} fill={MARK_FILL_COLOR}>
         <TooltipContent position={position} members={members} />
       </SvgPositionCircleMark>
     );
   }
   else if (isValidRectangle) {
     result = (
-      <SvgPositionRectangleMark x={x} y={y} width={width} height={height} radius={1} fill="red">
+      <SvgPositionRectangleMark x={x} y={y} width={width} height={height} radius={1} fill={MARK_FILL_COLOR}>
         <TooltipContent position={position} members={members} />
       </SvgPositionRectangleMark>
     );

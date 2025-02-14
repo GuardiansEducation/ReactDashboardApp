@@ -5,6 +5,7 @@ import { SubscribedTeam, TeamListItem, TeamMatches } from "@types";
 import { TeamService } from "@services";
 import { CommonAlert, OverviewLoader } from "@components";
 import TeamCard from "./components/TeamCard";
+import OverviewLayout from "../OverviewLayout";
 
 interface TeamData {
   team: TeamListItem;
@@ -54,12 +55,12 @@ const FavoriteTeams: React.FC = () => {
 
   const noTeamsComponent = (
     <Center mih="50vh">
-      <CommonAlert message="No teams selected. Please, get back to the main page and tick some" />
+      <CommonAlert message="No teams selected. Please, get back to the subscription page and tick some" />
     </Center>
   )
 
   const teamsComponent = (
-    <Flex mt="md" justify="center" wrap="wrap" gap="sm" direction={{ base: "column", lg: "row" }}>
+    <Flex mt="md" justify="center" wrap="wrap" gap="md" direction={{ base: "column", lg: "row" }}>
       {teamsData.map(({ team, teamMatches }, index) => (
         <Flex key={index} flex={{ base: "1 1 100%", lg: "1 1 40%" }}>
           <TeamCard team={team} teamMatches={teamMatches} />
@@ -70,7 +71,11 @@ const FavoriteTeams: React.FC = () => {
 
   const pageContentComponent = hasFavoriteTeams ? teamsComponent : noTeamsComponent;
 
-  return (isLoading ? loadingComponent : pageContentComponent);
+  return (
+    <OverviewLayout>
+      {isLoading ? loadingComponent : pageContentComponent}
+    </OverviewLayout>
+  )
 };
 
 export default FavoriteTeams;

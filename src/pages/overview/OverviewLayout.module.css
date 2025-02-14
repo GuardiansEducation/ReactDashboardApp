@@ -1,0 +1,6 @@
+.tab {
+  &:hover {
+    background-color: var(--tabs-color);
+    color: white;
+  }
+}

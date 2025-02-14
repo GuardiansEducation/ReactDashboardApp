@@ -7,7 +7,7 @@ export type SeasonStatisticPickerProps = {
 
 const SeasonStatisticPicker: React.FC<SeasonStatisticPickerProps> = ({ title, updateSeason }) => {
   return (
-    <Stack>
+    <Stack mb="md" gap={0}>
       {title}
       <Select
         onChange={(value) => {
