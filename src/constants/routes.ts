@@ -1,4 +1,6 @@
 export const routes = Object.freeze({
   subscriptions: "/subscriptions",
-  overview: "/overview",
+  overviewStandings: "/overview/standings",
+  overviewStats: "/overview/stats",
+  overviewFavoriteTeams: "/overview/favorite-teams",
 });
