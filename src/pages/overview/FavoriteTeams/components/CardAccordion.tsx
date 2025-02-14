@@ -69,7 +69,7 @@ const CardAccordion: React.FC<CardAccordionProps> = ({ team, teamMatches }) => {
       label: 'Squad',
       content: (
         showSquadOnField
-          ? <SquadOnFieldSection squad={squad} />
+          ? <SquadOnFieldSection squad={squad} coach={coach}/>
           : <SquadSection squad={squad} coach={coach} />
       ),
       controls: [squadViewToggle],

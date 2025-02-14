@@ -33,7 +33,7 @@ const MULTIPLIERS_MAP: RadiusMultiplierMap = {
 }
 
 export const MARK_FILL_COLOR = "#fff";
-export const MARK_RADIUS: SupportedRadius = 4;
+export const MARK_RADIUS: SupportedRadius = 5;
 export const MARK_TEXT_COLOR = "#000";
 export const MARK_TEXT_SIZE = `${MULTIPLIERS_MAP[MARK_RADIUS].TEXT_SIZE}px`;
 
