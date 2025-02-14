@@ -32,10 +32,9 @@ const Layout: React.FC = () => {
   const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
   const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
 
-  const selectedOverview: SubscribedCompetition | undefined = useAppSelector(
-    (state) => state.subscription.selectedOverviewCompetition
+  const hasSubscribedItems = useAppSelector(
+    (state) => state.subscription.subscriptions.length > 0
   );
-  const hasSelectedOverview = selectedOverview !== undefined;
 
   return (
     <AppShell
@@ -62,7 +61,7 @@ const Layout: React.FC = () => {
             mt="sm"
             key={index}
             navigateTo={item.route}
-            disabled={!hasSelectedOverview && item.requireSelectedOverview}
+            disabled={!hasSubscribedItems && item.requireSelectedOverview}
           >
             {item.text}
           </NavigateButton>

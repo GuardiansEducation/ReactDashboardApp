@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import StatisticsService from "../../../services/api/statisticsService";
 import { CompetitionScorers, SubscribedCompetition } from "@types";
-import { Group, Container, Stack, Flex } from "@mantine/core";
+import { Container, Flex } from "@mantine/core";
 import GoalsStatsArea from "./GoalsStatsArea";
 import AssistStatsArea from "./AssistsStatsArea";
 import PenaltiesStatArea from "./PenaltiesStatsArea";

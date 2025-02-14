@@ -1,14 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { SubscribedArea, SubscribedCompetition, SubscribedTeam, SubscriptionStore } from "@types";
 
-//#region Initial State
-
-// const initialState: SubscriptionStore = {
-//   subscriptions: [],
-//   selectedOverviewCompetition: undefined,
-// };
-
 const initialState: SubscriptionStore = {
+  subscriptions: [],
+  selectedOverviewCompetition: undefined,
+};
+
+// #region Initial State
+
+
+const initialState2: SubscriptionStore = {
   subscriptions: [
     {
       id: 1,
@@ -22,6 +23,7 @@ const initialState: SubscriptionStore = {
         id: 2021,
         name: "Premier League",
         code: "PL",
+        emblem: "",
         area: {
           id: 2072,
           name: "England",
@@ -43,6 +45,7 @@ const initialState: SubscriptionStore = {
         id: 2019,
         name: "Serie A",
         code: "SA",
+        emblem: "",
         area: {
           id: 2114,
           name: "Italy",
@@ -64,6 +67,7 @@ const initialState: SubscriptionStore = {
         id: 2002,
         name: "Bundesliga",
         code: "BL1",
+        emblem: "",
         area: {
           id: 2088,
           name: "Germany",
@@ -85,6 +89,7 @@ const initialState: SubscriptionStore = {
         id: 2014,
         name: "Primera Division",
         code: "PD",
+        emblem: "",
         area: {
           id: 2224,
           name: "Spain",
@@ -99,6 +104,7 @@ const initialState: SubscriptionStore = {
     id: 2021,
     name: "Premier League",
     code: "PL",
+    emblem: "",
     area: {
       id: 2072,
       name: "England",
@@ -109,7 +115,7 @@ const initialState: SubscriptionStore = {
   },
 };
 
-//#endregion
+// #endregion
 
 const subscriptionSlice = createSlice({
   name: "subscription",
@@ -150,6 +156,10 @@ const subscriptionSlice = createSlice({
 
       const { competition } = state.subscriptions[index];
       competition.teams = [...competition.teams.filter((x) => x.id !== team.id), team];
+
+      if (state.selectedOverviewCompetition !== undefined) {
+        state.selectedOverviewCompetition.teams = competition.teams;
+      }
     },
     unsubscribeCompetitionTeam: (
       state,
@@ -163,6 +173,10 @@ const subscriptionSlice = createSlice({
 
       const { competition } = state.subscriptions[index];
       competition.teams = competition.teams.filter((x) => x.id !== teamId);
+
+      if (state.selectedOverviewCompetition !== undefined) {
+        state.selectedOverviewCompetition.teams = competition.teams;
+      }
     },
     selectOverviewCompetition: (state, action: PayloadAction<{ code: string | null }>) => {
       const { code } = action.payload;
