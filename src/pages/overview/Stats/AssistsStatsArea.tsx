@@ -61,7 +61,7 @@ const AssistsStatsArea: React.FC<StatsAreaProps> = ({ competition, season, score
     ));
 
   const selectorTitle = (
-    <SeasonStatisticPickerTitle title={`${startDate} - ${endDate} Assistants Statistics`}>
+    <SeasonStatisticPickerTitle title={`${startDate} - ${endDate}`}>
       {loading && <OverviewLoader />}
     </SeasonStatisticPickerTitle>
   );

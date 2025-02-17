@@ -1,4 +1,4 @@
-import { Group, BackgroundImage, Image, Stack, Flex, Space, Badge } from "@mantine/core";
+import { Group, BackgroundImage, Stack, Flex, Space, Badge } from "@mantine/core";
 
 export type StatsAreaHeaderProps = {
   title: string;
@@ -14,10 +14,7 @@ const StatsAreaHeader: React.FC<StatsAreaHeaderProps> = ({ title, emblem, backgr
           <Space />
           <Group>
             <Badge color="orange" variant="gradient" size="xl" radius="md">
-              <Group>
-                <Image h={30} src={emblem}></Image>
-                {title}
-              </Group>
+              {title}
             </Badge>
             <Space />
           </Group>

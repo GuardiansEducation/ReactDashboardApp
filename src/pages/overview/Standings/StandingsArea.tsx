@@ -1,4 +1,4 @@
-import { Container, Flex, Image, Stack } from "@mantine/core";
+import { Container, Flex, Stack } from "@mantine/core";
 import CompetitionTable from "./CompetitionTable";
 import { SubscribedCompetition } from "@types";
 import { useAppSelector } from "@hooks";
@@ -17,12 +17,10 @@ const StandingsArea: React.FC = () => {
   const { standings, updateStandingsBySeason } = useStandings(selectedOverview);
   const { startDate, endDate } = useSeasonDates(standings);
 
-  const selectorTitle = (
-    <SeasonStatisticPickerTitle title={`${startDate} - ${endDate} Standings`} />
-  );
+  const selectorTitle = <SeasonStatisticPickerTitle title={`${startDate} - ${endDate}`} />;
 
   return (
-    <OverviewLayout>
+    <OverviewLayout headerText="Team Standings">
       <Container fluid>
         {standings === undefined || !selectedOverview ? (
           <Flex justify="center" align="center" mih="50vh">
@@ -31,9 +29,6 @@ const StandingsArea: React.FC = () => {
         ) : (
           <Stack justify="space-between" mt="md" mb="xs">
             <SeasonStatisticPicker title={selectorTitle} updateSeason={updateStandingsBySeason} />
-            <Stack align="stretch" justify="center" gap="xs">
-              <Image w={80} h={80} src={standings.competition.emblem} />
-            </Stack>
             <CompetitionTable standings={standings} />
           </Stack>
         )}

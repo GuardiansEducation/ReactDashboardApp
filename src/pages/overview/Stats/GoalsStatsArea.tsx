@@ -45,9 +45,11 @@ const GoalsStatsArea: React.FC<StatsAreaProps> = ({ competition, season, scorers
       <Player key={index} scorer={player} position={++index} value={player.goals} />
     ));
 
-  const selectorTitle = <SeasonStatisticPickerTitle title={`${startDate} - ${endDate} Goals Statistics`}>
-    {loading && <OverviewLoader />}
-  </SeasonStatisticPickerTitle>;
+  const selectorTitle = (
+    <SeasonStatisticPickerTitle title={`${startDate} - ${endDate}`}>
+      {loading && <OverviewLoader />}
+    </SeasonStatisticPickerTitle>
+  );
 
   return (
     <Card shadow="sm" padding="lg" withBorder w="100%">

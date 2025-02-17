@@ -16,13 +16,15 @@ const FavoriteTeams: React.FC = () => {
   const [teamsData, updateTeamsData] = useState<TeamData[]>([]);
   const [isLoading, setLoading] = useState<boolean>(false);
 
-  const favoriteTeams = useAppSelector((state) => state.subscription.selectedOverviewCompetition?.teams || []);
+  const favoriteTeams = useAppSelector(
+    (state) => state.subscription.selectedOverviewCompetition?.teams || []
+  );
   const hasFavoriteTeams = favoriteTeams.length > 0;
 
   const loadTeamsData = async (subscribedTeams: SubscribedTeam[]) => {
     setLoading(true);
 
-    const dataRequests = subscribedTeams.map(async subscribedTeam => {
+    const dataRequests = subscribedTeams.map(async (subscribedTeam) => {
       const team = await TeamService.getTeamInfo(subscribedTeam.id);
       const teamMatches = await TeamService.getTeamMatches(subscribedTeam.id);
 
@@ -57,7 +59,7 @@ const FavoriteTeams: React.FC = () => {
     <Center mih="50vh">
       <CommonAlert message="No teams selected. Please, get back to the subscription page and tick some" />
     </Center>
-  )
+  );
 
   const teamsComponent = (
     <Flex mt="md" justify="center" wrap="wrap" gap="md" direction={{ base: "column", lg: "row" }}>
@@ -72,10 +74,10 @@ const FavoriteTeams: React.FC = () => {
   const pageContentComponent = hasFavoriteTeams ? teamsComponent : noTeamsComponent;
 
   return (
-    <OverviewLayout>
+    <OverviewLayout headerText="Favorite Team">
       {isLoading ? loadingComponent : pageContentComponent}
     </OverviewLayout>
-  )
+  );
 };
 
 export default FavoriteTeams;

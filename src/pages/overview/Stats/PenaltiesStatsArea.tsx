@@ -60,9 +60,11 @@ const PenaltiesStatsArea: React.FC<StatsAreaProps> = ({ competition, season, sco
       <Player key={index} scorer={player} position={++index} value={player.penalties} />
     ));
 
-  const selectorTitle = <SeasonStatisticPickerTitle title={`${startDate} - ${endDate} Penalties Statistics`}>
-    {loading && <OverviewLoader />}
-  </SeasonStatisticPickerTitle>;
+  const selectorTitle = (
+    <SeasonStatisticPickerTitle title={`${startDate} - ${endDate}`}>
+      {loading && <OverviewLoader />}
+    </SeasonStatisticPickerTitle>
+  );
 
   return (
     <Card shadow="sm" padding="lg" withBorder w="100%">
