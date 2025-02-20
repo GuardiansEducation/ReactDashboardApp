@@ -32,6 +32,7 @@ const customTheme = createTheme({
   colors: {
     tomato: tomatoColor,
   },
+  fontFamily: "Inter, serif",
   primaryColor: "tomato",
   primaryShade: 7,
   defaultRadius: "md",
