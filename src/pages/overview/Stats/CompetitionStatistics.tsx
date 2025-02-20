@@ -29,7 +29,7 @@ const CompetitionStatistics: React.FC = () => {
   }, [selectedOverview?.code]);
 
   return (
-    <OverviewLayout>
+    <OverviewLayout headerText="Player Stats">
       <Container fluid p={0}>
         {scorers === undefined || !selectedOverview ? (
           <Flex justify="center" align="center" mih="50vh">
@@ -37,21 +37,21 @@ const CompetitionStatistics: React.FC = () => {
           </Flex>
         ) : (
           <Flex justify="center" align="flex-start" gap="md" wrap="wrap" mt="md">
-            <Flex flex={{ base: "1 1 100%", lg: "1 1 32%"}}>
+            <Flex flex={{ base: "1 1 100%", lg: "1 1 32%" }}>
               <GoalsStatsArea
                 competition={scorers.competition}
                 season={scorers.season}
                 scorers={scorers.scorers}
               />
             </Flex>
-            <Flex flex={{ base: "1 1 100%", lg: "1 1 32%"}}>
+            <Flex flex={{ base: "1 1 100%", lg: "1 1 32%" }}>
               <AssistStatsArea
                 competition={scorers.competition}
                 season={scorers.season}
                 scorers={scorers.scorers}
               />
             </Flex>
-            <Flex flex={{ base: "1 1 100%", lg: "1 1 32%"}}>
+            <Flex flex={{ base: "1 1 100%", lg: "1 1 32%" }}>
               <PenaltiesStatArea
                 competition={scorers.competition}
                 season={scorers.season}
@@ -61,7 +61,7 @@ const CompetitionStatistics: React.FC = () => {
           </Flex>
         )}
       </Container>
-    </OverviewLayout >
+    </OverviewLayout>
   );
 };
 
