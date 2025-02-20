@@ -16,9 +16,12 @@ const FavoriteTeams: React.FC = () => {
   const [teamsData, updateTeamsData] = useState<TeamData[]>([]);
   const [isLoading, setLoading] = useState<boolean>(false);
 
-  const favoriteTeams = useAppSelector(
-    (state) => state.subscription.selectedOverviewCompetition?.teams || []
-  );
+  const favoriteTeams = useAppSelector(({ subscription }) => {
+    const { subscriptions, selectedCompetitionCode } = subscription;
+    const selectedCompetition = subscriptions.find(sub => sub.competition.code === selectedCompetitionCode);
+
+    return selectedCompetition?.competition.teams || [];
+  });
   const hasFavoriteTeams = favoriteTeams.length > 0;
 
   const loadTeamsData = async (subscribedTeams: SubscribedTeam[]) => {

@@ -13,13 +13,13 @@ export type OverviewLayoutProps = {
 
 const OverviewLayout: React.FC<OverviewLayoutProps> = ({ children, headerText }) => {
   const dispatch = useAppDispatch();
-  const { subscriptions, selectedOverviewCompetition } = useAppSelector(
-    (state) => state.subscription
-  );
-
+  const { subscriptions, selectedCompetitionCode } = useAppSelector((state) => state.subscription);
   const hasItems = subscriptions.length > 0;
-  const hasSelectedCompetition = selectedOverviewCompetition?.code !== undefined;
+  const hasSelectedCompetition = selectedCompetitionCode !== undefined;
   const isTabsVisible = hasItems && hasSelectedCompetition;
+  const competition = subscriptions.find(
+    (x) => x.competition.code === selectedCompetitionCode
+  )?.competition;
 
   const tabChangeHandler = (code?: string | null) => {
     if (code) {
@@ -39,10 +39,10 @@ const OverviewLayout: React.FC<OverviewLayoutProps> = ({ children, headerText })
     );
   };
 
-  const tabsComponent = selectedOverviewCompetition && (
+  const tabsComponent = selectedCompetitionCode && (
     <Tabs
       keepMounted={false}
-      defaultValue={selectedOverviewCompetition.code}
+      defaultValue={selectedCompetitionCode}
       variant="pills"
       color="orange"
       onChange={tabChangeHandler}
@@ -51,10 +51,10 @@ const OverviewLayout: React.FC<OverviewLayoutProps> = ({ children, headerText })
       <Tabs.List justify="center" grow>
         {subscriptions.map(({ competition }, index) => renderTab(competition, index))}
       </Tabs.List>
-      <Tabs.Panel value={selectedOverviewCompetition.code}>
+      <Tabs.Panel value={selectedCompetitionCode}>
         <Space h="md" />
         <PageHeaderLayout
-          image={<Image w={70} h={70} src={selectedOverviewCompetition.emblem} />}
+          image={<Image w={70} h={70} src={competition?.emblem || ""} />}
           content={headerText}
         />
         {children}

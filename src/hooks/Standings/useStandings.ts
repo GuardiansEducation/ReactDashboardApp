@@ -1,9 +1,8 @@
-import { SubscribedCompetition } from "@types";
 import { useEffect, useState } from "react";
 import standingsService from "../../services/api/standingsService";
 import { CompetitionStandings } from "../../types/api/Standings";
 
-export const useStandings = (selectedOverview: SubscribedCompetition | undefined) => {
+export const useStandings = (selectedCompetitionCode: string | undefined) => {
   const [standings, setStandings] = useState<CompetitionStandings>();
 
   const fetchStandings = async (code: string) => {
@@ -20,10 +19,10 @@ export const useStandings = (selectedOverview: SubscribedCompetition | undefined
   };
 
   useEffect(() => {
-    if (selectedOverview?.code) {
-      fetchStandings(selectedOverview.code);
+    if (selectedCompetitionCode) {
+      fetchStandings(selectedCompetitionCode);
     }
-  }, [selectedOverview?.code]);
+  }, [selectedCompetitionCode]);
 
   return { standings, updateStandingsBySeason };
 };

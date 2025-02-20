@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import StatisticsService from "../../../services/api/statisticsService";
-import { CompetitionScorers, SubscribedCompetition } from "@types";
+import { CompetitionScorers } from "@types";
 import { Container, Flex } from "@mantine/core";
 import GoalsStatsArea from "./GoalsStatsArea";
 import AssistStatsArea from "./AssistsStatsArea";
@@ -10,9 +10,7 @@ import OverviewLoader from "../../../components/shared/OverviewLoader";
 import OverviewLayout from "../OverviewLayout";
 
 const CompetitionStatistics: React.FC = () => {
-  const selectedOverview: SubscribedCompetition | undefined = useAppSelector(
-    (state) => state.subscription.selectedOverviewCompetition
-  );
+  const selectedCompetitionCode = useAppSelector((state) => state.subscription.selectedCompetitionCode);
 
   const [scorers, updateScorers] = useState<CompetitionScorers>();
 
@@ -23,15 +21,17 @@ const CompetitionStatistics: React.FC = () => {
   };
 
   useEffect(() => {
-    if (selectedOverview?.code != undefined) {
-      getScorers(selectedOverview?.code);
+    if (selectedCompetitionCode != undefined) {
+      getScorers(selectedCompetitionCode);
     }
-  }, [selectedOverview?.code]);
+  }, [selectedCompetitionCode]);
+
+  const isPageLoading = !scorers || !selectedCompetitionCode;
 
   return (
     <OverviewLayout headerText="Player Stats">
       <Container fluid p={0}>
-        {scorers === undefined || !selectedOverview ? (
+        {isPageLoading ? (
           <Flex justify="center" align="center" mih="50vh">
             <OverviewLoader size={50} />
           </Flex>

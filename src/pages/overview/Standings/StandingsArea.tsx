@@ -1,6 +1,5 @@
 import { Container, Flex, Stack } from "@mantine/core";
 import CompetitionTable from "./CompetitionTable";
-import { SubscribedCompetition } from "@types";
 import { useAppSelector } from "@hooks";
 import SeasonStatisticPicker from "../Stats/SeasonStatisticPicker";
 import SeasonStatisticPickerTitle from "../Stats/SeasonStatisticPickerTitle";
@@ -10,19 +9,19 @@ import { useSeasonDates } from "../../../hooks/Standings/useSeasonDates";
 import OverviewLayout from "../OverviewLayout";
 
 const StandingsArea: React.FC = () => {
-  const selectedOverview: SubscribedCompetition | undefined = useAppSelector(
-    (state) => state.subscription.selectedOverviewCompetition
-  );
+  const selectedOverviewCode = useAppSelector((state) => state.subscription.selectedCompetitionCode);
 
-  const { standings, updateStandingsBySeason } = useStandings(selectedOverview);
+  const { standings, updateStandingsBySeason } = useStandings(selectedOverviewCode);
   const { startDate, endDate } = useSeasonDates(standings);
 
   const selectorTitle = <SeasonStatisticPickerTitle title={`${startDate} - ${endDate}`} />;
 
+  const isLoading = !standings || !selectedOverviewCode;
+
   return (
     <OverviewLayout headerText="Team Standings">
       <Container fluid>
-        {standings === undefined || !selectedOverview ? (
+        {isLoading ? (
           <Flex justify="center" align="center" mih="50vh">
             <OverviewLoader size={50} />
           </Flex>
