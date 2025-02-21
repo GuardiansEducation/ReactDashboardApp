@@ -1,8 +1,8 @@
 import { useCallback } from "react";
 import { SubscribedArea, SubscribedCompetition } from "@types";
 import { subscribeCompetition, unsubscribeCompetition } from "@store";
-import { useAppDispatch } from "./useAppDispatch";
-import { useAppSelector } from "./useAppSelector";
+import { useAppDispatch } from "../store/useAppDispatch";
+import { useAppSelector } from "../store/useAppSelector";
 
 export interface SubscribedCompetitionActions {
   subscribedCompetition?: SubscribedCompetition;
@@ -26,7 +26,7 @@ export const useSubscribedCompetition = (subscriberId: number): SubscribedCompet
         })
       );
     },
-    [subscriberId]
+    [subscriberId, dispatch]
   );
 
   const unsubscribe = useCallback(
@@ -37,7 +37,7 @@ export const useSubscribedCompetition = (subscriberId: number): SubscribedCompet
 
       dispatch(unsubscribeCompetition({ subscriptionId: subscriberId }));
     },
-    [subscriberId, subscription]
+    [subscriberId, subscription, dispatch]
   );
 
   return {

@@ -36,6 +36,6 @@ export const useCompetitions = (subscribedArea?: SubscribedArea): CompetitionsAc
 
   return {
     loading,
-    competitions: competitions,
+    competitions,
   };
 };

@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import { SubscribedAreaFactory } from "@services";
 import { SubscribedArea } from "@types";
-import { useAppSelector } from "./useAppSelector";
-import { useAppDispatch } from "./useAppDispatch";
+import { useAppSelector } from "../store/useAppSelector";
+import { useAppDispatch } from "../store/useAppDispatch";
 import { unsubscribeCompetition } from "@store";
 
 export interface AreaActions {
@@ -28,7 +28,7 @@ export const useSubscribedArea = (subscriberId: number): AreaActions => {
       const subscribedArea: SubscribedArea = SubscribedAreaFactory.createFromName(id, name);
       setArea(subscribedArea);
     },
-    [subscriberId, area]
+    [subscriberId, area, dispatch]
   );
 
   useEffect(() => {
