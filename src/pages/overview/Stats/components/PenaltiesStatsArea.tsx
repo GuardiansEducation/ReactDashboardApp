@@ -1,8 +1,6 @@
-import { useEffect, useState } from "react";
 import { Card, Stack } from "@mantine/core";
-import { Scorer } from "@types";
-import { StatisticsService } from "@services";
 import { OverviewLoader } from "@components";
+import { useTopScorers } from "@hooks";
 import { StatsAreaProps } from "./StatsAreaProps";
 import Player from "./Player";
 import StatsAreaHeader from "./StatsAreaHeader";
@@ -12,32 +10,11 @@ import SeasonStatisticPickerTitle from "./SeasonStatisticPickerTitle";
 import Penalties from "/Penalties.png";
 
 const PenaltiesStatsArea: React.FC<StatsAreaProps> = ({ competition, season, scorers }) => {
-  const [topScorers, updateTopScorers] = useState<Scorer[] | undefined>(scorers);
-  const [startDate, updateStartDate] = useState<string | undefined>(
-    season.startDate.substring(0, season.startDate.indexOf("-"))
+  const { loading, startDate, endDate, topScorers, updateScorers } = useTopScorers(
+    competition.code,
+    season,
+    scorers
   );
-  const [endDate, updateEndDate] = useState<string | undefined>(
-    season.endDate.substring(0, season.endDate.indexOf("-"))
-  );
-  const [loading, setLoading] = useState<boolean>(false);
-
-  useEffect(() => {
-    updateTopScorers(scorers);
-  }, [scorers]);
-
-  const updateScorers = async (season: string | undefined) => {
-    if (season === undefined) return;
-
-    const response = await StatisticsService.getBySeason(competition.code, season);
-
-    setLoading(true);
-
-    updateTopScorers(response.scorers);
-    updateStartDate(response.season.startDate.substring(0, response.season.startDate.indexOf("-")));
-    updateEndDate(response.season.endDate.substring(0, response.season.endDate.indexOf("-")));
-
-    setLoading(false);
-  };
 
   const sortByPenalties = () => {
     return topScorers?.slice().sort((first, second) => {
@@ -70,11 +47,7 @@ const PenaltiesStatsArea: React.FC<StatsAreaProps> = ({ competition, season, sco
   return (
     <Card shadow="sm" padding="lg" withBorder w="100%">
       <Card.Section>
-        <StatsAreaHeader
-          title="Penalties"
-          emblem={competition.emblem}
-          backgroundImage={Penalties}
-        />
+        <StatsAreaHeader title="Penalties" backgroundImage={Penalties} />
       </Card.Section>
       <Stack justify="space-between" mt="md" mb="xs">
         <SeasonStatisticPicker title={selectorTitle} updateSeason={updateScorers} />
