@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { StandingsService } from "@services";
-import { Standings } from "../../types/api/Standings";
+import { Standing } from "@types";
 
 export type SelectedSeason = {
-  standing: Standings | undefined;
+  standing: Standing | undefined;
   startDate: string | undefined;
   endDate: string | undefined;
 }

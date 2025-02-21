@@ -1,3 +1,3 @@
 export * from "./Area";
-export * from "./Team";
+export * from "./FrontEndTeam";
 export * from "./AccordionItemData"

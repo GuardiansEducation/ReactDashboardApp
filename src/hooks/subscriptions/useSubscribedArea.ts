@@ -37,7 +37,7 @@ export const useSubscribedArea = (subscriberId: number): AreaActions => {
     }
 
     setArea(subscription?.area);
-  }, []);
+  }, [subscription]);
 
   return {
     subscribedArea: area,

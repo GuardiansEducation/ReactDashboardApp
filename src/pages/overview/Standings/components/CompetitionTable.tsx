@@ -1,11 +1,11 @@
 import { Stack, Table } from "@mantine/core";
 import { standingsTHead } from "@constants";
+import { Standing } from "@types";
 import Club from "./Club";
 import Streak from "./Streak";
-import { Standings } from "../../../../types/api/Standings";
 
 export type CompetitionTableProps = {
-  standing: Standings;
+  standing: Standing;
 };
 
 const CompetitionTable: React.FC<CompetitionTableProps> = ({ standing }) => {

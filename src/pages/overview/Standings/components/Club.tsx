@@ -1,8 +1,8 @@
 import { Group, Image, Stack, Title } from "@mantine/core";
-import { StandingsInfoTeam } from "../../../../types/api/Standings";
+import { Team } from "@types";
 
 export type ClubProps = {
-  team: StandingsInfoTeam;
+  team: Team;
 };
 
 const Club: React.FC<ClubProps> = ({ team }) => {
