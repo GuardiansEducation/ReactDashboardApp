@@ -1,10 +1,10 @@
+import { AppShell, Burger, Group, Image, Title } from "@mantine/core";
 import { routes } from "@constants";
 import { useDisclosure } from "@mantine/hooks";
-import { AppShell, Burger, Group, Image, Title } from "@mantine/core";
-import { DashboardRouter, NavigateButton } from "@components";
-import logo from "/logo.svg";
+import { NavigateButton } from "@components";
 import { useAppSelector } from "@hooks";
-import { SubscribedCompetition } from "@types";
+
+import logo from "/logo.svg";
 
 const navigationLinks = [
   {
@@ -28,7 +28,11 @@ const navigationLinks = [
   },
 ];
 
-const Layout: React.FC = () => {
+export type LayoutProps = {
+  children: React.ReactNode;
+};
+
+const Layout: React.FC<LayoutProps> = ({ children }) => {
   const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
   const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
 
@@ -68,7 +72,7 @@ const Layout: React.FC = () => {
         ))}
       </AppShell.Navbar>
       <AppShell.Main>
-        <DashboardRouter />
+        {children}
       </AppShell.Main>
     </AppShell>
   );

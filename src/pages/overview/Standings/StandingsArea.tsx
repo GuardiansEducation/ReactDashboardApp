@@ -3,7 +3,7 @@ import CompetitionTable from "./components/CompetitionTable";
 import { useAppSelector } from "@hooks";
 import SeasonStatisticPicker from "../Stats/components/SeasonStatisticPicker";
 import SeasonStatisticPickerTitle from "../Stats/components/SeasonStatisticPickerTitle";
-import OverviewLoader from "../../../components/shared/OverviewLoader";
+import OverviewLoader from "../../../components/OverviewLoader";
 import { useStandings } from "../../../hooks/Standings/useStandings";
 import { useSeasonDates } from "../../../hooks/Standings/useSeasonDates";
 import OverviewLayout from "../OverviewLayout";

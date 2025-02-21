@@ -1,7 +1,7 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import { routes } from "@constants";
 import { Subscriptions } from "@pages";
-import { StandingsArea, CompetitionStatistics, FavoriteTeams } from "../../pages/overview";
+import { StandingsArea, CompetitionStatistics, FavoriteTeams } from "./overview";
 
 const DashboardRouter: React.FC = () => {
   return (

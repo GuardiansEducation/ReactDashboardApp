@@ -1,7 +1,7 @@
 import { MantineProvider } from "@mantine/core";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
-import { Layout } from "@components";
+import { DashboardRouter, Layout } from "@pages";
 import { store } from "@store";
 import customTheme from "./theme";
 
@@ -13,7 +13,9 @@ function App() {
     <BrowserRouter>
       <Provider store={store}>
         <MantineProvider theme={customTheme} defaultColorScheme="dark">
-          <Layout />
+          <Layout>
+            <DashboardRouter />
+          </Layout>
         </MantineProvider>
       </Provider>
     </BrowserRouter>
