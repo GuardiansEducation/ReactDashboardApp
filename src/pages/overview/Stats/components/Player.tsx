@@ -1,5 +1,5 @@
-import { Scorer } from "@types";
 import { Group, Title, Stack, Image, Text, Grid } from "@mantine/core";
+import { Scorer } from "@types";
 import { CountryFlag } from "@components";
 
 export type PlayerProps = {

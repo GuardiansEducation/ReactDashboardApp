@@ -1,5 +1,5 @@
 import { Group, Image, Stack, Title } from "@mantine/core";
-import { StandingsInfoTeam } from "../../../types/api/Standings";
+import { StandingsInfoTeam } from "../../../../types/api/Standings";
 
 export type ClubProps = {
   team: StandingsInfoTeam;

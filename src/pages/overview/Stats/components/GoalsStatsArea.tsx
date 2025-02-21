@@ -1,17 +1,19 @@
-import { Card, Stack } from "@mantine/core";
 import { useEffect, useState } from "react";
+import { Card, Stack } from "@mantine/core";
 import { StatsAreaProps } from "./StatsAreaProps";
 import { Scorer } from "@types";
+import { StatisticsService } from "@services";
+import { OverviewLoader } from "@components";
 import Player from "./Player";
 import StatsAreaHeader from "./StatsAreaHeader";
-import StatisticsService from "../../../services/api/statisticsService";
-import Assists from "/Assists.png";
 import SeasonStatisticPicker from "./SeasonStatisticPicker";
-import OverviewLoader from "../../../components/shared/OverviewLoader";
 import SeasonStatisticPickerTitle from "./SeasonStatisticPickerTitle";
 
-const AssistsStatsArea: React.FC<StatsAreaProps> = ({ competition, season, scorers }) => {
+import Goals from "/Goals.png";
+
+const GoalsStatsArea: React.FC<StatsAreaProps> = ({ competition, season, scorers }) => {
   const [topScorers, updateTopScorers] = useState<Scorer[] | undefined>(scorers);
+
   const [startDate, updateStartDate] = useState<string | undefined>(
     season.startDate.substring(0, season.startDate.indexOf("-"))
   );
@@ -38,26 +40,10 @@ const AssistsStatsArea: React.FC<StatsAreaProps> = ({ competition, season, score
     setLoading(false);
   };
 
-  const sortByAssists = () => {
-    return topScorers?.slice().sort((first, second) => {
-      if (getValue(first.assists) > getValue(second.assists)) {
-        return -1;
-      }
-      if (getValue(first.assists) < getValue(second.assists)) {
-        return 1;
-      }
-      return 0;
-    });
-  };
-
-  const getValue = (value: number | null) => {
-    return value != null ? value : 0;
-  };
-
-  const playerList = sortByAssists()
+  const playerList = topScorers
     ?.slice(0, 10)
     .map((player, index) => (
-      <Player key={index} scorer={player} position={++index} value={player.assists} />
+      <Player key={index} scorer={player} position={++index} value={player.goals} />
     ));
 
   const selectorTitle = (
@@ -69,7 +55,7 @@ const AssistsStatsArea: React.FC<StatsAreaProps> = ({ competition, season, score
   return (
     <Card shadow="sm" padding="lg" withBorder w="100%">
       <Card.Section>
-        <StatsAreaHeader title="Assists" emblem={competition.emblem} backgroundImage={Assists} />
+        <StatsAreaHeader title="Goals" emblem={competition.emblem} backgroundImage={Goals} />
       </Card.Section>
       <Stack justify="space-between" mt="md" mb="xs">
         <SeasonStatisticPicker title={selectorTitle} updateSeason={updateScorers} />
@@ -79,4 +65,4 @@ const AssistsStatsArea: React.FC<StatsAreaProps> = ({ competition, season, score
   );
 };
 
-export default AssistsStatsArea;
+export default GoalsStatsArea;

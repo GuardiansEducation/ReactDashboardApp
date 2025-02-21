@@ -2,7 +2,7 @@ import { Stack, Table } from "@mantine/core";
 import Club from "./Club";
 import { standingsTHead } from "@constants";
 import Streak from "./Streak";
-import { CompetitionStandings } from "../../../types/api/Standings";
+import { CompetitionStandings } from "../../../../types/api/Standings";
 
 export type CompetitionTableProps = {
   standings: CompetitionStandings | undefined;

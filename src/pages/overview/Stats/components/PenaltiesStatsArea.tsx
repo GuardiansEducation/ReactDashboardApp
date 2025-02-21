@@ -1,18 +1,18 @@
-import { Card, Stack } from "@mantine/core";
 import { useEffect, useState } from "react";
-import { StatsAreaProps } from "./StatsAreaProps";
+import { Card, Stack } from "@mantine/core";
 import { Scorer } from "@types";
+import { StatisticsService } from "@services";
+import { OverviewLoader } from "@components";
+import { StatsAreaProps } from "./StatsAreaProps";
 import Player from "./Player";
-import StatisticsService from "../../../services/api/statisticsService";
 import StatsAreaHeader from "./StatsAreaHeader";
-import Goals from "/Goals.png";
 import SeasonStatisticPicker from "./SeasonStatisticPicker";
-import OverviewLoader from "../../../components/shared/OverviewLoader";
 import SeasonStatisticPickerTitle from "./SeasonStatisticPickerTitle";
 
-const GoalsStatsArea: React.FC<StatsAreaProps> = ({ competition, season, scorers }) => {
-  const [topScorers, updateTopScorers] = useState<Scorer[] | undefined>(scorers);
+import Penalties from "/Penalties.png";
 
+const PenaltiesStatsArea: React.FC<StatsAreaProps> = ({ competition, season, scorers }) => {
+  const [topScorers, updateTopScorers] = useState<Scorer[] | undefined>(scorers);
   const [startDate, updateStartDate] = useState<string | undefined>(
     season.startDate.substring(0, season.startDate.indexOf("-"))
   );
@@ -28,9 +28,9 @@ const GoalsStatsArea: React.FC<StatsAreaProps> = ({ competition, season, scorers
   const updateScorers = async (season: string | undefined) => {
     if (season === undefined) return;
 
-    setLoading(true);
-
     const response = await StatisticsService.getBySeason(competition.code, season);
+
+    setLoading(true);
 
     updateTopScorers(response.scorers);
     updateStartDate(response.season.startDate.substring(0, response.season.startDate.indexOf("-")));
@@ -39,10 +39,26 @@ const GoalsStatsArea: React.FC<StatsAreaProps> = ({ competition, season, scorers
     setLoading(false);
   };
 
-  const playerList = topScorers
+  const sortByPenalties = () => {
+    return topScorers?.slice().sort((first, second) => {
+      if (getValue(first.penalties) > getValue(second.penalties)) {
+        return -1;
+      }
+      if (getValue(first.penalties) < getValue(second.penalties)) {
+        return 1;
+      }
+      return 0;
+    });
+  };
+
+  const getValue = (value: number | null) => {
+    return value != null ? value : 0;
+  };
+
+  const playerList = sortByPenalties()
     ?.slice(0, 10)
     .map((player, index) => (
-      <Player key={index} scorer={player} position={++index} value={player.goals} />
+      <Player key={index} scorer={player} position={++index} value={player.penalties} />
     ));
 
   const selectorTitle = (
@@ -54,7 +70,11 @@ const GoalsStatsArea: React.FC<StatsAreaProps> = ({ competition, season, scorers
   return (
     <Card shadow="sm" padding="lg" withBorder w="100%">
       <Card.Section>
-        <StatsAreaHeader title="Goals" emblem={competition.emblem} backgroundImage={Goals} />
+        <StatsAreaHeader
+          title="Penalties"
+          emblem={competition.emblem}
+          backgroundImage={Penalties}
+        />
       </Card.Section>
       <Stack justify="space-between" mt="md" mb="xs">
         <SeasonStatisticPicker title={selectorTitle} updateSeason={updateScorers} />
@@ -64,4 +84,4 @@ const GoalsStatsArea: React.FC<StatsAreaProps> = ({ competition, season, scorers
   );
 };
 
-export default GoalsStatsArea;
+export default PenaltiesStatsArea;

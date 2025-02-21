@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Accordion, ComboboxItem, Group, Space } from "@mantine/core";
-import { useSubscribedArea, useSubscribedCompetition } from "@hooks";
 import { IconUsersGroup, IconTournament } from "@tabler/icons-react";
+import { useSubscribedArea, useSubscribedCompetition } from "@hooks";
 import { AccordionItemData } from "@types";
-import { AreaSelect } from "../shared";
+import { AreaSelect } from "@components";
 import CompetitionsSection from "./CompetitionsSection";
 import TeamsSection from "./TeamsSection";
 

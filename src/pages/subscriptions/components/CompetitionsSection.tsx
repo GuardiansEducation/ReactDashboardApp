@@ -1,6 +1,6 @@
 import { useCallback } from "react";
-import { SubscribedArea, SubscribedCompetition } from "@types";
 import { Table, Image, Button, Group, Text, Center, Loader } from "@mantine/core";
+import { SubscribedArea, SubscribedCompetition } from "@types";
 import { useCompetitions, useSubscribedCompetition } from "@hooks";
 
 export interface CompetitionsSectionProps {

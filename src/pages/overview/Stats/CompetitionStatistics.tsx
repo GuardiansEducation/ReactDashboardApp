@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import StatisticsService from "../../../services/api/statisticsService";
-import { CompetitionScorers } from "@types";
 import { Container, Flex } from "@mantine/core";
-import GoalsStatsArea from "./GoalsStatsArea";
-import AssistStatsArea from "./AssistsStatsArea";
-import PenaltiesStatArea from "./PenaltiesStatsArea";
+import { CompetitionScorers } from "@types";
 import { useAppSelector } from "@hooks";
-import OverviewLoader from "../../../components/shared/OverviewLoader";
+import { OverviewLoader } from "@components";
+import { StatisticsService } from "@services";
 import OverviewLayout from "../OverviewLayout";
+import GoalsStatsArea from "./components/GoalsStatsArea";
+import AssistStatsArea from "./components/AssistsStatsArea";
+import PenaltiesStatArea from "./components/PenaltiesStatsArea";
 
 const CompetitionStatistics: React.FC = () => {
   const selectedCompetitionCode = useAppSelector((state) => state.subscription.selectedCompetitionCode);
