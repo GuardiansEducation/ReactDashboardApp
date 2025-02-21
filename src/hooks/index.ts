@@ -5,3 +5,4 @@ export * from "./useSubscribedArea";
 export * from "./useCompetitions";
 export * from "./useTeams";
 export * from "./useFollowedTeams";
+export * from "./Standings";

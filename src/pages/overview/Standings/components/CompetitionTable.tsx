@@ -1,14 +1,14 @@
 import { Stack, Table } from "@mantine/core";
-import Club from "./Club";
 import { standingsTHead } from "@constants";
+import Club from "./Club";
 import Streak from "./Streak";
-import { CompetitionStandings } from "../../../../types/api/Standings";
+import { Standings } from "../../../../types/api/Standings";
 
 export type CompetitionTableProps = {
-  standings: CompetitionStandings | undefined;
+  standing: Standings;
 };
 
-const CompetitionTable: React.FC<CompetitionTableProps> = ({ standings }) => {
+const CompetitionTable: React.FC<CompetitionTableProps> = ({ standing }) => {
   return (
     <Stack align="stretch" justify="center" gap="xs">
       <Table striped>
@@ -27,7 +27,7 @@ const CompetitionTable: React.FC<CompetitionTableProps> = ({ standings }) => {
           </Table.Tr>
         </Table.Thead>
         <Table.Tbody>
-          {standings?.standings[0].table.map((element) => (
+          {standing.table.map((element) => (
             <Table.Tr key={element.team.name}>
               <Table.Td>{element.position}</Table.Td>
               <Table.Td>

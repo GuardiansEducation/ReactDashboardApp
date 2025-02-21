@@ -16,7 +16,7 @@ const SeasonStatisticPicker: React.FC<SeasonStatisticPickerProps> = ({ title, up
           updateSeason(season);
         }}
         label="Filter by Season"
-        data={["2024/25", "2023/24", "2022/23"]}
+        data={["2024/25", "2023/24"]}
         defaultValue="2024/25"
       />
     </Stack>
