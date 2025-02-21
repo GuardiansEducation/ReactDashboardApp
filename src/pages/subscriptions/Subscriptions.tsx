@@ -1,9 +1,9 @@
 import { Grid, Paper, Space } from "@mantine/core";
-import { ComboboxItemFactory } from "@services";
-import { Subscriber } from "@components";
-import { areas } from "@constants";
-import PageHeaderLayout from "../PageHeaderLayout";
 import { IconBrandStripe } from "@tabler/icons-react";
+import { ComboboxItemFactory } from "@services";
+import { areas } from "@constants";
+import Subscriber from "./components/Subscriber";
+import PageHeaderLayout from "../PageHeaderLayout";
 
 const Subscriptions: React.FC = () => {
   const data = ComboboxItemFactory.create(areas);

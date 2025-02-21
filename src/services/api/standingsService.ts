@@ -1,6 +1,6 @@
 import { AxiosInstance } from "axios";
+import { CompetitionStandings } from "@types";
 import api from "./footballApi";
-import { CompetitionStandings } from "../../types/api/Standings";
 
 class StandingsService {
   private instance: AxiosInstance;

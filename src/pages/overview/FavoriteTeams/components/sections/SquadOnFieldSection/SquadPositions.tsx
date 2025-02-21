@@ -1,7 +1,6 @@
 import { TeamMember, TeamMemberPosition } from "@types";
 import SvgPositionMark, { MarkProperties } from "./SvgPositionMark";
 import * as MARK from "./constants/markConstants";
-import { text } from "stream/consumers";
 
 export type SquadPositionsProps = {
   squad: TeamMember[];
