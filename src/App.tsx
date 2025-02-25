@@ -6,7 +6,6 @@ import { store } from "@store";
 import customTheme from "./theme";
 
 import "@mantine/core/styles.css";
-import "./App.css";
 
 function App() {
   return (

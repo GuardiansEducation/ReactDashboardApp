@@ -1,11 +1,11 @@
+import { AxiosInstance } from "axios";
 import { TeamList, TeamListItem, TeamMatches } from "@types";
-import { cachedApi } from "./footballApi";
-import { AxiosCacheInstance } from "axios-cache-interceptor";
+import api from "./footballApi";
 
 class TeamService {
-  private instance: AxiosCacheInstance;
+  private instance: AxiosInstance;
 
-  constructor(instance: AxiosCacheInstance) {
+  constructor(instance: AxiosInstance) {
     this.instance = instance;
   }
 
@@ -34,4 +34,4 @@ class TeamService {
   }
 }
 
-export default new TeamService(cachedApi);
+export default new TeamService(api);

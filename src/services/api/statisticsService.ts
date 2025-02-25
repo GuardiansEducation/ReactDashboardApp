@@ -1,11 +1,11 @@
+import { AxiosInstance } from "axios";
 import { CompetitionScorers } from "@types";
-import { cachedApi } from "./footballApi";
-import { AxiosCacheInstance } from "axios-cache-interceptor";
+import api from "./footballApi";
 
 class StatisticsService {
-  private instance: AxiosCacheInstance;
+  private instance: AxiosInstance;
 
-  constructor(instance: AxiosCacheInstance) {
+  constructor(instance: AxiosInstance) {
     this.instance = instance;
   }
 
@@ -26,4 +26,4 @@ class StatisticsService {
   }
 }
 
-export default new StatisticsService(cachedApi);
+export default new StatisticsService(api);
