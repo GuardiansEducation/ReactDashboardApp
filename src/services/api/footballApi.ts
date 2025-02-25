@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from "axios";
-import { setupCache, buildWebStorage } from 'axios-cache-interceptor';
-import rateLimit from 'axios-rate-limit';
+import { cachingRequestInterceptor, cachingResponseErrorInterceptor, cachingResponseInterceptor } from "./infrastructure/caching";
+import { rateLimitInterceptor } from "./infrastructure/rateLimit";
 
 const token = FOOTBALL_API_TOKEN;
 
@@ -11,13 +11,9 @@ const baseApi: AxiosInstance = axios.create({
   maxRedirects: 0,
 });
 
-const cachedApi: AxiosInstance = setupCache(baseApi, {
-  storage: buildWebStorage(sessionStorage, 'axios-cache:')
-}) as unknown as AxiosInstance;
+baseApi.interceptors.request.use(rateLimitInterceptor);
+baseApi.interceptors.request.use(cachingRequestInterceptor);
 
-const rateLimitedApi: AxiosInstance = rateLimit(cachedApi, {
-  maxRequests: 10,
-  perMilliseconds: 60000,
-});
+baseApi.interceptors.response.use(cachingResponseInterceptor, cachingResponseErrorInterceptor)
 
-export default rateLimitedApi;
+export default baseApi;
