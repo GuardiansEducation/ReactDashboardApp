@@ -1,7 +1,8 @@
-import { Table, Image, Loader, Center, Group, Text, Pagination, Stack } from "@mantine/core";
+import { Table, Image, Center, Group, Text, Pagination, Stack } from "@mantine/core";
 import { useFollowedTeams, useTeams } from "@hooks";
 import { useCallback, useState } from "react";
 import { SubscribedTeam } from "@types";
+import { CustomLoader } from "@components";
 import UnsubscribeButton from "./UnsubscribeButton";
 import SubscribeButton from "./SubscribeButton";
 
@@ -44,11 +45,7 @@ const TeamsSection: React.FC<TeamsProps> = ({ subscriptionId }) => {
   );
 
   if (loading) {
-    return (
-      <Center>
-        <Loader />
-      </Center>
-    );
+    return (<CustomLoader size={40}/>);
   }
 
   return (

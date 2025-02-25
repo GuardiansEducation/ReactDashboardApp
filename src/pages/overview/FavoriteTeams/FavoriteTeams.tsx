@@ -1,6 +1,6 @@
 import { Center, Flex } from "@mantine/core";
 import { useAppSelector, useTeamData } from "@hooks";
-import { CommonAlert, OverviewLoader } from "@components";
+import { CommonAlert, CustomLoader } from "@components";
 import TeamCard from "./components/TeamCard";
 import OverviewLayout from "../OverviewLayout";
 
@@ -17,7 +17,7 @@ const FavoriteTeams: React.FC = () => {
 
   const loadingComponent = (
     <Flex align="center" justify="center" h="50vh">
-      <OverviewLoader size={50} />
+      <CustomLoader size={50} />
     </Flex>
   );
 
