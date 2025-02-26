@@ -12,7 +12,7 @@ export const useCompetitions = (subscribedArea?: SubscribedArea): CompetitionsAc
   const [competitions, setCompetitions] = useState<SubscribedCompetition[]>([]);
 
   useEffect(() => {
-    if (subscribedArea == null) {
+    if (!subscribedArea) {
       return;
     }
 

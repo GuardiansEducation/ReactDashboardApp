@@ -1,6 +1,7 @@
 export * from "./store/useAppDispatch";
 export * from "./store/useAppSelector";
 export * from "./subscriptions/useSubscribedCompetition";
+export * from "./subscriptions/useSubscribedCompetitions";
 export * from "./subscriptions/useSubscribedArea";
 export * from "./subscriptions/useCompetitions";
 export * from "./subscriptions/useTeams";

@@ -25,25 +25,25 @@ const Subscriber: React.FC<SubscriberProps> = ({ id, areas }) => {
       id: competitionsItemId,
       label: "Competitions",
       icon: <IconTournament />,
-      disabled: subscribedArea == null,
+      disabled: !subscribedArea,
       content: <CompetitionsSection subscriptionId={id} subscribedArea={subscribedArea} />,
     },
     {
       id: teamItemId,
       label: "Followed Teams",
       icon: <IconUsersGroup />,
-      disabled: subscribedCompetition == null,
+      disabled: !subscribedCompetition,
       content: <TeamsSection subscriptionId={id} />,
     },
   ];
 
   useEffect(() => {
-    if (subscribedArea == null) {
+    if (!subscribedArea) {
       setSelectedItem(null);
       return;
     }
 
-    if (subscribedCompetition == null) {
+    if (!subscribedCompetition) {
       setSelectedItem(competitionsItemId);
       return;
     }

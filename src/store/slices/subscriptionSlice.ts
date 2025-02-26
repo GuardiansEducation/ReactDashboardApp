@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { SubscribedArea, SubscribedCompetition, SubscribedTeam, SubscriptionStore } from "@types";
 
+const subscribedTeamsLimit = 2;
+
 const initialState: SubscriptionStore = {
   subscriptions: [],
   selectedCompetitionCode: undefined,
@@ -19,6 +21,10 @@ const subscriptionSlice = createSlice({
       }>
     ) => {
       const { subscriptionId, area, competition } = action.payload;
+      if (state.subscriptions.some((x) => x.competition.id === competition.id)) {
+        return;
+      }
+
       state.subscriptions = [
         ...state.subscriptions.filter((x) => x.id !== subscriptionId),
         { id: subscriptionId, area, competition },
@@ -48,7 +54,13 @@ const subscriptionSlice = createSlice({
       }
 
       const { competition } = state.subscriptions[index];
-      competition.teams = [...competition.teams.filter((x) => x.id !== team.id), team];
+      const subscribedTeams = competition.teams.filter((x) => x.id !== team.id);
+      if (subscribedTeams.length < subscribedTeamsLimit) {
+        competition.teams = [...subscribedTeams, team];
+        return;
+      }
+
+      competition.teams = [...subscribedTeams.slice(1, subscribedTeamsLimit), team];
     },
     unsubscribeCompetitionTeam: (
       state,
