@@ -1,4 +1,5 @@
 import { InternalAxiosRequestConfig } from "axios";
+import { apiThrottledKey } from "@constants";
 
 let lastInvocationTime: number | undefined = undefined;
 
@@ -7,6 +8,18 @@ const maxRequests = 10;
 const intervalPerMilliseconds = 60000;
 
 const requestQueue: Array<() => void> = [];
+
+const setRateLimitedFlag = () => {
+  const isApiRateLimited = sessionStorage.getItem(apiThrottledKey);
+
+  if (!isApiRateLimited) {
+    sessionStorage.setItem(apiThrottledKey, "true");
+  }
+}
+
+const clearRateLimitedFlag = () => {
+  sessionStorage.removeItem(apiThrottledKey);
+}
 
 const processQueue = () => {
   if (requestQueue.length <= 0) {
@@ -23,6 +36,7 @@ const processQueue = () => {
 
   if (requestCount >= maxRequests) {
     const delay = intervalPerMilliseconds - timeSinceLastInvocation;
+    setRateLimitedFlag();
     setTimeout(processQueue, delay);
     return;
   }
@@ -30,6 +44,8 @@ const processQueue = () => {
   requestCount++;
   lastInvocationTime = now;
   const nextRequest = requestQueue.shift();
+
+  clearRateLimitedFlag();
   nextRequest!();
 };
 

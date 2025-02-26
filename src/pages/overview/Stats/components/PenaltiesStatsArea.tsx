@@ -40,7 +40,7 @@ const PenaltiesStatsArea: React.FC<StatsAreaProps> = ({ competition, season, sco
 
   const selectorTitle = (
     <SeasonStatisticPickerTitle title={`${startDate} - ${endDate}`}>
-      {loading && <CustomLoader />}
+      {loading && <CustomLoader variant="horizontal" />}
     </SeasonStatisticPickerTitle>
   );
 

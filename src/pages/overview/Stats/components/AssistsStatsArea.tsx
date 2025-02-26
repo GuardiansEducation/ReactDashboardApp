@@ -40,7 +40,7 @@ const AssistsStatsArea: React.FC<StatsAreaProps> = ({ competition, season, score
 
   const selectorTitle = (
     <SeasonStatisticPickerTitle title={`${startDate} - ${endDate}`}>
-      {loading && <CustomLoader />}
+      {loading && <CustomLoader variant="horizontal" />}
     </SeasonStatisticPickerTitle>
   );
 

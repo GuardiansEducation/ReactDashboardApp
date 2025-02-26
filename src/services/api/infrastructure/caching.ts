@@ -1,14 +1,13 @@
 import { AxiosResponse, InternalAxiosRequestConfig } from "axios";
+import { apiCacheKeyPrefix } from "@constants";
 
 type CachedRejection = {
   config: InternalAxiosRequestConfig;
   cachedResponse: AxiosResponse;
 };
 
-const cacheKeyPrefix = 'axios-cache:';
-
 const getCacheKey = (config: InternalAxiosRequestConfig) => {
-  return `${cacheKeyPrefix}${config.method}:${config.url}`;
+  return `${apiCacheKeyPrefix}${config.method}:${config.url}`;
 };
 
 const setCache = (key: string, data: AxiosResponse) => {
