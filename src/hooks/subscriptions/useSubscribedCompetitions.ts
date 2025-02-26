@@ -9,8 +9,8 @@ export interface SubscribedCompetitionsActions {
 
 const selectSubscribedCompetitions = createSelector(
   [(state: RootState) => state.subscription.subscriptions],
-  (subscribtions) => {
-    return subscribtions.map((x) => x.competition);
+  (subscriptions) => {
+    return subscriptions.map((x) => x.competition);
   }
 );
 
