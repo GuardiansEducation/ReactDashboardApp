@@ -1,7 +1,7 @@
-import { TeamListItem, FrontEndTeam } from "@types";
+import { TeamListItem, SubscribedTeam } from "@types";
 
 class TeamFactory {
-  create(team: TeamListItem): FrontEndTeam {
+  create(team: TeamListItem): SubscribedTeam {
     return {
       name: team.shortName,
       logo: team.crest,

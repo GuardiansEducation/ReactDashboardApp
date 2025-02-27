@@ -22,7 +22,7 @@ const CountryFlag = forwardRef<HTMLSpanElement, CountryFlagProps>(({ countryFull
   const countryCode = () => {
     const countryCode = iso.whereCountry(countryFullName)?.alpha2.toLocaleLowerCase();
 
-    if (countryCode === undefined) {
+    if (!countryCode) {
       const gbRegion = unknownCountries.get(countryFullName);
 
       return gbRegion != undefined ? gbRegion : defaultFlagCode;

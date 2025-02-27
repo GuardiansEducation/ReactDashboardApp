@@ -2,11 +2,12 @@ import { useCallback, useMemo } from "react";
 import { subscribeCompetitionTeam, unsubscribeCompetitionTeam } from "@store";
 import { useAppDispatch } from "../store/useAppDispatch";
 import { useAppSelector } from "../store/useAppSelector";
+import { SubscribedTeam } from "@types";
 
 export interface FollowTeamsActions {
   followedTeams: number[];
-  subscribe: (teamId: number) => void;
-  unsubscribe: (teamId: number) => void;
+  subscribe: (team: SubscribedTeam) => void;
+  unsubscribe: (team: SubscribedTeam) => void;
 }
 
 export const useFollowedTeams = (subscriptionId: number): FollowTeamsActions => {
@@ -21,11 +22,11 @@ export const useFollowedTeams = (subscriptionId: number): FollowTeamsActions => 
   );
 
   const subscribe = useCallback(
-    (teamId: number) => {
+    (team: SubscribedTeam) => {
       dispatch(
         subscribeCompetitionTeam({
           subscriptionId,
-          team: { id: teamId },
+          team,
         })
       );
     },
@@ -33,11 +34,11 @@ export const useFollowedTeams = (subscriptionId: number): FollowTeamsActions => 
   );
 
   const unsubscribe = useCallback(
-    (teamId: number) => {
+    (team: SubscribedTeam) => {
       dispatch(
         unsubscribeCompetitionTeam({
           subscriptionId,
-          teamId,
+          teamId: team.id,
         })
       );
     },

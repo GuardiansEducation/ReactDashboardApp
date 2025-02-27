@@ -1,7 +1,9 @@
 import { useCallback } from "react";
-import { Table, Image, Button, Group, Text, Center, Loader } from "@mantine/core";
+import { Table, Image, Group, Text, Center, Loader } from "@mantine/core";
 import { SubscribedArea, SubscribedCompetition } from "@types";
-import { useCompetitions, useSubscribedCompetition } from "@hooks";
+import { useCompetitions, useSubscribedCompetition, useSubscribedCompetitions } from "@hooks";
+import UnsubscribeButton from "./UnsubscribeButton";
+import SubscribeButton from "./SubscribeButton";
 
 export interface CompetitionsSectionProps {
   subscriptionId: number;
@@ -12,43 +14,37 @@ const CompetitionsSection: React.FC<CompetitionsSectionProps> = ({
   subscriptionId,
   subscribedArea,
 }) => {
+  const { subscribedCompetitions } = useSubscribedCompetitions();
   const { loading, competitions } = useCompetitions(subscribedArea);
-  const { subscribedCompetition, subscribe, unsubscribe } = useSubscribedCompetition(subscriptionId);
+  const { subscribedCompetition, subscribe, unsubscribe } =
+    useSubscribedCompetition(subscriptionId);
 
   const getSubscriptionButton = useCallback(
     (competition: SubscribedCompetition) => {
-      if (subscribedArea == null) {
+      if (!subscribedArea) {
         return;
       }
 
       if (competition.id === subscribedCompetition?.id) {
         return (
-          <Button
-            color="red"
-            size="compact-xs"
-            variant="outline"
+          <UnsubscribeButton
             onClick={() => {
               unsubscribe(competition);
             }}
-          >
-            Unsubscribe
-          </Button>
+          />
         );
       }
 
       return (
-        <Button
-          size="compact-xs"
-          variant="gradient"
+        <SubscribeButton
+          disabled={subscribedCompetitions.some((x) => x.id === competition.id)}
           onClick={() => {
             subscribe(subscribedArea, competition);
           }}
-        >
-          Subscribe
-        </Button>
+        />
       );
     },
-    [subscribedArea, subscribedCompetition, subscribe, unsubscribe]
+    [subscribedArea, subscribedCompetitions, subscribedCompetition, subscribe, unsubscribe]
   );
 
   if (loading) {
@@ -70,7 +66,9 @@ const CompetitionsSection: React.FC<CompetitionsSectionProps> = ({
                 <Text size="xs">{x.name}</Text>
               </Group>
             </Table.Td>
-            <Table.Td>{getSubscriptionButton(x)}</Table.Td>
+            <Table.Td ta="center" w="33%">
+              {getSubscriptionButton(x)}
+            </Table.Td>
           </Table.Tr>
         ))}
       </Table.Tbody>

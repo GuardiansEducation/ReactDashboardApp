@@ -32,7 +32,7 @@ export const useSubscribedArea = (subscriberId: number): AreaActions => {
   );
 
   useEffect(() => {
-    if (subscription == null) {
+    if (!subscription) {
       return;
     }
 

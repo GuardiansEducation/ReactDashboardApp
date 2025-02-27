@@ -1,13 +1,47 @@
-import { Checkbox, Table, Image, ScrollArea, Loader, Center, Group, Text } from "@mantine/core";
+import { Table, Image, Loader, Center, Group, Text, Pagination, Stack } from "@mantine/core";
 import { useFollowedTeams, useTeams } from "@hooks";
+import { useCallback, useState } from "react";
+import { SubscribedTeam } from "@types";
+import UnsubscribeButton from "./UnsubscribeButton";
+import SubscribeButton from "./SubscribeButton";
+
+const pageSize = 8;
+const initialPage = 1;
 
 export interface TeamsProps {
   subscriptionId: number;
 }
 
 const TeamsSection: React.FC<TeamsProps> = ({ subscriptionId }) => {
+  const [page, setPage] = useState(initialPage);
   const { loading, teams } = useTeams(subscriptionId);
   const { followedTeams, subscribe, unsubscribe } = useFollowedTeams(subscriptionId);
+
+  const totalPages = Math.ceil(teams.length / pageSize);
+  const currentPageTeams = teams.slice((page - 1) * pageSize, page * pageSize);
+
+  const getSubscriptionButton = useCallback(
+    (team: SubscribedTeam) => {
+      if (followedTeams.includes(team.id)) {
+        return (
+          <UnsubscribeButton
+            onClick={() => {
+              unsubscribe(team);
+            }}
+          />
+        );
+      }
+
+      return (
+        <SubscribeButton
+          onClick={() => {
+            subscribe(team);
+          }}
+        />
+      );
+    },
+    [followedTeams, subscribe, unsubscribe]
+  );
 
   if (loading) {
     return (
@@ -17,36 +51,35 @@ const TeamsSection: React.FC<TeamsProps> = ({ subscriptionId }) => {
     );
   }
 
-  const rows = teams.map((team) => (
-    <Table.Tr key={team.id}>
-      <Table.Td>
-        <Group>
-          <Image w={25} src={team.logo} />
-          <Text size="xs">{team.name}</Text>
-        </Group>
-      </Table.Td>
-      <Table.Td>
-        <Group>
-          <Checkbox
-            aria-label="Follow team"
-            checked={followedTeams.includes(team.id)}
-            onChange={(event) => {
-              if (event.currentTarget.checked) subscribe(team.id);
-              else unsubscribe(team.id);
-            }}
-          />
-          <Text size="xs">Follow</Text>
-        </Group>
-      </Table.Td>
-    </Table.Tr>
-  ));
-
   return (
-    <ScrollArea h={400}>
+    <Stack mih={385} justify="space-between">
       <Table>
-        <Table.Tbody>{rows}</Table.Tbody>
+        <Table.Tbody>
+          {currentPageTeams.map((x) => (
+            <Table.Tr key={x.id}>
+              <Table.Td>
+                <Group>
+                  <Image w={25} src={x.logo} />
+                  <Text size="xs">{x.name}</Text>
+                </Group>
+              </Table.Td>
+              <Table.Td ta="center" w="33%">
+                {getSubscriptionButton(x)}
+              </Table.Td>
+            </Table.Tr>
+          ))}
+        </Table.Tbody>
       </Table>
-    </ScrollArea>
+      <Center>
+        <Pagination
+          total={totalPages}
+          value={page}
+          onChange={setPage}
+          color="orange"
+          withControls={false}
+        />
+      </Center>
+    </Stack>
   );
 };
 

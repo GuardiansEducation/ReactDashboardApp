@@ -25,7 +25,7 @@ export const useTopScorers = (
   );
 
   const updateScorers = async (season: string | undefined) => {
-    if (season === undefined) return;
+    if (!season) return;
     try {
       setLoading(true);
       const response = await StatisticsService.getBySeason(code, season);
