@@ -1,0 +1,53 @@
+name: Build Application
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository (latest version)
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Set up Node.js (latest version)
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22 # Use the latest LTS or a version compatible with your project
+          cache: 'npm'
+
+      # Install dependencies
+      - name: Install dependencies
+        run: npm ci
+
+      # Build the project
+      - name: Build project
+        run: npm run build
+        
+      # Configure AWS credentials
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            aws-region: ${{ secrets.AWS_REGION }}
+
+      # Deploy build to S3 bucket
+      - name: Deploy to S3
+        run: |
+            SOURCE="dist/"
+            DEST="s3://guardians-dashboard"
+
+            echo "Purging destination folder..."
+            aws s3 rm $DEST --recursive
+
+            echo "Copying new files..."
+            aws s3 cp $SOURCE $DEST --recursive
