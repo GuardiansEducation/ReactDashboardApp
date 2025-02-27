@@ -11,7 +11,7 @@ class StatisticsService {
 
   async get(id: string): Promise<CompetitionScorers> {
     const response = await this.instance.get<CompetitionScorers>(
-      `/football/competitions/${id}/scorers?limit=300`
+      `/competitions/${id}/scorers?limit=300`
     );
 
     return response.data;
@@ -19,7 +19,7 @@ class StatisticsService {
 
   async getBySeason(id: string, season: string): Promise<CompetitionScorers> {
     const response = await this.instance.get<CompetitionScorers>(
-      `/football/competitions/${id}/scorers?limit=300&season=${season}`
+      `/competitions/${id}/scorers?limit=300&season=${season}`
     );
 
     return response.data;
