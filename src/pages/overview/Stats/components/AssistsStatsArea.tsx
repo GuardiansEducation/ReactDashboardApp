@@ -1,5 +1,5 @@
 import { Card, Stack } from "@mantine/core";
-import { OverviewLoader } from "@components";
+import { CustomLoader } from "@components";
 import { useTopScorers } from "@hooks";
 import { StatsAreaProps } from "./StatsAreaProps";
 import Player from "./Player";
@@ -40,7 +40,7 @@ const AssistsStatsArea: React.FC<StatsAreaProps> = ({ competition, season, score
 
   const selectorTitle = (
     <SeasonStatisticPickerTitle title={`${startDate} - ${endDate}`}>
-      {loading && <OverviewLoader />}
+      {loading && <CustomLoader variant="horizontal" />}
     </SeasonStatisticPickerTitle>
   );
 

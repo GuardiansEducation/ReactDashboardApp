@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Container, Flex } from "@mantine/core";
 import { CompetitionScorers } from "@types";
 import { useAppSelector } from "@hooks";
-import { OverviewLoader } from "@components";
+import { CustomLoader } from "@components";
 import { StatisticsService } from "@services";
 import OverviewLayout from "../OverviewLayout";
 import GoalsStatsArea from "./components/GoalsStatsArea";
@@ -33,7 +33,7 @@ const CompetitionStatistics: React.FC = () => {
       <Container fluid p={0}>
         {isPageLoading ? (
           <Flex justify="center" align="center" mih="50vh">
-            <OverviewLoader size={50} />
+            <CustomLoader size={50} />
           </Flex>
         ) : (
           <Flex justify="center" align="flex-start" gap="md" wrap="wrap" mt="md">

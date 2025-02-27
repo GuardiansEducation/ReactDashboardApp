@@ -1,19 +1,19 @@
-import axios from "axios";
-import { setupCache, buildWebStorage } from 'axios-cache-interceptor';
+import axios, { AxiosInstance } from "axios";
+import { cachingRequestInterceptor, cachingResponseErrorInterceptor, cachingResponseInterceptor } from "./infrastructure/caching";
+import { rateLimitInterceptor } from "./infrastructure/rateLimit";
 
 const token = FOOTBALL_API_TOKEN;
 
-const api = axios.create({
-  // baseURL: `${base_uri}`,
+const baseApi: AxiosInstance = axios.create({
   headers: {
     "X-Auth-Token": `${token}`,
   },
   maxRedirects: 0,
 });
 
-const cachedApi = setupCache(api, {
-  storage: buildWebStorage(sessionStorage, 'axios-cache:')
-})
+baseApi.interceptors.request.use(rateLimitInterceptor);
+baseApi.interceptors.request.use(cachingRequestInterceptor);
 
-export default api;
-export { api, cachedApi };
+baseApi.interceptors.response.use(cachingResponseInterceptor, cachingResponseErrorInterceptor)
+
+export default baseApi;

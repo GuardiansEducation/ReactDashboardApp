@@ -1,7 +1,8 @@
 import { useCallback } from "react";
-import { Table, Image, Group, Text, Center, Loader } from "@mantine/core";
+import { Table, Image, Group, Text } from "@mantine/core";
 import { SubscribedArea, SubscribedCompetition } from "@types";
 import { useCompetitions, useSubscribedCompetition, useSubscribedCompetitions } from "@hooks";
+import { CustomLoader } from "@components";
 import UnsubscribeButton from "./UnsubscribeButton";
 import SubscribeButton from "./SubscribeButton";
 
@@ -48,11 +49,7 @@ const CompetitionsSection: React.FC<CompetitionsSectionProps> = ({
   );
 
   if (loading) {
-    return (
-      <Center>
-        <Loader />
-      </Center>
-    );
+    return (<CustomLoader size={40} />);
   }
 
   return (
