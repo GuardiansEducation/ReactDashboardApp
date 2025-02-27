@@ -10,16 +10,14 @@ class StandingsService {
   }
 
   async get(id: string): Promise<CompetitionStandings> {
-    const response = await this.instance.get<CompetitionStandings>(
-      `/football/competitions/${id}/standings`
-    );
+    const response = await this.instance.get<CompetitionStandings>(`/competitions/${id}/standings`);
 
     return response.data;
   }
 
   async getBySeason(id: string, season: string): Promise<CompetitionStandings> {
     const response = await this.instance.get<CompetitionStandings>(
-      `/football/competitions/${id}/standings?season=${season}`
+      `/competitions/${id}/standings?season=${season}`
     );
 
     return response.data;
