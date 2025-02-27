@@ -7,10 +7,10 @@ import {
 import { rateLimitInterceptor } from "./infrastructure/rateLimit";
 
 const token = FOOTBALL_API_TOKEN;
-const baseApiUrl = IS_PRODUCTION ? `${FOOTBALL_API_BASE_URL}v4` : "/football";
+// const baseApiUrl = IS_PRODUCTION ? `${FOOTBALL_API_BASE_URL}v4` : "/football";
 
 const baseApi: AxiosInstance = axios.create({
-  baseURL: baseApiUrl,
+  baseURL: `${FOOTBALL_API_BASE_URL}v4`,
   headers: {
     "X-Auth-Token": `${token}`,
   },
