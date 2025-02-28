@@ -7,7 +7,7 @@ type CachedRejection = {
 };
 
 const getCacheKey = (config: InternalAxiosRequestConfig) => {
-  return `${apiCacheKeyPrefix}${config.method}:${config.url}`;
+  return `${apiCacheKeyPrefix}${config.method}:${config.url}:${JSON.stringify(config.params)}`;
 };
 
 const setCache = (key: string, data: AxiosResponse) => {

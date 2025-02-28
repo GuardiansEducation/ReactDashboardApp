@@ -10,22 +10,23 @@ class TeamService {
   }
 
   async listCompetitionTeams(competitionId: number): Promise<TeamList> {
-    const url = encodeURI(`/competitions/${competitionId}/teams`);
-    const response = await this.instance.get<TeamList>(`?url=${url}`);
-
+    const url = encodeURI(`competitions/${competitionId}/teams`);
+    console.log(url);
+    const response = await this.instance.get<TeamList>("", { params: { url } });
+    console.log(response);
     return response.data;
   }
 
   async getTeamInfo(teamId: number): Promise<TeamListItem> {
-    const url = encodeURI(`/teams/${teamId}`);
-    const response = await this.instance.get<TeamListItem>(`?url=${url}`);
+    const url = encodeURI(`teams/${teamId}`);
+    const response = await this.instance.get<TeamListItem>("", { params: { url } });
 
     return response.data;
   }
 
   async getTeamMatches(teamId: number): Promise<TeamMatches> {
-    const url = encodeURI(`/teams/${teamId}/matches`);
-    const response = await this.instance.get<TeamMatches>(`url=${url}`);
+    const url = encodeURI(`teams/${teamId}/matches`);
+    const response = await this.instance.get<TeamMatches>("", { params: { url } });
 
     return response.data;
   }
