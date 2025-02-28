@@ -6,14 +6,10 @@ import {
 } from "./infrastructure/caching";
 import { rateLimitInterceptor } from "./infrastructure/rateLimit";
 
-const token = FOOTBALL_API_TOKEN;
 // const baseApiUrl = IS_PRODUCTION ? `${FOOTBALL_API_BASE_URL}v4` : "/football";
 
 const baseApi: AxiosInstance = axios.create({
-  baseURL: `${FOOTBALL_API_BASE_URL}v4`,
-  headers: {
-    "X-Auth-Token": `${token}`,
-  },
+  baseURL: "https://0z1w0cmaoh.execute-api.eu-central-1.amazonaws.com/football/api",
   maxRedirects: 0,
 });
 
