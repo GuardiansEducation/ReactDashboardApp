@@ -10,15 +10,15 @@ class CompetitionService {
   }
 
   async get(id: number): Promise<Competition> {
-    const response = await this.instance.get<Competition>(`/football/competitions/${id}`);
+    const url = encodeURI(`competitions/${id}`);
+    const response = await this.instance.get<Competition>("", { params: { url } });
 
     return response.data;
   }
 
   async listAreaCompetitions(areaId: number): Promise<CompetitionList> {
-    const response = await this.instance.get<CompetitionList>(
-      `/football/competitions?areas=${areaId}`
-    );
+    const url = encodeURI(`competitions?areas=${areaId}`);
+    const response = await this.instance.get<CompetitionList>("", { params: { url } });
 
     return response.data;
   }
