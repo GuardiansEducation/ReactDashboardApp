@@ -7,7 +7,7 @@ import {
 import { rateLimitInterceptor } from "./infrastructure/rateLimit";
 
 const baseApi: AxiosInstance = axios.create({
-  baseURL: "https://0z1w0cmaoh.execute-api.eu-central-1.amazonaws.com/football/api",
+  baseURL: FOOTBALL_API_PROXY_URL,
   maxRedirects: 0,
 });
 
