@@ -31,7 +31,7 @@ jobs:
       # Build the project
       - name: Build project
         run: npm run build
-        
+
       # Configure AWS credentials
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
