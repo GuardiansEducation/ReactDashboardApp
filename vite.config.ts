@@ -21,7 +21,6 @@ export default defineConfig(({ mode }) => {
       FOOTBALL_API_PROXY_URL: JSON.stringify(env.FOOTBALL_API_PROXY_URL),
       FOOTBALL_API_BASE_URL: JSON.stringify(env.FOOTBALL_API_BASE_URL),
       FOOTBALL_API_TOKEN: JSON.stringify(env.FOOTBALL_API_TOKEN),
-      IS_PRODUCTION: env.mode === "production",
     },
     resolve: {
       alias: {
