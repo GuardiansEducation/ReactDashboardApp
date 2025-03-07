@@ -1,2 +1,3 @@
 export * from "./api";
-export * from "./factories"
+export * from "./auth";
+export * from "./factories";
