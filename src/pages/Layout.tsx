@@ -1,8 +1,8 @@
-import { AppShell, Burger, Group, Image, Title } from "@mantine/core";
+import { AppShell, Burger, Button, Group, Image, Title } from "@mantine/core";
 import { routes } from "@constants";
 import { useDisclosure } from "@mantine/hooks";
 import { NavigateButton } from "@components";
-import { useAppSelector } from "@hooks";
+import { useAppSelector, useCustomAuth } from "@hooks";
 
 import logo from "/logo.svg";
 
@@ -33,12 +33,17 @@ export type LayoutProps = {
 };
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
+  const { isAuthenticated, removeUser, signOutRedirect } = useCustomAuth();
   const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
   const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
 
-  const hasSubscribedItems = useAppSelector(
-    (state) => state.subscription.subscriptions.length > 0
-  );
+  const hasSubscribedItems = useAppSelector((state) => state.subscription.subscriptions.length > 0);
+
+  const signOut = () => {
+    removeUser().then(() => {
+      signOutRedirect();
+    });
+  };
 
   return (
     <AppShell
@@ -56,6 +61,11 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           <Burger opened={desktopOpened} onClick={toggleDesktop} visibleFrom="sm" size="sm" />
           <Image src={logo} alt="logo" h={50} />
           <Title size={"lg"}>Football Dashboard</Title>
+          {isAuthenticated && (
+            <Button ml="auto" onClick={() => signOut()}>
+              Sign out
+            </Button>
+          )}
         </Group>
       </AppShell.Header>
       <AppShell.Navbar p="md">
@@ -71,9 +81,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           </NavigateButton>
         ))}
       </AppShell.Navbar>
-      <AppShell.Main>
-        {children}
-      </AppShell.Main>
+      <AppShell.Main>{children}</AppShell.Main>
     </AppShell>
   );
 };

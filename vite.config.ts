@@ -21,6 +21,9 @@ export default defineConfig(({ mode }) => {
       FOOTBALL_API_PROXY_URL: JSON.stringify(env.FOOTBALL_API_PROXY_URL),
       FOOTBALL_API_BASE_URL: JSON.stringify(env.FOOTBALL_API_BASE_URL),
       FOOTBALL_API_TOKEN: JSON.stringify(env.FOOTBALL_API_TOKEN),
+      USE_CUSTOM_AUTH: JSON.parse(JSON.stringify(env.USE_CUSTOM_AUTH)),
+      POST_LOGIN_URI: JSON.stringify(env.POST_LOGIN_URI),
+      POST_LOGOUT_URI: JSON.stringify(env.POST_LOGOUT_URI),
     },
     resolve: {
       alias: {
