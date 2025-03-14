@@ -25,6 +25,7 @@
     /* Custom */
     "paths": {
       "@pages": ["./src/pages"],
+      "@contexts": ["./src/contexts"],
       "@hooks": ["./src/hooks"],
       "@types": ["./src/types"],
       "@store": ["./src/store"],

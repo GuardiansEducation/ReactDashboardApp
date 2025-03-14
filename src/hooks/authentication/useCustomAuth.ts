@@ -1,7 +1,6 @@
 import { useAuth, AuthContextProps } from "react-oidc-context";
 import { useContext } from "react";
-import { signOutRedirect } from "@constants";
-import { MockAuthContext } from "../../contexts";
+import { MockAuthContext } from "@contexts";
 
 type CustomAuthType = Pick<
   AuthContextProps,
@@ -10,17 +9,22 @@ type CustomAuthType = Pick<
   signOutRedirect: () => void;
 };
 
+const signOutRedirect = () => {
+  const logoutUri = encodeURIComponent(POST_LOGOUT_URI);
+  const uri = `${COGNITO_ROOT_DOMAIN}/logout?client_id=${COGNITO_OIDC_CLIENT_ID}&logout_uri=${logoutUri}`;
+
+  window.location.href = uri;
+};
+
 export const useCustomAuth = (): CustomAuthType => {
-  const { isAuthenticated, setAuth } = useContext(MockAuthContext);
+  const { isAuthenticated, setIsAuthenticated } = useContext(MockAuthContext);
 
   const removeUser = () => Promise.resolve(console.log("remove user"));
-
   const customSignOutRedirect = () => {
-    setAuth(false);
+    setIsAuthenticated(false);
   };
-
   const signinRedirect = async () => {
-    setAuth(true);
+    setIsAuthenticated(true);
     window.location.href = POST_LOGIN_URI;
   };
 
@@ -28,11 +32,11 @@ export const useCustomAuth = (): CustomAuthType => {
 
   return USE_CUSTOM_AUTH
     ? {
-        isAuthenticated: isAuthenticated,
-        isLoading: false,
-        removeUser,
-        signinRedirect,
-        signOutRedirect: customSignOutRedirect,
-      }
+      isAuthenticated,
+      isLoading: false,
+      removeUser,
+      signinRedirect,
+      signOutRedirect: customSignOutRedirect,
+    }
     : { ...auth, signOutRedirect };
 };

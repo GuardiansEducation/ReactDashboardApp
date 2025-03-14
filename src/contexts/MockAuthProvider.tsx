@@ -6,13 +6,13 @@ export type AuthProviderProps = {
 };
 
 const MockAuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [isAuthenticated, setAuth] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
 
   return (
     <MockAuthContext.Provider
       value={{
         isAuthenticated: isAuthenticated,
-        setAuth,
+        setIsAuthenticated,
       }}
     >
       {children}
