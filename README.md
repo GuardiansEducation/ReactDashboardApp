@@ -48,6 +48,8 @@ This SPA (Single Page Application) is built using React and Vite, focusing on fo
  * preview - Run application in production mode
 
 # AWS Infrastructure
+Infrastructure was removed upon project finish. If you want to deploy this project you will have to recreate services described below.
+
 ## AWS API Gateway and AWS Lambda
 * AWS Gateway was created to integrate AWS Lambda [lambda/index.mjs](https://github.com/GuardiansEducation/ReactDashboardApp/blob/master/lambdas/proxy/index.mjs#L3) used in order to proxy API request to third party API provider.
 * For local development Vite proxy functionality was used. Details in [vite.config.ts](https://github.com/GuardiansEducation/ReactDashboardApp/blob/master/vite.config.ts#L16)
