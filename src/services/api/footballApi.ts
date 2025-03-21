@@ -9,6 +9,9 @@ import { rateLimitInterceptor } from "./infrastructure/rateLimit";
 const baseApi: AxiosInstance = axios.create({
   baseURL: FOOTBALL_API_PROXY_URL,
   maxRedirects: 0,
+  headers: {
+    "X-Auth-Token": `${FOOTBALL_API_TOKEN}`,
+  },
 });
 
 baseApi.interceptors.request.use(rateLimitInterceptor);
