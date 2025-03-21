@@ -32,22 +32,22 @@ jobs:
       - name: Build project
         run: npm run build
 
-      # Configure AWS credentials
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
+      # # Configure AWS credentials
+      # - name: Configure AWS credentials
+      #   uses: aws-actions/configure-aws-credentials@v4
+      #   with:
+      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #     aws-region: ${{ secrets.AWS_REGION }}
 
-      # Deploy build to S3 bucket
-      - name: Deploy to S3
-        run: |
-          SOURCE="dist/"
-          DEST="s3://guardians-dashboard"
+      # # Deploy build to S3 bucket
+      # - name: Deploy to S3
+      #   run: |
+      #     SOURCE="dist/"
+      #     DEST="s3://guardians-dashboard"
 
-          echo "Purging destination folder..."
-          aws s3 rm $DEST --recursive
+      #     echo "Purging destination folder..."
+      #     aws s3 rm $DEST --recursive
 
-          echo "Copying new files..."
-          aws s3 cp $SOURCE $DEST --recursive
+      #     echo "Copying new files..."
+      #     aws s3 cp $SOURCE $DEST --recursive

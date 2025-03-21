@@ -45,27 +45,27 @@ jobs:
         run: |
           zip -r ${{ env.proxyLambdaName }} .
 
-      # Configure AWS credentials
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
+      # # Configure AWS credentials
+      # - name: Configure AWS credentials
+      #   uses: aws-actions/configure-aws-credentials@v4
+      #   with:
+      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #     aws-region: ${{ secrets.AWS_REGION }}
 
-      # Load lambda zip to s3
-      - name: Deploy to S3
-        run: |
-          SOURCE="${{ env.proxyLambdaName }}"
-          DEST="s3://${{ env.lambdasBucket }}/${{ env.proxyLambdaName }}"
+      # # Load lambda zip to s3
+      # - name: Deploy to S3
+      #   run: |
+      #     SOURCE="${{ env.proxyLambdaName }}"
+      #     DEST="s3://${{ env.lambdasBucket }}/${{ env.proxyLambdaName }}"
 
-          echo "Purging destination folder..."
-          aws s3 rm $DEST
+      #     echo "Purging destination folder..."
+      #     aws s3 rm $DEST
 
-          echo "Copying new files..."
-          aws s3 cp $SOURCE $DEST
+      #     echo "Copying new files..."
+      #     aws s3 cp $SOURCE $DEST
 
-      # Update lambda code
-      - name: Update lambda code
-        run: |
-          aws lambda update-function-code --function-name ${{ env.functionName }} --s3-bucket ${{ env.lambdasBucket }} --s3-key ${{ env.proxyLambdaName }}
+      # # Update lambda code
+      # - name: Update lambda code
+      #   run: |
+      #     aws lambda update-function-code --function-name ${{ env.functionName }} --s3-bucket ${{ env.lambdasBucket }} --s3-key ${{ env.proxyLambdaName }}
